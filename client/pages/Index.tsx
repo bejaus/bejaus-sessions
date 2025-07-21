@@ -19,15 +19,21 @@ export default function Index() {
   return (
     <div className="min-h-screen bg-beige">
       {/* Header */}
-      <header className="fixed top-0 left-0 right-0 z-50">
-        <div className="max-w-7xl mx-auto px-6 py-4">
+      <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-in-out ${
+        isScrolled
+          ? 'bg-forest-green/95 backdrop-blur-md shadow-lg'
+          : 'bg-transparent'
+      }`}>
+        <div className={`max-w-7xl mx-auto px-6 transition-all duration-300 ease-in-out ${
+          isScrolled ? 'py-2' : 'py-4'
+        }`}>
           <div className="flex items-center justify-between">
             <div className="flex items-center">
               <img
                 src="https://cdn.builder.io/api/v1/image/assets%2Fb483dd511682401f9f00211e632d2fcf%2F308198e9c8eb46d1a930f8082135cfed"
                 alt="Bejaus Logo"
-                className="w-auto"
-                style={{ height: '72px' }}
+                className="w-auto transition-all duration-300 ease-in-out"
+                style={{ height: isScrolled ? '48px' : '72px' }}
               />
             </div>
 
