@@ -348,71 +348,82 @@ export default function Index() {
           <div className="mb-20">
             <div className="text-center mb-12">
               <h3 className="text-3xl font-bold text-forest-green mb-4">
-                Momentos únicos
+                {youtubeData ? "Los Más Vistos" : "Momentos únicos"}
               </h3>
               <p className="text-lg text-forest-green/70 max-w-2xl mx-auto">
-                Cada sesión es una experiencia irrepetible donde la música, el
-                café y la comunidad se encuentran
+                {youtubeData ?
+                  "Nuestras sesiones más populares, elegidas por la comunidad" :
+                  "Cada sesión es una experiencia irrepetible donde la música, el café y la comunidad se encuentran"
+                }
               </p>
+              {videoError && (
+                <p className="text-sm text-terracotta mt-2">
+                  {videoError}
+                </p>
+              )}
             </div>
 
             <div className="grid md:grid-cols-3 gap-8">
-              <Card className="group hover:scale-105 transition-all duration-500 bg-white/50 border-forest-green/20 overflow-hidden">
-                <div className="aspect-video bg-forest-green/10 overflow-hidden">
-                  <iframe
-                    src="https://www.youtube.com/embed/fflf6I7UHXM"
-                    className="w-full h-full group-hover:scale-110 transition-transform duration-700"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                  />
-                </div>
-                <div className="p-6">
-                  <h4 className="font-semibold text-forest-green mb-2">
-                    Jou Nielsen
-                  </h4>
-                  <p className="text-sm text-forest-green/70">
-                    Una noche mágica con sonidos únicos
-                  </p>
-                </div>
-              </Card>
-
-              <Card className="group hover:scale-105 transition-all duration-500 bg-white/50 border-forest-green/20 overflow-hidden">
-                <div className="aspect-video bg-forest-green/10 overflow-hidden">
-                  <iframe
-                    src="https://www.youtube.com/embed/zaoEoFKjoR4"
-                    className="w-full h-full group-hover:scale-110 transition-transform duration-700"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                  />
-                </div>
-                <div className="p-6">
-                  <h4 className="font-semibold text-forest-green mb-2">
-                    Noé
-                  </h4>
-                  <p className="text-sm text-forest-green/70">
-                    Ritmos que conectan almas
-                  </p>
-                </div>
-              </Card>
-
-              <Card className="group hover:scale-105 transition-all duration-500 bg-white/50 border-forest-green/20 overflow-hidden">
-                <div className="aspect-video bg-forest-green/10 overflow-hidden">
-                  <iframe
-                    src="https://www.youtube.com/embed/X52oRpXKOxM"
-                    className="w-full h-full group-hover:scale-110 transition-transform duration-700"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                  />
-                </div>
-                <div className="p-6">
-                  <h4 className="font-semibold text-forest-green mb-2">
-                    Alexx Zander Johnson
-                  </h4>
-                  <p className="text-sm text-forest-green/70">
-                    Experiencias que trascienden
-                  </p>
-                </div>
-              </Card>
+              {isLoadingVideos ? (
+                // Loading skeletons
+                Array.from({ length: 3 }).map((_, index) => (
+                  <Card key={index} className="bg-white/50 border-forest-green/20 overflow-hidden">
+                    <div className="aspect-video bg-forest-green/10 animate-pulse"></div>
+                    <div className="p-6">
+                      <div className="h-5 bg-forest-green/20 rounded animate-pulse mb-2"></div>
+                      <div className="h-4 bg-forest-green/10 rounded animate-pulse"></div>
+                    </div>
+                  </Card>
+                ))
+              ) : youtubeData?.popular ? (
+                // Dynamic videos
+                youtubeData.popular.map((video, index) => (
+                  <Card key={video.id} className="group hover:scale-105 transition-all duration-500 bg-white/50 border-forest-green/20 overflow-hidden">
+                    <div className="aspect-video bg-forest-green/10 overflow-hidden">
+                      <iframe
+                        src={`https://www.youtube.com/embed/${video.id}`}
+                        className="w-full h-full group-hover:scale-110 transition-transform duration-700"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen
+                      />
+                    </div>
+                    <div className="p-6">
+                      <h4 className="font-semibold text-forest-green mb-2 line-clamp-2">
+                        {video.title.length > 50 ? `${video.title.substring(0, 50)}...` : video.title}
+                      </h4>
+                      <p className="text-sm text-forest-green/70">
+                        {video.viewCount ? `${parseInt(video.viewCount).toLocaleString()} visualizaciones` : "Sesión especial"}
+                      </p>
+                    </div>
+                  </Card>
+                ))
+              ) : (
+                // Fallback static videos
+                [
+                  { id: "fflf6I7UHXM", title: "Jou Nielsen", description: "Una noche mágica con sonidos únicos" },
+                  { id: "zaoEoFKjoR4", title: "Noé", description: "Ritmos que conectan almas" },
+                  { id: "X52oRpXKOxM", title: "Alexx Zander Johnson", description: "Experiencias que trascienden" }
+                ].map((video, index) => (
+                  <Card key={video.id} className="group hover:scale-105 transition-all duration-500 bg-white/50 border-forest-green/20 overflow-hidden">
+                    <div className="aspect-video bg-forest-green/10 overflow-hidden">
+                      <iframe
+                        src={`https://www.youtube.com/embed/${video.id}`}
+                        className="w-full h-full group-hover:scale-110 transition-transform duration-700"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen
+                      />
+                    </div>
+                    <div className="p-6">
+                      <h4 className="font-semibold text-forest-green mb-2">
+                        {video.title}
+                      </h4>
+                      <p className="text-sm text-forest-green/70">
+                        {video.description}
+                      </p>
+                    </div>
+                  </Card>
+                ))
+              )}
             </div>
           </div>
 
