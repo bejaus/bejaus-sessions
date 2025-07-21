@@ -477,7 +477,7 @@ export default function Index() {
       </section>
 
       {/* Collaboration Section */}
-      <section className="py-24 px-6 bg-terracotta">
+      <section id="contacto" className="py-24 px-6 bg-terracotta">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-4xl md:text-5xl font-bold text-beige mb-8">
             ¿Tienes un espacio o proyecto y quieres colaborar?
