@@ -561,7 +561,7 @@ export default function Index() {
                 </p>
                 <div className="flex justify-between items-center mb-4">
                   <span className="text-2xl font-bold text-forest-green">
-                    15��
+                    15€
                   </span>
                   <span className="text-sm text-forest-green/60">330ml</span>
                 </div>
