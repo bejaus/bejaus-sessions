@@ -474,7 +474,7 @@ export default function Index() {
             <div className="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-8">
               <div className="flex space-x-6">
                 <a
-                  href="https://instagram.com/bejaus"
+                  href="https://instagram.com/bejauscafe"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-beige hover:text-terracotta transition-colors"
