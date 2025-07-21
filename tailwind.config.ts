@@ -14,7 +14,7 @@ export default {
     },
     extend: {
       fontFamily: {
-        sans: ['Raleway', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        sans: ["Raleway", "ui-sans-serif", "system-ui", "sans-serif"],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -61,9 +61,9 @@ export default {
           ring: "hsl(var(--sidebar-ring))",
         },
         // Bejaus brand colors
-        'forest-green': '#234235',
-        'beige': '#F5F1E7',
-        'terracotta': '#D2691E',
+        "forest-green": "#234235",
+        beige: "#F5F1E7",
+        terracotta: "#D2691E",
       },
       borderRadius: {
         lg: "var(--radius)",
