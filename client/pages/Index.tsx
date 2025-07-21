@@ -52,16 +52,18 @@ export default function Index() {
       } catch (error) {
         console.error('Error fetching YouTube videos:', error);
 
-        // More specific error messages
-        let errorMessage = 'No pudimos cargar los videos dinámicos. Mostrando contenido estático.';
+        // Don't show error for expected development scenarios
+        let errorMessage = '';
 
         if (error instanceof Error) {
-          if (error.message.includes('API key not configured')) {
-            errorMessage = 'API de YouTube no configurada. Usando contenido estático.';
-          } else if (error.message.includes('Channel ID not configured')) {
-            errorMessage = 'Canal de YouTube no configurado. Usando contenido estático.';
+          if (error.message.includes('API key not configured') ||
+              error.message.includes('Channel ID not configured')) {
+            // Don't show error for development mode
+            errorMessage = '';
           } else if (error.message.includes('404')) {
-            errorMessage = 'Canal no encontrado. Usando contenido estático.';
+            errorMessage = 'Canal no encontrado. Usando contenido de ejemplo.';
+          } else {
+            errorMessage = 'Usando videos de ejemplo.';
           }
         }
 
