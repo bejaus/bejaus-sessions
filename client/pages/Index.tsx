@@ -157,6 +157,20 @@ export default function Index() {
               />
             </div>
           </div>
+
+          {/* YouTube Channel Button */}
+          <div className="text-center mt-16">
+            <Button
+              size="lg"
+              className="bg-forest-green hover:bg-forest-green/90 text-beige px-8 py-4 text-lg"
+              onClick={() =>
+                window.open("https://www.youtube.com/@bejaussessions", "_blank")
+              }
+            >
+              Ver más videos en YouTube
+              <Youtube className="ml-2 h-5 w-5" />
+            </Button>
+          </div>
         </div>
       </section>
 
