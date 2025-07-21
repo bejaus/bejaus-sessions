@@ -109,7 +109,7 @@ export default function Index() {
       </section>
 
       {/* Próximo Evento */}
-      <section className="py-24 px-6 bg-gradient-to-br from-forest-green via-forest-green/95 to-forest-green/90 relative overflow-hidden">
+      <section id="eventos" className="py-24 px-6 bg-gradient-to-br from-forest-green via-forest-green/95 to-forest-green/90 relative overflow-hidden">
         {/* Background decoration */}
         <div className="absolute inset-0 opacity-10">
           <div className="absolute top-20 left-10 w-72 h-72 rounded-full bg-terracotta/20 blur-3xl"></div>
