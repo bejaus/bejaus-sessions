@@ -12,9 +12,9 @@ export default function Index() {
           <div className="flex items-center justify-between">
             <div className="flex items-center">
               <img
-                src="https://cdn.builder.io/api/v1/image/assets%2Fb483dd511682401f9f00211e632d2fcf%2F86b6c0b2bd3546578e69525b96f2c572"
+                src="https://cdn.builder.io/api/v1/image/assets%2Fb483dd511682401f9f00211e632d2fcf%2F308198e9c8eb46d1a930f8082135cfed"
                 alt="Bejaus Logo"
-                className="h-24 w-auto"
+                className="h-18 w-auto"
               />
             </div>
 
