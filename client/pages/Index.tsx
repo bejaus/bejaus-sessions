@@ -174,14 +174,16 @@ export default function Index() {
             </div>
             <div>
               <p className="text-base lg:text-lg text-forest-green/80 leading-relaxed mb-4 lg:mb-6">
-                Un espacio único en el corazón de Les Corts. Inspirados por la energía vibrante de Barcelona,
-                hemos creado un lugar acogedor donde disfrutar de café de especialidad, cervezas locales
-                y una gastronomía fresca, de proximidad y de calidad.
+                Un espacio único en el corazón de Les Corts. Inspirados por la
+                energía vibrante de Barcelona, hemos creado un lugar acogedor
+                donde disfrutar de café de especialidad, cervezas locales y una
+                gastronomía fresca, de proximidad y de calidad.
               </p>
               <p className="text-base lg:text-lg text-forest-green/80 leading-relaxed">
-                Nuestro enfoque es sencillo: cuidar cada detalle, desde el primer sorbo de café hasta
-                el último bocado de un pastel casero. Celebramos lo local y lo auténtico, priorizando
-                ingredientes sostenibles de productores cercanos.
+                Nuestro enfoque es sencillo: cuidar cada detalle, desde el
+                primer sorbo de café hasta el último bocado de un pastel casero.
+                Celebramos lo local y lo auténtico, priorizando ingredientes
+                sostenibles de productores cercanos.
               </p>
             </div>
           </div>
@@ -193,12 +195,14 @@ export default function Index() {
                 Comunidad
               </h3>
               <p className="text-base lg:text-lg text-forest-green/80 leading-relaxed mb-4 lg:mb-6">
-                Creemos en el poder de la comunidad, en las conversaciones que surgen al compartir
-                una tapa o en las ideas que nacen con una taza en las manos.
+                Creemos en el poder de la comunidad, en las conversaciones que
+                surgen al compartir una tapa o en las ideas que nacen con una
+                taza en las manos.
               </p>
               <p className="text-base lg:text-lg text-forest-green/80 leading-relaxed">
-                Bejaus es el lugar donde vecinos y visitantes se conectan, creando momentos memorables
-                y compartiendo buenos ratos en un ambiente relajado y amigable.
+                Bejaus es el lugar donde vecinos y visitantes se conectan,
+                creando momentos memorables y compartiendo buenos ratos en un
+                ambiente relajado y amigable.
               </p>
             </div>
             <div className="aspect-[4/3] bg-forest-green/10 rounded-lg overflow-hidden order-1 lg:order-2">
@@ -224,13 +228,15 @@ export default function Index() {
                 Localidad y Calidad
               </h3>
               <p className="text-base lg:text-lg text-forest-green/80 leading-relaxed mb-4 lg:mb-6">
-                Apoyamos a productores locales utilizando ingredientes frescos y de proximidad,
-                celebrando lo mejor de nuestra tierra y apoyando la economía local.
+                Apoyamos a productores locales utilizando ingredientes frescos y
+                de proximidad, celebrando lo mejor de nuestra tierra y apoyando
+                la economía local.
               </p>
               <p className="text-base lg:text-lg text-forest-green/80 leading-relaxed">
-                Seleccionamos cuidadosamente cada producto para ofrecerte una experiencia excepcional,
-                siempre a un precio justo que refleje el valor de lo que ofrecemos. En Bejaus, queremos
-                que te sientas como en casa y encuentres un lugar que inspire tu día.
+                Seleccionamos cuidadosamente cada producto para ofrecerte una
+                experiencia excepcional, siempre a un precio justo que refleje
+                el valor de lo que ofrecemos. En Bejaus, queremos que te sientas
+                como en casa y encuentres un lugar que inspire tu día.
               </p>
             </div>
           </div>
