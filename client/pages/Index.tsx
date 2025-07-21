@@ -155,110 +155,83 @@ export default function Index() {
 
       {/* Sobre Nosotros */}
       <section id="sobre-bejaus" className="py-24 px-6 bg-beige">
-        <div className="max-w-7xl mx-auto">
+        <div className="max-w-6xl mx-auto">
           {/* Header */}
           <div className="text-center mb-20">
-            <h2 className="text-4xl md:text-6xl font-bold text-forest-green mb-8">
+            <h2 className="text-4xl md:text-5xl font-bold text-forest-green mb-6">
               Quién somos
             </h2>
-            <p className="text-xl md:text-2xl text-forest-green leading-relaxed max-w-5xl mx-auto">
-              Un espacio único en el corazón de Les Corts. Inspirados por la energía vibrante de Barcelona,
-              hemos creado un lugar acogedor donde disfrutar de café de especialidad, cervezas locales
-              y una gastronomía fresca, de proximidad y de calidad.
-            </p>
           </div>
 
-          {/* Main Content */}
-          <div className="grid lg:grid-cols-2 gap-16 items-center mb-20">
-            <div>
-              <p className="text-lg text-forest-green/80 leading-relaxed mb-6">
-                Nuestro enfoque es sencillo: cuidar cada detalle, desde el primer sorbo de café hasta
-                el último bocado de un pastel casero. Celebramos lo local y lo auténtico, priorizando
-                ingredientes sostenibles de productores cercanos.
-              </p>
-              <p className="text-lg text-forest-green/80 leading-relaxed">
-                En Bejaus, queremos que te sientas como en casa y encuentres un lugar que inspire tu día.
-                Ven, siéntate y disfruta de la experiencia.
-              </p>
-            </div>
-            <div className="aspect-square bg-forest-green/10 rounded-2xl overflow-hidden">
+          {/* Section 1: Image Left, Text Right */}
+          <div className="grid lg:grid-cols-2 gap-16 items-center mb-24">
+            <div className="aspect-[4/3] bg-forest-green/10 rounded-lg overflow-hidden">
               <img
                 src="/placeholder.svg"
                 alt="Interior de Bejaus Café"
                 className="w-full h-full object-cover"
               />
             </div>
+            <div>
+              <p className="text-lg text-forest-green/80 leading-relaxed mb-6">
+                Un espacio único en el corazón de Les Corts. Inspirados por la energía vibrante de Barcelona,
+                hemos creado un lugar acogedor donde disfrutar de café de especialidad, cervezas locales
+                y una gastronomía fresca, de proximidad y de calidad.
+              </p>
+              <p className="text-lg text-forest-green/80 leading-relaxed">
+                Nuestro enfoque es sencillo: cuidar cada detalle, desde el primer sorbo de café hasta
+                el último bocado de un pastel casero. Celebramos lo local y lo auténtico, priorizando
+                ingredientes sostenibles de productores cercanos.
+              </p>
+            </div>
           </div>
 
-          {/* Values Grid */}
-          <div className="grid md:grid-cols-2 gap-12">
-            {/* Comunidad */}
-            <Card className="bg-forest-green/5 border-forest-green/20 p-8">
-              <div className="flex items-start space-x-4 mb-6">
-                <div className="flex-shrink-0 w-16 h-16 bg-forest-green/20 rounded-xl flex items-center justify-center">
-                  <span className="text-3xl">🤝</span>
-                </div>
-                <div>
-                  <h3 className="text-2xl font-bold text-forest-green mb-2">
-                    Comunidad
-                  </h3>
-                </div>
-              </div>
-              <p className="text-forest-green/80 leading-relaxed mb-4">
+          {/* Section 2: Text Left, Image Right */}
+          <div className="grid lg:grid-cols-2 gap-16 items-center mb-24">
+            <div>
+              <h3 className="text-2xl font-bold text-forest-green mb-6">
+                Comunidad
+              </h3>
+              <p className="text-lg text-forest-green/80 leading-relaxed mb-6">
                 Creemos en el poder de la comunidad, en las conversaciones que surgen al compartir
                 una tapa o en las ideas que nacen con una taza en las manos.
               </p>
-              <p className="text-forest-green/80 leading-relaxed">
+              <p className="text-lg text-forest-green/80 leading-relaxed">
                 Bejaus es el lugar donde vecinos y visitantes se conectan, creando momentos memorables
                 y compartiendo buenos ratos en un ambiente relajado y amigable.
               </p>
-            </Card>
-
-            {/* Localidad y Calidad */}
-            <Card className="bg-forest-green/5 border-forest-green/20 p-8">
-              <div className="flex items-start space-x-4 mb-6">
-                <div className="flex-shrink-0 w-16 h-16 bg-forest-green/20 rounded-xl flex items-center justify-center">
-                  <span className="text-3xl">🌱</span>
-                </div>
-                <div>
-                  <h3 className="text-2xl font-bold text-forest-green mb-2">
-                    Localidad y Calidad
-                  </h3>
-                </div>
-              </div>
-              <p className="text-forest-green/80 leading-relaxed mb-4">
-                Apoyamos a productores locales utilizando ingredientes frescos y de proximidad,
-                celebrando lo mejor de nuestra tierra y apoyando la economía local.
-              </p>
-              <p className="text-forest-green/80 leading-relaxed">
-                Seleccionamos cuidadosamente cada producto para ofrecerte una experiencia excepcional,
-                siempre a un precio justo que refleje el valor de lo que ofrecemos.
-              </p>
-            </Card>
+            </div>
+            <div className="aspect-[4/3] bg-forest-green/10 rounded-lg overflow-hidden">
+              <img
+                src="/placeholder.svg"
+                alt="Comunidad en Bejaus"
+                className="w-full h-full object-cover"
+              />
+            </div>
           </div>
 
-          {/* Cafe Images Gallery */}
-          <div className="grid md:grid-cols-3 gap-8 mt-20">
-            <div className="aspect-[4/3] bg-forest-green/10 rounded-lg overflow-hidden">
-              <img
-                src="/placeholder.svg"
-                alt="Café de especialidad"
-                className="w-full h-full object-cover"
-              />
-            </div>
-            <div className="aspect-[4/3] bg-forest-green/10 rounded-lg overflow-hidden">
-              <img
-                src="/placeholder.svg"
-                alt="Ambiente acogedor"
-                className="w-full h-full object-cover"
-              />
-            </div>
+          {/* Section 3: Image Left, Text Right */}
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
             <div className="aspect-[4/3] bg-forest-green/10 rounded-lg overflow-hidden">
               <img
                 src="/placeholder.svg"
                 alt="Productos locales"
                 className="w-full h-full object-cover"
               />
+            </div>
+            <div>
+              <h3 className="text-2xl font-bold text-forest-green mb-6">
+                Localidad y Calidad
+              </h3>
+              <p className="text-lg text-forest-green/80 leading-relaxed mb-6">
+                Apoyamos a productores locales utilizando ingredientes frescos y de proximidad,
+                celebrando lo mejor de nuestra tierra y apoyando la economía local.
+              </p>
+              <p className="text-lg text-forest-green/80 leading-relaxed">
+                Seleccionamos cuidadosamente cada producto para ofrecerte una experiencia excepcional,
+                siempre a un precio justo que refleje el valor de lo que ofrecemos. En Bejaus, queremos
+                que te sientas como en casa y encuentres un lugar que inspire tu día.
+              </p>
             </div>
           </div>
         </div>
