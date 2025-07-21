@@ -164,7 +164,7 @@ export default function Index() {
           </div>
 
           {/* Section 1: Image Left, Text Right */}
-          <div className="grid lg:grid-cols-2 gap-16 items-center mb-24">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center mb-16 lg:mb-24">
             <div className="aspect-[4/3] bg-forest-green/10 rounded-lg overflow-hidden">
               <img
                 src="/placeholder.svg"
@@ -173,12 +173,12 @@ export default function Index() {
               />
             </div>
             <div>
-              <p className="text-lg text-forest-green/80 leading-relaxed mb-6">
+              <p className="text-base lg:text-lg text-forest-green/80 leading-relaxed mb-4 lg:mb-6">
                 Un espacio único en el corazón de Les Corts. Inspirados por la energía vibrante de Barcelona,
                 hemos creado un lugar acogedor donde disfrutar de café de especialidad, cervezas locales
                 y una gastronomía fresca, de proximidad y de calidad.
               </p>
-              <p className="text-lg text-forest-green/80 leading-relaxed">
+              <p className="text-base lg:text-lg text-forest-green/80 leading-relaxed">
                 Nuestro enfoque es sencillo: cuidar cada detalle, desde el primer sorbo de café hasta
                 el último bocado de un pastel casero. Celebramos lo local y lo auténtico, priorizando
                 ingredientes sostenibles de productores cercanos.
@@ -187,21 +187,21 @@ export default function Index() {
           </div>
 
           {/* Section 2: Text Left, Image Right */}
-          <div className="grid lg:grid-cols-2 gap-16 items-center mb-24">
-            <div>
-              <h3 className="text-2xl font-bold text-forest-green mb-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center mb-16 lg:mb-24">
+            <div className="order-2 lg:order-1">
+              <h3 className="text-xl lg:text-2xl font-bold text-forest-green mb-4 lg:mb-6">
                 Comunidad
               </h3>
-              <p className="text-lg text-forest-green/80 leading-relaxed mb-6">
+              <p className="text-base lg:text-lg text-forest-green/80 leading-relaxed mb-4 lg:mb-6">
                 Creemos en el poder de la comunidad, en las conversaciones que surgen al compartir
                 una tapa o en las ideas que nacen con una taza en las manos.
               </p>
-              <p className="text-lg text-forest-green/80 leading-relaxed">
+              <p className="text-base lg:text-lg text-forest-green/80 leading-relaxed">
                 Bejaus es el lugar donde vecinos y visitantes se conectan, creando momentos memorables
                 y compartiendo buenos ratos en un ambiente relajado y amigable.
               </p>
             </div>
-            <div className="aspect-[4/3] bg-forest-green/10 rounded-lg overflow-hidden">
+            <div className="aspect-[4/3] bg-forest-green/10 rounded-lg overflow-hidden order-1 lg:order-2">
               <img
                 src="/placeholder.svg"
                 alt="Comunidad en Bejaus"
@@ -211,7 +211,7 @@ export default function Index() {
           </div>
 
           {/* Section 3: Image Left, Text Right */}
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
             <div className="aspect-[4/3] bg-forest-green/10 rounded-lg overflow-hidden">
               <img
                 src="/placeholder.svg"
@@ -220,14 +220,14 @@ export default function Index() {
               />
             </div>
             <div>
-              <h3 className="text-2xl font-bold text-forest-green mb-6">
+              <h3 className="text-xl lg:text-2xl font-bold text-forest-green mb-4 lg:mb-6">
                 Localidad y Calidad
               </h3>
-              <p className="text-lg text-forest-green/80 leading-relaxed mb-6">
+              <p className="text-base lg:text-lg text-forest-green/80 leading-relaxed mb-4 lg:mb-6">
                 Apoyamos a productores locales utilizando ingredientes frescos y de proximidad,
                 celebrando lo mejor de nuestra tierra y apoyando la economía local.
               </p>
-              <p className="text-lg text-forest-green/80 leading-relaxed">
+              <p className="text-base lg:text-lg text-forest-green/80 leading-relaxed">
                 Seleccionamos cuidadosamente cada producto para ofrecerte una experiencia excepcional,
                 siempre a un precio justo que refleje el valor de lo que ofrecemos. En Bejaus, queremos
                 que te sientas como en casa y encuentres un lugar que inspire tu día.
