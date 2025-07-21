@@ -382,7 +382,7 @@ export default function Index() {
                     <Button
                       size="lg"
                       variant="outline"
-                      className="border-beige text-beige hover:bg-beige/10 px-8 py-4 text-lg"
+                      className="border-beige text-forest-green hover:bg-beige hover:text-forest-green px-8 py-4 text-lg"
                     >
                       Más información
                     </Button>
