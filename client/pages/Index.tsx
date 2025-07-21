@@ -91,7 +91,7 @@ export default function Index() {
           >
             <source src="https://cdn.builder.io/o/assets%2Fb483dd511682401f9f00211e632d2fcf%2Fab8a6d09dd1b4d80a427d0eecee15f31?alt=media&token=48dbe188-4c32-4e72-bb94-f053f51a48b4&apiKey=b483dd511682401f9f00211e632d2fcf" type="video/mp4" />
           </video>
-          <div className="absolute inset-0 bg-forest-green/60"></div>
+          <div className="absolute inset-0 bg-forest-green/20"></div>
         </div>
 
         {/* Spacer for video content */}
