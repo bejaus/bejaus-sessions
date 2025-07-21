@@ -496,7 +496,7 @@ export default function Index() {
       </section>
 
       {/* Collaboration Section */}
-      <section id="contacto" className="py-24 px-6 bg-terracotta">
+      <section id="contacto" className="py-24 px-6 bg-forest-green/95">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-4xl md:text-5xl font-bold text-beige mb-8">
             ¿Tienes un espacio o proyecto y quieres colaborar?
@@ -508,7 +508,7 @@ export default function Index() {
 
           <Button
             size="lg"
-            className="bg-beige hover:bg-beige/90 text-terracotta px-8 py-4 text-lg font-semibold"
+            className="bg-beige hover:bg-beige/90 text-forest-green px-8 py-4 text-lg font-semibold"
           >
             Contactar
           </Button>
