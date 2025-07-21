@@ -294,8 +294,7 @@ export default function Index() {
           <div className="text-center mt-16">
             <Button
               size="lg"
-              variant="outline"
-              className="border-beige text-beige hover:bg-beige hover:text-forest-green px-8 py-4 text-lg"
+              className="bg-terracotta hover:bg-terracotta/90 text-beige px-8 py-4 text-lg"
             >
               Ver toda la tienda
             </Button>
