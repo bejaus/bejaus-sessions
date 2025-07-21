@@ -341,7 +341,7 @@ export default function Index() {
                 </div>
                 <div className="p-6">
                   <h4 className="font-semibold text-forest-green mb-2">
-                    Session Vol. 3
+                    Noé
                   </h4>
                   <p className="text-sm text-forest-green/70">
                     Ritmos que conectan almas
