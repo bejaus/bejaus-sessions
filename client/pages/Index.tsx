@@ -33,11 +33,11 @@ export default function Index() {
         }`}
       >
         <div
-          className={`max-w-7xl mx-auto px-6 transition-all duration-300 ease-in-out ${
+          className={`w-full px-6 xl:px-12 transition-all duration-300 ease-in-out ${
             isScrolled ? "py-2" : "py-4"
           }`}
         >
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between max-w-7xl mx-auto">
             <div className="flex items-center">
               <img
                 src="https://cdn.builder.io/api/v1/image/assets%2Fb483dd511682401f9f00211e632d2fcf%2F86b6c0b2bd3546578e69525b96f2c572"
