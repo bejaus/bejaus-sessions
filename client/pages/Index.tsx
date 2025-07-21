@@ -576,7 +576,11 @@ export default function Index() {
         <div className="max-w-6xl mx-auto">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-8 md:space-y-0">
             <div className="text-beige">
-              <h3 className="text-2xl font-bold mb-4">Bejaus Sessions</h3>
+              <img
+                src="https://cdn.builder.io/api/v1/image/assets%2Fb483dd511682401f9f00211e632d2fcf%2F3cb05d7d76a94745984779edb5aafdae?format=webp&width=800"
+                alt="Bejaus"
+                className="h-12 w-auto mb-4"
+              />
               <p className="text-beige/80">
                 Música, café y comunidad en Barcelona
               </p>
