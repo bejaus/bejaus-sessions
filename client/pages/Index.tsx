@@ -14,7 +14,8 @@ export default function Index() {
               <img
                 src="https://cdn.builder.io/api/v1/image/assets%2Fb483dd511682401f9f00211e632d2fcf%2F308198e9c8eb46d1a930f8082135cfed"
                 alt="Bejaus Logo"
-                className="h-18 w-auto"
+                className="w-auto"
+                style={{ height: '72px' }}
               />
             </div>
 
