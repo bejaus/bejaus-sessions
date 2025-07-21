@@ -42,7 +42,7 @@ export default function Index() {
               <img
                 src="https://cdn.builder.io/api/v1/image/assets%2Fb483dd511682401f9f00211e632d2fcf%2F86b6c0b2bd3546578e69525b96f2c572"
                 alt="Bejaus Logo"
-                className="w-auto transition-all duration-300 ease-in-out"
+                className="w-auto transition-all duration-300 ease-in-out opacity-80 hover:opacity-100"
                 style={{ height: isScrolled ? "48px" : "72px" }}
               />
             </div>
