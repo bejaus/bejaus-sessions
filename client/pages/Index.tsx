@@ -246,9 +246,11 @@ export default function Index() {
         </div>
       </section>
 
-
       {/* Bejaus Sessions - Events */}
-      <section id="eventos" className="py-24 px-6 bg-gradient-to-b from-beige to-forest-green/5 relative overflow-hidden">
+      <section
+        id="eventos"
+        className="py-24 px-6 bg-gradient-to-b from-beige to-forest-green/5 relative overflow-hidden"
+      >
         {/* Subtle background decoration */}
         <div className="absolute inset-0 opacity-5">
           <div className="absolute top-32 left-16 w-64 h-64 rounded-full bg-forest-green blur-3xl"></div>
@@ -265,8 +267,9 @@ export default function Index() {
               Vibra con nosotros
             </h2>
             <p className="text-xl text-forest-green/80 max-w-3xl mx-auto leading-relaxed">
-              Descubre la magia de nuestros eventos únicos. Música en vivo, DJs locales,
-              café de especialidad y una comunidad que celebra la creatividad y la buena vibra.
+              Descubre la magia de nuestros eventos únicos. Música en vivo, DJs
+              locales, café de especialidad y una comunidad que celebra la
+              creatividad y la buena vibra.
             </p>
           </div>
 
@@ -279,7 +282,8 @@ export default function Index() {
                     🎵 Última Sesión Completa
                   </h3>
                   <p className="text-forest-green/70">
-                    Disfruta la sesión completa de 1 hora desde nuestro canal de YouTube
+                    Disfruta la sesión completa de 1 hora desde nuestro canal de
+                    YouTube
                   </p>
                 </div>
                 <div className="aspect-video bg-forest-green/10 rounded-xl overflow-hidden shadow-2xl">
@@ -301,7 +305,8 @@ export default function Index() {
                 Momentos únicos
               </h3>
               <p className="text-lg text-forest-green/70 max-w-2xl mx-auto">
-                Cada sesión es una experiencia irrepetible donde la música, el café y la comunidad se encuentran
+                Cada sesión es una experiencia irrepetible donde la música, el
+                café y la comunidad se encuentran
               </p>
             </div>
 
@@ -316,8 +321,12 @@ export default function Index() {
                   />
                 </div>
                 <div className="p-6">
-                  <h4 className="font-semibold text-forest-green mb-2">Session Vol. 2</h4>
-                  <p className="text-sm text-forest-green/70">Una noche mágica con sonidos únicos</p>
+                  <h4 className="font-semibold text-forest-green mb-2">
+                    Session Vol. 2
+                  </h4>
+                  <p className="text-sm text-forest-green/70">
+                    Una noche mágica con sonidos únicos
+                  </p>
                 </div>
               </Card>
 
@@ -331,8 +340,12 @@ export default function Index() {
                   />
                 </div>
                 <div className="p-6">
-                  <h4 className="font-semibold text-forest-green mb-2">Session Vol. 3</h4>
-                  <p className="text-sm text-forest-green/70">Ritmos que conectan almas</p>
+                  <h4 className="font-semibold text-forest-green mb-2">
+                    Session Vol. 3
+                  </h4>
+                  <p className="text-sm text-forest-green/70">
+                    Ritmos que conectan almas
+                  </p>
                 </div>
               </Card>
 
@@ -346,8 +359,12 @@ export default function Index() {
                   />
                 </div>
                 <div className="p-6">
-                  <h4 className="font-semibold text-forest-green mb-2">Session Vol. 4</h4>
-                  <p className="text-sm text-forest-green/70">Experiencias que trascienden</p>
+                  <h4 className="font-semibold text-forest-green mb-2">
+                    Session Vol. 4
+                  </h4>
+                  <p className="text-sm text-forest-green/70">
+                    Experiencias que trascienden
+                  </p>
                 </div>
               </Card>
             </div>
@@ -360,7 +377,8 @@ export default function Index() {
                 ¿Listo para la próxima sesión?
               </h3>
               <p className="text-xl text-beige/90 mb-8 max-w-2xl mx-auto">
-                Síguenos en nuestras redes para no perderte ningún evento y ser parte de la vibra Bejaus
+                Síguenos en nuestras redes para no perderte ningún evento y ser
+                parte de la vibra Bejaus
               </p>
 
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -368,7 +386,10 @@ export default function Index() {
                   size="lg"
                   className="bg-terracotta hover:bg-terracotta/90 text-beige px-8 py-4 text-lg font-semibold"
                   onClick={() =>
-                    window.open("https://www.youtube.com/@bejaussessions", "_blank")
+                    window.open(
+                      "https://www.youtube.com/@bejaussessions",
+                      "_blank",
+                    )
                   }
                 >
                   <Youtube className="mr-2 h-5 w-5" />
