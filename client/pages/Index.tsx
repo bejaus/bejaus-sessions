@@ -313,7 +313,7 @@ export default function Index() {
       </section>
 
       {/* Merch Section */}
-      <section className="py-24 px-6 bg-forest-green">
+      <section id="merch" className="py-24 px-6 bg-forest-green">
         <div className="max-w-6xl mx-auto">
           <h2 className="text-4xl md:text-5xl font-bold text-beige text-center mb-8">
             Merch Bejaus
