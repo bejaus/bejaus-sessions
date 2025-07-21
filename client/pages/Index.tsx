@@ -19,15 +19,8 @@ export default function Index() {
           <div className="absolute inset-0 bg-forest-green/60"></div>
         </div>
 
-        {/* Hero Content */}
-        <div className="relative z-10 text-center text-beige px-6 max-w-4xl mx-auto">
-          <h1 className="text-6xl md:text-8xl font-bold mb-6 tracking-tight">
-            Bejaus Sessions
-          </h1>
-          <p className="text-xl md:text-2xl mb-12 font-light leading-relaxed">
-            Música en vivo. Comunidad local. Buen café. Mejor vibra.
-          </p>
-        </div>
+        {/* Spacer for video content */}
+        <div className="relative z-10"></div>
 
         {/* Scroll Indicator */}
         <div
