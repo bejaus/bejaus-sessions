@@ -1,19 +1,5 @@
 import { RequestHandler } from "express";
-
-export interface YouTubeVideo {
-  id: string;
-  title: string;
-  description: string;
-  thumbnail: string;
-  publishedAt: string;
-  viewCount?: string;
-  duration?: string;
-}
-
-export interface YouTubeApiResponse {
-  latest: YouTubeVideo;
-  popular: YouTubeVideo[];
-}
+import { YouTubeVideo, YouTubeApiResponse } from "@shared/api";
 
 export const handleYouTubeVideos: RequestHandler = async (req, res) => {
   try {
