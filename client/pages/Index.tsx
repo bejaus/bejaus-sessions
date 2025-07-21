@@ -174,6 +174,135 @@ export default function Index() {
         </div>
       </section>
 
+      {/* Merch Section */}
+      <section className="py-24 px-6 bg-forest-green">
+        <div className="max-w-6xl mx-auto">
+          <h2 className="text-4xl md:text-5xl font-bold text-beige text-center mb-8">
+            Merch Bejaus
+          </h2>
+          <p className="text-xl text-beige/90 text-center mb-16 max-w-2xl mx-auto">
+            Lleva la vibra Bejaus contigo. Diseños únicos inspirados en la comunidad musical de Barcelona.
+          </p>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {/* Product 1 - Camiseta */}
+            <Card className="bg-beige border-0 overflow-hidden group hover:scale-105 transition-transform duration-300">
+              <div className="aspect-square bg-forest-green/10 overflow-hidden">
+                <img
+                  src="/placeholder.svg"
+                  alt="Camiseta Bejaus Sessions"
+                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                />
+              </div>
+              <div className="p-6">
+                <h3 className="text-xl font-semibold text-forest-green mb-2">
+                  Camiseta Bejaus Sessions
+                </h3>
+                <p className="text-forest-green/70 text-sm mb-4">
+                  100% Algodón orgánico
+                </p>
+                <div className="flex justify-between items-center mb-4">
+                  <span className="text-2xl font-bold text-forest-green">25€</span>
+                  <span className="text-sm text-forest-green/60">S, M, L, XL</span>
+                </div>
+                <Button className="w-full bg-terracotta hover:bg-terracotta/90 text-beige">
+                  Añadir al carrito
+                </Button>
+              </div>
+            </Card>
+
+            {/* Product 2 - Hoodie */}
+            <Card className="bg-beige border-0 overflow-hidden group hover:scale-105 transition-transform duration-300">
+              <div className="aspect-square bg-forest-green/10 overflow-hidden">
+                <img
+                  src="/placeholder.svg"
+                  alt="Hoodie Bejaus Sessions"
+                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                />
+              </div>
+              <div className="p-6">
+                <h3 className="text-xl font-semibold text-forest-green mb-2">
+                  Hoodie Bejaus Sessions
+                </h3>
+                <p className="text-forest-green/70 text-sm mb-4">
+                  80% Algodón, 20% Poliéster
+                </p>
+                <div className="flex justify-between items-center mb-4">
+                  <span className="text-2xl font-bold text-forest-green">45€</span>
+                  <span className="text-sm text-forest-green/60">S, M, L, XL</span>
+                </div>
+                <Button className="w-full bg-terracotta hover:bg-terracotta/90 text-beige">
+                  Añadir al carrito
+                </Button>
+              </div>
+            </Card>
+
+            {/* Product 3 - Taza */}
+            <Card className="bg-beige border-0 overflow-hidden group hover:scale-105 transition-transform duration-300">
+              <div className="aspect-square bg-forest-green/10 overflow-hidden">
+                <img
+                  src="/placeholder.svg"
+                  alt="Taza Bejaus Sessions"
+                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                />
+              </div>
+              <div className="p-6">
+                <h3 className="text-xl font-semibold text-forest-green mb-2">
+                  Taza Bejaus Sessions
+                </h3>
+                <p className="text-forest-green/70 text-sm mb-4">
+                  Cerámica de alta calidad
+                </p>
+                <div className="flex justify-between items-center mb-4">
+                  <span className="text-2xl font-bold text-forest-green">15€</span>
+                  <span className="text-sm text-forest-green/60">330ml</span>
+                </div>
+                <Button className="w-full bg-terracotta hover:bg-terracotta/90 text-beige">
+                  Añadir al carrito
+                </Button>
+              </div>
+            </Card>
+
+            {/* Product 4 - Tote Bag */}
+            <Card className="bg-beige border-0 overflow-hidden group hover:scale-105 transition-transform duration-300">
+              <div className="aspect-square bg-forest-green/10 overflow-hidden">
+                <img
+                  src="/placeholder.svg"
+                  alt="Tote Bag Bejaus Sessions"
+                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                />
+              </div>
+              <div className="p-6">
+                <h3 className="text-xl font-semibold text-forest-green mb-2">
+                  Tote Bag Bejaus Sessions
+                </h3>
+                <p className="text-forest-green/70 text-sm mb-4">
+                  Algodón sostenible
+                </p>
+                <div className="flex justify-between items-center mb-4">
+                  <span className="text-2xl font-bold text-forest-green">18€</span>
+                  <span className="text-sm text-forest-green/60">40x35cm</span>
+                </div>
+                <Button className="w-full bg-terracotta hover:bg-terracotta/90 text-beige">
+                  Añadir al carrito
+                </Button>
+              </div>
+            </Card>
+          </div>
+
+          {/* Ver toda la tienda */}
+          <div className="text-center mt-16">
+            <Button
+              size="lg"
+              variant="outline"
+              className="border-beige text-beige hover:bg-beige hover:text-forest-green px-8 py-4 text-lg"
+            >
+              Ver toda la tienda
+            </Button>
+          </div>
+        </div>
+      </section>
+
       {/* Newsletter Subscription */}
       <section className="py-24 px-6 bg-beige">
         <div className="max-w-4xl mx-auto text-center">
