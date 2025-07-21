@@ -173,10 +173,13 @@ export default function Index() {
               />
             </div>
             <div>
+              <h3 className="text-xl lg:text-2xl font-bold text-forest-green mb-4 lg:mb-6">
+                Nuestro espacio
+              </h3>
               <p className="text-base lg:text-lg text-forest-green/80 leading-relaxed mb-4 lg:mb-6">
                 Un espacio único en el corazón de Les Corts. Inspirados por la
                 energía vibrante de Barcelona, hemos creado un lugar acogedor
-                donde disfrutar de café de especialidad, cervezas locales y una
+                donde disfrutar de caf�� de especialidad, cervezas locales y una
                 gastronomía fresca, de proximidad y de calidad.
               </p>
               <p className="text-base lg:text-lg text-forest-green/80 leading-relaxed">
