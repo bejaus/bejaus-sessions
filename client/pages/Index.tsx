@@ -7,14 +7,14 @@ export default function Index() {
   return (
     <div className="min-h-screen bg-beige">
       {/* Header */}
-      <header className="fixed top-0 left-0 right-0 z-50 bg-forest-green/90 backdrop-blur-sm border-b border-beige/20">
+      <header className="fixed top-0 left-0 right-0 z-50">
         <div className="max-w-7xl mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center">
               <img
                 src="https://cdn.builder.io/api/v1/image/assets%2Fb483dd511682401f9f00211e632d2fcf%2F080970fcfe234ce8980095845b757d23?format=webp&width=800"
                 alt="Bejaus Logo"
-                className="h-8 w-auto"
+                className="h-12 w-auto"
               />
             </div>
 
