@@ -247,64 +247,175 @@ export default function Index() {
       </section>
 
 
-      {/* Aftermovies */}
-      <section className="py-24 px-6">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-4xl md:text-5xl font-bold text-forest-green text-center mb-16">
-            Vibra con nosotros
-          </h2>
+      {/* Bejaus Sessions - Events */}
+      <section id="eventos" className="py-24 px-6 bg-gradient-to-b from-beige to-forest-green/5 relative overflow-hidden">
+        {/* Subtle background decoration */}
+        <div className="absolute inset-0 opacity-5">
+          <div className="absolute top-32 left-16 w-64 h-64 rounded-full bg-forest-green blur-3xl"></div>
+          <div className="absolute bottom-32 right-16 w-80 h-80 rounded-full bg-terracotta blur-3xl"></div>
+        </div>
 
-          <div className="max-w-4xl mx-auto">
-            <div className="aspect-video bg-forest-green/10 rounded-lg overflow-hidden">
-              <iframe
-                src="https://www.youtube.com/embed/bR29G5pSpaQ"
-                className="w-full h-full"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-              />
+        <div className="max-w-7xl mx-auto relative z-10">
+          {/* Header */}
+          <div className="text-center mb-20">
+            <span className="inline-block bg-forest-green/10 text-forest-green px-6 py-3 rounded-full text-sm font-semibold mb-6 tracking-wide uppercase">
+              🎵 Bejaus Sessions
+            </span>
+            <h2 className="text-4xl md:text-6xl font-bold text-forest-green mb-6">
+              Vibra con nosotros
+            </h2>
+            <p className="text-xl text-forest-green/80 max-w-3xl mx-auto leading-relaxed">
+              Descubre la magia de nuestros eventos únicos. Música en vivo, DJs locales,
+              café de especialidad y una comunidad que celebra la creatividad y la buena vibra.
+            </p>
+          </div>
+
+          {/* Featured Video */}
+          <div className="mb-20">
+            <div className="max-w-5xl mx-auto">
+              <Card className="bg-forest-green/5 border-forest-green/20 p-4 lg:p-8">
+                <div className="text-center mb-6">
+                  <h3 className="text-2xl font-bold text-forest-green mb-2">
+                    🎬 Último Aftermovie
+                  </h3>
+                  <p className="text-forest-green/70">
+                    Revive los mejores momentos de nuestras sesiones
+                  </p>
+                </div>
+                <div className="aspect-video bg-forest-green/10 rounded-xl overflow-hidden shadow-2xl">
+                  <iframe
+                    src="https://www.youtube.com/embed/bR29G5pSpaQ"
+                    className="w-full h-full"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  />
+                </div>
+              </Card>
             </div>
           </div>
 
-          {/* Additional videos */}
-          <div className="grid md:grid-cols-3 gap-6 mt-12">
-            <div className="aspect-video bg-forest-green/10 rounded-lg overflow-hidden">
-              <iframe
-                src="https://www.youtube.com/embed/fflf6I7UHXM"
-                className="w-full h-full"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-              />
+          {/* Events Gallery */}
+          <div className="mb-20">
+            <div className="text-center mb-12">
+              <h3 className="text-3xl font-bold text-forest-green mb-4">
+                Momentos únicos
+              </h3>
+              <p className="text-lg text-forest-green/70 max-w-2xl mx-auto">
+                Cada sesión es una experiencia irrepetible donde la música, el café y la comunidad se encuentran
+              </p>
             </div>
-            <div className="aspect-video bg-forest-green/10 rounded-lg overflow-hidden">
-              <iframe
-                src="https://www.youtube.com/embed/zaoEoFKjoR4"
-                className="w-full h-full"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-              />
-            </div>
-            <div className="aspect-video bg-forest-green/10 rounded-lg overflow-hidden">
-              <iframe
-                src="https://www.youtube.com/embed/I12W9RiDqF8"
-                className="w-full h-full"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-              />
+
+            <div className="grid md:grid-cols-3 gap-8">
+              <Card className="group hover:scale-105 transition-all duration-500 bg-white/50 border-forest-green/20 overflow-hidden">
+                <div className="aspect-video bg-forest-green/10 overflow-hidden">
+                  <iframe
+                    src="https://www.youtube.com/embed/fflf6I7UHXM"
+                    className="w-full h-full group-hover:scale-110 transition-transform duration-700"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  />
+                </div>
+                <div className="p-6">
+                  <h4 className="font-semibold text-forest-green mb-2">Session Vol. 2</h4>
+                  <p className="text-sm text-forest-green/70">Una noche mágica con sonidos únicos</p>
+                </div>
+              </Card>
+
+              <Card className="group hover:scale-105 transition-all duration-500 bg-white/50 border-forest-green/20 overflow-hidden">
+                <div className="aspect-video bg-forest-green/10 overflow-hidden">
+                  <iframe
+                    src="https://www.youtube.com/embed/zaoEoFKjoR4"
+                    className="w-full h-full group-hover:scale-110 transition-transform duration-700"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  />
+                </div>
+                <div className="p-6">
+                  <h4 className="font-semibold text-forest-green mb-2">Session Vol. 3</h4>
+                  <p className="text-sm text-forest-green/70">Ritmos que conectan almas</p>
+                </div>
+              </Card>
+
+              <Card className="group hover:scale-105 transition-all duration-500 bg-white/50 border-forest-green/20 overflow-hidden">
+                <div className="aspect-video bg-forest-green/10 overflow-hidden">
+                  <iframe
+                    src="https://www.youtube.com/embed/I12W9RiDqF8"
+                    className="w-full h-full group-hover:scale-110 transition-transform duration-700"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  />
+                </div>
+                <div className="p-6">
+                  <h4 className="font-semibold text-forest-green mb-2">Session Vol. 4</h4>
+                  <p className="text-sm text-forest-green/70">Experiencias que trascienden</p>
+                </div>
+              </Card>
             </div>
           </div>
 
-          {/* YouTube Channel Button */}
-          <div className="text-center mt-16">
-            <Button
-              size="lg"
-              className="bg-terracotta hover:bg-terracotta/90 text-beige px-8 py-4 text-lg"
-              onClick={() =>
-                window.open("https://www.youtube.com/@bejaussessions", "_blank")
-              }
-            >
-              Ver más videos en YouTube
-              <Youtube className="ml-2 h-5 w-5" />
-            </Button>
+          {/* Stats & Social Proof */}
+          <div className="mb-16">
+            <Card className="bg-forest-green text-beige p-8 lg:p-12">
+              <div className="text-center mb-8">
+                <h3 className="text-2xl font-bold mb-4">La comunidad habla</h3>
+                <p className="text-beige/90">Cada evento es una celebración de la música y la conexión humana</p>
+              </div>
+
+              <div className="grid md:grid-cols-4 gap-8 text-center">
+                <div>
+                  <div className="text-3xl font-bold text-terracotta mb-2">15+</div>
+                  <div className="text-sm text-beige/80">Eventos realizados</div>
+                </div>
+                <div>
+                  <div className="text-3xl font-bold text-terracotta mb-2">500+</div>
+                  <div className="text-sm text-beige/80">Asistentes únicos</div>
+                </div>
+                <div>
+                  <div className="text-3xl font-bold text-terracotta mb-2">25+</div>
+                  <div className="text-sm text-beige/80">Artistas locales</div>
+                </div>
+                <div>
+                  <div className="text-3xl font-bold text-terracotta mb-2">4.9★</div>
+                  <div className="text-sm text-beige/80">Valoración media</div>
+                </div>
+              </div>
+            </Card>
+          </div>
+
+          {/* CTA Section */}
+          <div className="text-center">
+            <Card className="bg-gradient-to-r from-forest-green to-forest-green/90 text-beige p-8 lg:p-12 max-w-4xl mx-auto">
+              <h3 className="text-3xl font-bold mb-4">
+                ¿Listo para la próxima sesión?
+              </h3>
+              <p className="text-xl text-beige/90 mb-8 max-w-2xl mx-auto">
+                Síguenos en nuestras redes para no perderte ningún evento y ser parte de la vibra Bejaus
+              </p>
+
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <Button
+                  size="lg"
+                  className="bg-terracotta hover:bg-terracotta/90 text-beige px-8 py-4 text-lg font-semibold"
+                  onClick={() =>
+                    window.open("https://www.youtube.com/@bejaussessions", "_blank")
+                  }
+                >
+                  <Youtube className="mr-2 h-5 w-5" />
+                  Ver más videos
+                </Button>
+                <Button
+                  size="lg"
+                  variant="outline"
+                  className="border-beige text-beige hover:bg-beige hover:text-forest-green px-8 py-4 text-lg"
+                  onClick={() =>
+                    window.open("https://instagram.com/bejauscafe", "_blank")
+                  }
+                >
+                  <Instagram className="mr-2 h-5 w-5" />
+                  Síguenos
+                </Button>
+              </div>
+            </Card>
           </div>
         </div>
       </section>
