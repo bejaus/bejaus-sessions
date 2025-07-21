@@ -593,7 +593,7 @@ export default function Index() {
                   <Instagram className="h-6 w-6" />
                 </a>
                 <a
-                  href="https://youtube.com/@bejaus"
+                  href="https://www.youtube.com/@bejaussessions"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-beige hover:text-terracotta transition-colors"
