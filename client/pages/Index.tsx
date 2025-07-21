@@ -322,7 +322,7 @@ export default function Index() {
                 </div>
                 <div className="p-6">
                   <h4 className="font-semibold text-forest-green mb-2">
-                    Session Vol. 2
+                    Jou Nielsen
                   </h4>
                   <p className="text-sm text-forest-green/70">
                     Una noche mágica con sonidos únicos
