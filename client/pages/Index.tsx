@@ -352,7 +352,7 @@ export default function Index() {
               <Card className="group hover:scale-105 transition-all duration-500 bg-white/50 border-forest-green/20 overflow-hidden">
                 <div className="aspect-video bg-forest-green/10 overflow-hidden">
                   <iframe
-                    src="https://youtu.be/X52oRpXKOxM"
+                    src="https://www.youtube.com/embed/X52oRpXKOxM"
                     className="w-full h-full group-hover:scale-110 transition-transform duration-700"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     allowFullScreen
