@@ -162,7 +162,7 @@ export default function Index() {
           <div className="text-center mt-16">
             <Button
               size="lg"
-              className="bg-forest-green hover:bg-forest-green/90 text-beige px-8 py-4 text-lg"
+              className="bg-terracotta hover:bg-terracotta/90 text-beige px-8 py-4 text-lg"
               onClick={() =>
                 window.open("https://www.youtube.com/@bejaussessions", "_blank")
               }
