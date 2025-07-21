@@ -335,7 +335,7 @@ export default function Index() {
                   </h3>
                   <p className="text-forest-green/70">
                     {youtubeData?.latest ?
-                      `${youtubeData.latest.title} - Publicado ${new Date(youtubeData.latest.publishedAt).toLocaleDateString()}` :
+                      `Publicado ${new Date(youtubeData.latest.publishedAt).toLocaleDateString()}` :
                       "Disfruta la sesión completa de 1 hora desde nuestro canal de YouTube"
                     }
                   </p>
