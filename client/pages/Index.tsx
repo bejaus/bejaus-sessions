@@ -353,35 +353,6 @@ export default function Index() {
             </div>
           </div>
 
-          {/* Stats & Social Proof */}
-          <div className="mb-16">
-            <Card className="bg-forest-green text-beige p-8 lg:p-12">
-              <div className="text-center mb-8">
-                <h3 className="text-2xl font-bold mb-4">La comunidad habla</h3>
-                <p className="text-beige/90">Cada evento es una celebración de la música y la conexión humana</p>
-              </div>
-
-              <div className="grid md:grid-cols-4 gap-8 text-center">
-                <div>
-                  <div className="text-3xl font-bold text-terracotta mb-2">15+</div>
-                  <div className="text-sm text-beige/80">Eventos realizados</div>
-                </div>
-                <div>
-                  <div className="text-3xl font-bold text-terracotta mb-2">500+</div>
-                  <div className="text-sm text-beige/80">Asistentes únicos</div>
-                </div>
-                <div>
-                  <div className="text-3xl font-bold text-terracotta mb-2">25+</div>
-                  <div className="text-sm text-beige/80">Artistas locales</div>
-                </div>
-                <div>
-                  <div className="text-3xl font-bold text-terracotta mb-2">4.9★</div>
-                  <div className="text-sm text-beige/80">Valoración media</div>
-                </div>
-              </div>
-            </Card>
-          </div>
-
           {/* CTA Section */}
           <div className="text-center">
             <Card className="bg-gradient-to-r from-forest-green to-forest-green/90 text-beige p-8 lg:p-12 max-w-4xl mx-auto">
