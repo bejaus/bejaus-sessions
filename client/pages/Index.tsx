@@ -14,6 +14,9 @@ import { YouTubeApiResponse, YouTubeVideo } from "@shared/api";
 
 export default function Index() {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [youtubeData, setYoutubeData] = useState<YouTubeApiResponse | null>(null);
+  const [isLoadingVideos, setIsLoadingVideos] = useState(true);
+  const [videoError, setVideoError] = useState<string | null>(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -23,6 +26,32 @@ export default function Index() {
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  // Fetch YouTube videos
+  useEffect(() => {
+    const fetchYouTubeVideos = async () => {
+      try {
+        setIsLoadingVideos(true);
+        setVideoError(null);
+
+        const response = await fetch('/api/youtube-videos');
+        if (!response.ok) {
+          throw new Error('Failed to fetch videos');
+        }
+
+        const data: YouTubeApiResponse = await response.json();
+        setYoutubeData(data);
+      } catch (error) {
+        console.error('Error fetching YouTube videos:', error);
+        setVideoError('No pudimos cargar los videos. Mostrando contenido estático.');
+        // Keep static content as fallback
+      } finally {
+        setIsLoadingVideos(false);
+      }
+    };
+
+    fetchYouTubeVideos();
   }, []);
   return (
     <div className="min-h-screen bg-beige">
