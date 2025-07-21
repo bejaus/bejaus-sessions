@@ -10,3 +10,21 @@
 export interface DemoResponse {
   message: string;
 }
+
+/**
+ * YouTube API types
+ */
+export interface YouTubeVideo {
+  id: string;
+  title: string;
+  description: string;
+  thumbnail: string;
+  publishedAt: string;
+  viewCount?: string;
+  duration?: string;
+}
+
+export interface YouTubeApiResponse {
+  latest: YouTubeVideo;
+  popular: YouTubeVideo[];
+}
