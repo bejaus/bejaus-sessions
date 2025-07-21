@@ -49,30 +49,66 @@ export default function Index() {
 
             {/* Navigation - Optional for future */}
             <nav className="hidden md:flex items-center space-x-8">
-              <a
-                href="#sobre-bejaus"
+              <button
+                onClick={() => {
+                  const section = document.querySelector("#sobre-bejaus");
+                  if (section) {
+                    const offsetTop = section.offsetTop - 80;
+                    window.scrollTo({
+                      top: offsetTop,
+                      behavior: "smooth",
+                    });
+                  }
+                }}
                 className="text-beige/80 hover:text-beige transition-colors text-sm font-medium"
               >
                 Sobre nosotros
-              </a>
-              <a
-                href="#eventos"
+              </button>
+              <button
+                onClick={() => {
+                  const section = document.querySelector("#eventos");
+                  if (section) {
+                    const offsetTop = section.offsetTop - 80;
+                    window.scrollTo({
+                      top: offsetTop,
+                      behavior: "smooth",
+                    });
+                  }
+                }}
                 className="text-beige/80 hover:text-beige transition-colors text-sm font-medium"
               >
                 Eventos
-              </a>
-              <a
-                href="#merch"
+              </button>
+              <button
+                onClick={() => {
+                  const section = document.querySelector("#merch");
+                  if (section) {
+                    const offsetTop = section.offsetTop - 80;
+                    window.scrollTo({
+                      top: offsetTop,
+                      behavior: "smooth",
+                    });
+                  }
+                }}
                 className="text-beige/80 hover:text-beige transition-colors text-sm font-medium"
               >
                 Merch
-              </a>
-              <a
-                href="#contacto"
+              </button>
+              <button
+                onClick={() => {
+                  const section = document.querySelector("#contacto");
+                  if (section) {
+                    const offsetTop = section.offsetTop - 80;
+                    window.scrollTo({
+                      top: offsetTop,
+                      behavior: "smooth",
+                    });
+                  }
+                }}
                 className="text-beige/80 hover:text-beige transition-colors text-sm font-medium"
               >
                 Contacto
-              </a>
+              </button>
             </nav>
           </div>
         </div>
@@ -470,7 +506,7 @@ export default function Index() {
                 </p>
                 <div className="flex justify-between items-center mb-4">
                   <span className="text-2xl font-bold text-forest-green">
-                    15€
+                    15��
                   </span>
                   <span className="text-sm text-forest-green/60">330ml</span>
                 </div>
