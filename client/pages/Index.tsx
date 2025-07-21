@@ -36,7 +36,7 @@ export default function Index() {
       </section>
 
       {/* Sobre Bejaus Sessions */}
-      <section className="py-24 px-6">
+      <section id="sobre-bejaus" className="py-24 px-6">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
             <p className="text-xl md:text-2xl text-forest-green leading-relaxed max-w-4xl mx-auto">
