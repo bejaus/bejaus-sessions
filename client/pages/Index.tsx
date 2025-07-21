@@ -6,6 +6,37 @@ import { ExternalLink, Instagram, Youtube, Mail, ChevronDown } from "lucide-reac
 export default function Index() {
   return (
     <div className="min-h-screen bg-beige">
+      {/* Header */}
+      <header className="fixed top-0 left-0 right-0 z-50 bg-forest-green/90 backdrop-blur-sm border-b border-beige/20">
+        <div className="max-w-7xl mx-auto px-6 py-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center">
+              <img
+                src="https://cdn.builder.io/api/v1/image/assets%2Fb483dd511682401f9f00211e632d2fcf%2F080970fcfe234ce8980095845b757d23?format=webp&width=800"
+                alt="Bejaus Logo"
+                className="h-8 w-auto"
+              />
+            </div>
+
+            {/* Navigation - Optional for future */}
+            <nav className="hidden md:flex items-center space-x-8">
+              <a href="#sobre-bejaus" className="text-beige/80 hover:text-beige transition-colors text-sm font-medium">
+                Sobre nosotros
+              </a>
+              <a href="#eventos" className="text-beige/80 hover:text-beige transition-colors text-sm font-medium">
+                Eventos
+              </a>
+              <a href="#merch" className="text-beige/80 hover:text-beige transition-colors text-sm font-medium">
+                Merch
+              </a>
+              <a href="#contacto" className="text-beige/80 hover:text-beige transition-colors text-sm font-medium">
+                Contacto
+              </a>
+            </nav>
+          </div>
+        </div>
+      </header>
+
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
         {/* YouTube Video Background */}
