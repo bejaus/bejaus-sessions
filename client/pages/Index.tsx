@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
-import { ExternalLink, Instagram, Youtube, Mail } from "lucide-react";
+import { ExternalLink, Instagram, Youtube, Mail, ChevronDown } from "lucide-react";
 
 export default function Index() {
   return (
