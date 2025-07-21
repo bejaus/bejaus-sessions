@@ -7,8 +7,10 @@ import {
   Youtube,
   Mail,
   ChevronDown,
+  Loader2,
 } from "lucide-react";
 import { useState, useEffect } from "react";
+import { YouTubeApiResponse, YouTubeVideo } from "@shared/api";
 
 export default function Index() {
   const [isScrolled, setIsScrolled] = useState(false);
