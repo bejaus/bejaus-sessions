@@ -24,12 +24,13 @@ export default function Index() {
           <Button
             size="lg"
             className="bg-terracotta hover:bg-terracotta/90 text-beige px-8 py-4 text-lg"
-            onClick={() =>
-              window.open("https://youtu.be/bR29G5pSpaQ", "_blank")
-            }
+            onClick={() => {
+              const nextSection = document.querySelector('#sobre-bejaus');
+              nextSection?.scrollIntoView({ behavior: 'smooth' });
+            }}
           >
-            Ver aftermovie
-            <ExternalLink className="ml-2 h-5 w-5" />
+            Conócenos
+            <ChevronDown className="ml-2 h-5 w-5" />
           </Button>
         </div>
       </section>
