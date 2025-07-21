@@ -57,6 +57,10 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
+        // Bejaus brand colors
+        'forest-green': '#234235',
+        'beige': '#F5F1E7',
+        'terracotta': '#D2691E',
       },
       borderRadius: {
         lg: "var(--radius)",
