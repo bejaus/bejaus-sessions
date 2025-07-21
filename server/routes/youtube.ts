@@ -4,36 +4,72 @@ import { YouTubeVideo, YouTubeApiResponse } from "@shared/api";
 export const handleYouTubeVideos: RequestHandler = async (req, res) => {
   try {
     const API_KEY = process.env.YOUTUBE_API_KEY;
-    const CHANNEL_ID = process.env.YOUTUBE_CHANNEL_ID || 'UCYourChannelId'; // Bejaus Sessions channel ID
-    
+    const CHANNEL_ID = process.env.YOUTUBE_CHANNEL_ID;
+
+    console.log('YouTube API Request started');
+    console.log('API_KEY configured:', !!API_KEY);
+    console.log('CHANNEL_ID configured:', !!CHANNEL_ID);
+
     if (!API_KEY) {
-      return res.status(500).json({ 
-        error: 'YouTube API key not configured' 
+      console.log('YouTube API key not configured');
+      return res.status(500).json({
+        error: 'YouTube API key not configured',
+        debug: 'Set YOUTUBE_API_KEY environment variable'
       });
     }
 
+    if (!CHANNEL_ID) {
+      console.log('YouTube Channel ID not configured');
+      return res.status(500).json({
+        error: 'YouTube Channel ID not configured',
+        debug: 'Set YOUTUBE_CHANNEL_ID environment variable'
+      });
+    }
+
+    console.log('Fetching videos from channel:', CHANNEL_ID);
+
     // Fetch latest videos from the channel
-    const channelResponse = await fetch(
-      `https://www.googleapis.com/youtube/v3/search?key=${API_KEY}&channelId=${CHANNEL_ID}&part=snippet&order=date&maxResults=10&type=video`
-    );
+    const channelUrl = `https://www.googleapis.com/youtube/v3/search?key=${API_KEY}&channelId=${CHANNEL_ID}&part=snippet&order=date&maxResults=10&type=video`;
+    console.log('Channel API URL:', channelUrl.replace(API_KEY, 'HIDDEN_API_KEY'));
+
+    const channelResponse = await fetch(channelUrl);
+
+    console.log('Channel response status:', channelResponse.status);
 
     if (!channelResponse.ok) {
-      throw new Error('Failed to fetch channel videos');
+      const errorText = await channelResponse.text();
+      console.error('Channel API Error:', errorText);
+      throw new Error(`Failed to fetch channel videos: ${channelResponse.status} - ${errorText}`);
     }
 
     const channelData = await channelResponse.json();
+    console.log('Channel data received, items count:', channelData.items?.length || 0);
+
+    if (!channelData.items || channelData.items.length === 0) {
+      console.log('No videos found in channel');
+      return res.status(404).json({
+        error: 'No videos found in channel',
+        debug: 'Check if the channel ID is correct and has public videos'
+      });
+    }
+
     const videoIds = channelData.items.map((item: any) => item.id.videoId).join(',');
+    console.log('Video IDs to fetch stats for:', videoIds);
 
     // Get detailed video statistics
-    const statsResponse = await fetch(
-      `https://www.googleapis.com/youtube/v3/videos?key=${API_KEY}&id=${videoIds}&part=snippet,statistics,contentDetails`
-    );
+    const statsUrl = `https://www.googleapis.com/youtube/v3/videos?key=${API_KEY}&id=${videoIds}&part=snippet,statistics,contentDetails`;
+    const statsResponse = await fetch(statsUrl);
+
+    console.log('Stats response status:', statsResponse.status);
 
     if (!statsResponse.ok) {
-      throw new Error('Failed to fetch video statistics');
+      const errorText = await statsResponse.text();
+      console.error('Stats API Error:', errorText);
+      throw new Error(`Failed to fetch video statistics: ${statsResponse.status} - ${errorText}`);
     }
 
     const statsData = await statsResponse.json();
+    console.log('Stats data received, items count:', statsData.items?.length || 0);
 
     const videos: YouTubeVideo[] = statsData.items.map((item: any) => ({
       id: item.id,
@@ -59,12 +95,18 @@ export const handleYouTubeVideos: RequestHandler = async (req, res) => {
       popular,
     };
 
+    console.log('Successfully processed YouTube data:', {
+      latestTitle: latest?.title,
+      popularCount: popular.length
+    });
+
     res.json(response);
   } catch (error) {
     console.error('YouTube API Error:', error);
-    res.status(500).json({ 
+    res.status(500).json({
       error: 'Failed to fetch YouTube videos',
-      details: error instanceof Error ? error.message : 'Unknown error'
+      details: error instanceof Error ? error.message : 'Unknown error',
+      debug: 'Check server logs for more details'
     });
   }
 };
