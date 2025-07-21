@@ -82,12 +82,15 @@ export default function Index() {
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
         {/* YouTube Video Background */}
         <div className="absolute inset-0 w-full h-full">
-          <iframe
-            src="https://www.youtube.com/embed/bR29G5pSpaQ?autoplay=1&mute=1&loop=1&playlist=bR29G5pSpaQ&controls=0&showinfo=0&rel=0&iv_load_policy=3&modestbranding=1&start=0&end=20"
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
             className="w-full h-full object-cover scale-125"
-            allow="autoplay; encrypted-media"
-            allowFullScreen
-          />
+          >
+            <source src="https://cdn.builder.io/o/assets%2Fb483dd511682401f9f00211e632d2fcf%2Fab8a6d09dd1b4d80a427d0eecee15f31?alt=media&token=48dbe188-4c32-4e72-bb94-f053f51a48b4&apiKey=b483dd511682401f9f00211e632d2fcf" type="video/mp4" />
+          </video>
           <div className="absolute inset-0 bg-forest-green/60"></div>
         </div>
 
