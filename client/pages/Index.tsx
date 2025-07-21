@@ -35,16 +35,37 @@ export default function Index() {
         setIsLoadingVideos(true);
         setVideoError(null);
 
+        console.log('Fetching YouTube videos from /api/youtube-videos');
         const response = await fetch('/api/youtube-videos');
+
+        console.log('Response status:', response.status, response.statusText);
+
         if (!response.ok) {
-          throw new Error('Failed to fetch videos');
+          const errorData = await response.json().catch(() => ({ error: 'Unknown error' }));
+          console.error('API Error Response:', errorData);
+          throw new Error(`API Error (${response.status}): ${errorData.error || 'Failed to fetch videos'}`);
         }
 
         const data: YouTubeApiResponse = await response.json();
+        console.log('YouTube data received:', data);
         setYoutubeData(data);
       } catch (error) {
         console.error('Error fetching YouTube videos:', error);
-        setVideoError('No pudimos cargar los videos. Mostrando contenido estático.');
+
+        // More specific error messages
+        let errorMessage = 'No pudimos cargar los videos dinámicos. Mostrando contenido estático.';
+
+        if (error instanceof Error) {
+          if (error.message.includes('API key not configured')) {
+            errorMessage = 'API de YouTube no configurada. Usando contenido estático.';
+          } else if (error.message.includes('Channel ID not configured')) {
+            errorMessage = 'Canal de YouTube no configurado. Usando contenido estático.';
+          } else if (error.message.includes('404')) {
+            errorMessage = 'Canal no encontrado. Usando contenido estático.';
+          }
+        }
+
+        setVideoError(errorMessage);
         // Keep static content as fallback
       } finally {
         setIsLoadingVideos(false);
