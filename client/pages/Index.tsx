@@ -1,7 +1,13 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
-import { ExternalLink, Instagram, Youtube, Mail, ChevronDown } from "lucide-react";
+import {
+  ExternalLink,
+  Instagram,
+  Youtube,
+  Mail,
+  ChevronDown,
+} from "lucide-react";
 import { useState, useEffect } from "react";
 
 export default function Index() {
@@ -13,42 +19,58 @@ export default function Index() {
       setIsScrolled(scrollTop > 100);
     };
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
   return (
     <div className="min-h-screen bg-beige">
       {/* Header */}
-      <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-in-out ${
-        isScrolled
-          ? 'bg-forest-green/95 backdrop-blur-md shadow-lg'
-          : 'bg-transparent'
-      }`}>
-        <div className={`max-w-7xl mx-auto px-6 transition-all duration-300 ease-in-out ${
-          isScrolled ? 'py-2' : 'py-4'
-        }`}>
+      <header
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-in-out ${
+          isScrolled
+            ? "bg-forest-green/95 backdrop-blur-md shadow-lg"
+            : "bg-transparent"
+        }`}
+      >
+        <div
+          className={`max-w-7xl mx-auto px-6 transition-all duration-300 ease-in-out ${
+            isScrolled ? "py-2" : "py-4"
+          }`}
+        >
           <div className="flex items-center justify-between">
             <div className="flex items-center">
               <img
                 src="https://cdn.builder.io/api/v1/image/assets%2Fb483dd511682401f9f00211e632d2fcf%2F308198e9c8eb46d1a930f8082135cfed"
                 alt="Bejaus Logo"
                 className="w-auto transition-all duration-300 ease-in-out"
-                style={{ height: isScrolled ? '48px' : '72px' }}
+                style={{ height: isScrolled ? "48px" : "72px" }}
               />
             </div>
 
             {/* Navigation - Optional for future */}
             <nav className="hidden md:flex items-center space-x-8">
-              <a href="#sobre-bejaus" className="text-beige/80 hover:text-beige transition-colors text-sm font-medium">
+              <a
+                href="#sobre-bejaus"
+                className="text-beige/80 hover:text-beige transition-colors text-sm font-medium"
+              >
                 Sobre nosotros
               </a>
-              <a href="#eventos" className="text-beige/80 hover:text-beige transition-colors text-sm font-medium">
+              <a
+                href="#eventos"
+                className="text-beige/80 hover:text-beige transition-colors text-sm font-medium"
+              >
                 Eventos
               </a>
-              <a href="#merch" className="text-beige/80 hover:text-beige transition-colors text-sm font-medium">
+              <a
+                href="#merch"
+                className="text-beige/80 hover:text-beige transition-colors text-sm font-medium"
+              >
                 Merch
               </a>
-              <a href="#contacto" className="text-beige/80 hover:text-beige transition-colors text-sm font-medium">
+              <a
+                href="#contacto"
+                className="text-beige/80 hover:text-beige transition-colors text-sm font-medium"
+              >
                 Contacto
               </a>
             </nav>
@@ -76,8 +98,8 @@ export default function Index() {
         <div
           className="absolute bottom-8 left-1/2 transform -translate-x-1/2 cursor-pointer group"
           onClick={() => {
-            const nextSection = document.querySelector('#sobre-bejaus');
-            nextSection?.scrollIntoView({ behavior: 'smooth' });
+            const nextSection = document.querySelector("#sobre-bejaus");
+            nextSection?.scrollIntoView({ behavior: "smooth" });
           }}
         >
           <div className="flex flex-col items-center space-y-2 animate-bounce">
@@ -128,7 +150,10 @@ export default function Index() {
       </section>
 
       {/* Próximo Evento */}
-      <section id="eventos" className="py-24 px-6 bg-gradient-to-br from-forest-green via-forest-green/95 to-forest-green/90 relative overflow-hidden">
+      <section
+        id="eventos"
+        className="py-24 px-6 bg-gradient-to-br from-forest-green via-forest-green/95 to-forest-green/90 relative overflow-hidden"
+      >
         {/* Background decoration */}
         <div className="absolute inset-0 opacity-10">
           <div className="absolute top-20 left-10 w-72 h-72 rounded-full bg-terracotta/20 blur-3xl"></div>
@@ -144,7 +169,8 @@ export default function Index() {
               Bejaus Sessions Vol. 4
             </h2>
             <p className="text-xl text-beige/80 max-w-2xl mx-auto">
-              Una noche inolvidable con los mejores DJs locales, café de especialidad y la mejor vibra de Barcelona
+              Una noche inolvidable con los mejores DJs locales, café de
+              especialidad y la mejor vibra de Barcelona
             </p>
           </div>
 
@@ -161,8 +187,12 @@ export default function Index() {
                 </div>
                 <div className="p-6">
                   <div className="flex items-center justify-between text-beige">
-                    <span className="text-sm font-medium">Entradas disponibles</span>
-                    <span className="text-lg font-bold text-terracotta">15€</span>
+                    <span className="text-sm font-medium">
+                      Entradas disponibles
+                    </span>
+                    <span className="text-lg font-bold text-terracotta">
+                      15€
+                    </span>
                   </div>
                 </div>
               </Card>
@@ -178,7 +208,9 @@ export default function Index() {
                       <span className="text-2xl">📅</span>
                     </div>
                     <div>
-                      <h3 className="text-lg font-semibold text-beige mb-1">Fecha y Hora</h3>
+                      <h3 className="text-lg font-semibold text-beige mb-1">
+                        Fecha y Hora
+                      </h3>
                       <p className="text-beige/80">Sábado 15 Febrero, 2025</p>
                       <p className="text-beige/80">21:00 - 02:00</p>
                     </div>
@@ -192,7 +224,9 @@ export default function Index() {
                       <span className="text-2xl">📍</span>
                     </div>
                     <div>
-                      <h3 className="text-lg font-semibold text-beige mb-1">Ubicación</h3>
+                      <h3 className="text-lg font-semibold text-beige mb-1">
+                        Ubicación
+                      </h3>
                       <p className="text-beige/80">Bejaus Café</p>
                       <p className="text-beige/80">Les Corts, Barcelona</p>
                     </div>
@@ -206,7 +240,9 @@ export default function Index() {
                       <span className="text-2xl">🎧</span>
                     </div>
                     <div>
-                      <h3 className="text-lg font-semibold text-beige mb-1">Lineup</h3>
+                      <h3 className="text-lg font-semibold text-beige mb-1">
+                        Lineup
+                      </h3>
                       <p className="text-beige/80">DJ MARC VILLA</p>
                       <p className="text-beige/80">+ Artista Invitado</p>
                     </div>
@@ -220,9 +256,13 @@ export default function Index() {
                       <span className="text-2xl">👥</span>
                     </div>
                     <div>
-                      <h3 className="text-lg font-semibold text-beige mb-1">Capacidad</h3>
+                      <h3 className="text-lg font-semibold text-beige mb-1">
+                        Capacidad
+                      </h3>
                       <p className="text-beige/80">80 personas máximo</p>
-                      <p className="text-terracotta text-sm font-medium">¡Últimas entradas!</p>
+                      <p className="text-terracotta text-sm font-medium">
+                        ¡Últimas entradas!
+                      </p>
                     </div>
                   </div>
                 </Card>
@@ -235,7 +275,8 @@ export default function Index() {
                     ¿Listo para vivir la experiencia Bejaus?
                   </h3>
                   <p className="text-beige/90 mb-6">
-                    Música, café, vermut y la mejor comunidad de Barcelona te esperan
+                    Música, café, vermut y la mejor comunidad de Barcelona te
+                    esperan
                   </p>
                   <div className="flex flex-col sm:flex-row gap-4 justify-center">
                     <Button
@@ -259,7 +300,9 @@ export default function Index() {
 
           {/* Social Proof */}
           <div className="mt-16 text-center">
-            <p className="text-beige/70 text-sm mb-4">Eventos anteriores sold out ✨</p>
+            <p className="text-beige/70 text-sm mb-4">
+              Eventos anteriores sold out ✨
+            </p>
             <div className="flex justify-center items-center space-x-8 text-beige/60">
               <span className="text-sm">+200 asistentes</span>
               <span className="text-sm">4.9⭐ valoración</span>
@@ -338,7 +381,8 @@ export default function Index() {
             Merch Bejaus
           </h2>
           <p className="text-xl text-beige/90 text-center mb-16 max-w-2xl mx-auto">
-            Lleva la vibra Bejaus contigo. Diseños únicos inspirados en la comunidad musical de Barcelona.
+            Lleva la vibra Bejaus contigo. Diseños únicos inspirados en la
+            comunidad musical de Barcelona.
           </p>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -359,8 +403,12 @@ export default function Index() {
                   100% Algodón orgánico
                 </p>
                 <div className="flex justify-between items-center mb-4">
-                  <span className="text-2xl font-bold text-forest-green">25€</span>
-                  <span className="text-sm text-forest-green/60">S, M, L, XL</span>
+                  <span className="text-2xl font-bold text-forest-green">
+                    25€
+                  </span>
+                  <span className="text-sm text-forest-green/60">
+                    S, M, L, XL
+                  </span>
                 </div>
                 <Button className="w-full bg-terracotta hover:bg-terracotta/90 text-beige">
                   Añadir al carrito
@@ -385,8 +433,12 @@ export default function Index() {
                   80% Algodón, 20% Poliéster
                 </p>
                 <div className="flex justify-between items-center mb-4">
-                  <span className="text-2xl font-bold text-forest-green">45€</span>
-                  <span className="text-sm text-forest-green/60">S, M, L, XL</span>
+                  <span className="text-2xl font-bold text-forest-green">
+                    45€
+                  </span>
+                  <span className="text-sm text-forest-green/60">
+                    S, M, L, XL
+                  </span>
                 </div>
                 <Button className="w-full bg-terracotta hover:bg-terracotta/90 text-beige">
                   Añadir al carrito
@@ -411,7 +463,9 @@ export default function Index() {
                   Cerámica de alta calidad
                 </p>
                 <div className="flex justify-between items-center mb-4">
-                  <span className="text-2xl font-bold text-forest-green">15€</span>
+                  <span className="text-2xl font-bold text-forest-green">
+                    15€
+                  </span>
                   <span className="text-sm text-forest-green/60">330ml</span>
                 </div>
                 <Button className="w-full bg-terracotta hover:bg-terracotta/90 text-beige">
@@ -437,7 +491,9 @@ export default function Index() {
                   Algodón sostenible
                 </p>
                 <div className="flex justify-between items-center mb-4">
-                  <span className="text-2xl font-bold text-forest-green">18€</span>
+                  <span className="text-2xl font-bold text-forest-green">
+                    18€
+                  </span>
                   <span className="text-sm text-forest-green/60">40x35cm</span>
                 </div>
                 <Button className="w-full bg-terracotta hover:bg-terracotta/90 text-beige">
