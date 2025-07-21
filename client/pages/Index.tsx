@@ -40,7 +40,7 @@ export default function Index() {
           <div className="flex items-center justify-between">
             <div className="flex items-center">
               <img
-                src="https://cdn.builder.io/api/v1/image/assets%2Fb483dd511682401f9f00211e632d2fcf%2F3cb05d7d76a94745984779edb5aafdae?format=webp&width=800"
+                src="https://cdn.builder.io/api/v1/image/assets%2Fb483dd511682401f9f00211e632d2fcf%2F308198e9c8eb46d1a930f8082135cfed"
                 alt="Bejaus Logo"
                 className="w-auto transition-all duration-300 ease-in-out"
                 style={{ height: isScrolled ? "48px" : "72px" }}
