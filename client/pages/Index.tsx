@@ -14,7 +14,9 @@ import { YouTubeApiResponse, YouTubeVideo } from "@shared/api";
 
 export default function Index() {
   const [isScrolled, setIsScrolled] = useState(false);
-  const [youtubeData, setYoutubeData] = useState<YouTubeApiResponse | null>(null);
+  const [youtubeData, setYoutubeData] = useState<YouTubeApiResponse | null>(
+    null,
+  );
   const [isLoadingVideos, setIsLoadingVideos] = useState(true);
   const [videoError, setVideoError] = useState<string | null>(null);
 
@@ -35,35 +37,41 @@ export default function Index() {
         setIsLoadingVideos(true);
         setVideoError(null);
 
-        console.log('Fetching YouTube videos from /api/youtube-videos');
-        const response = await fetch('/api/youtube-videos');
+        console.log("Fetching YouTube videos from /api/youtube-videos");
+        const response = await fetch("/api/youtube-videos");
 
-        console.log('Response status:', response.status, response.statusText);
+        console.log("Response status:", response.status, response.statusText);
 
         if (!response.ok) {
-          const errorData = await response.json().catch(() => ({ error: 'Unknown error' }));
-          console.error('API Error Response:', errorData);
-          throw new Error(`API Error (${response.status}): ${errorData.error || 'Failed to fetch videos'}`);
+          const errorData = await response
+            .json()
+            .catch(() => ({ error: "Unknown error" }));
+          console.error("API Error Response:", errorData);
+          throw new Error(
+            `API Error (${response.status}): ${errorData.error || "Failed to fetch videos"}`,
+          );
         }
 
         const data: YouTubeApiResponse = await response.json();
-        console.log('YouTube data received:', data);
+        console.log("YouTube data received:", data);
         setYoutubeData(data);
       } catch (error) {
-        console.error('Error fetching YouTube videos:', error);
+        console.error("Error fetching YouTube videos:", error);
 
         // Don't show error for expected development scenarios
-        let errorMessage = '';
+        let errorMessage = "";
 
         if (error instanceof Error) {
-          if (error.message.includes('API key not configured') ||
-              error.message.includes('Channel ID not configured')) {
+          if (
+            error.message.includes("API key not configured") ||
+            error.message.includes("Channel ID not configured")
+          ) {
             // Don't show error for development mode
-            errorMessage = '';
-          } else if (error.message.includes('404')) {
-            errorMessage = 'Canal no encontrado. Usando contenido de ejemplo.';
+            errorMessage = "";
+          } else if (error.message.includes("404")) {
+            errorMessage = "Canal no encontrado. Usando contenido de ejemplo.";
           } else {
-            errorMessage = 'Usando videos de ejemplo.';
+            errorMessage = "Usando videos de ejemplo.";
           }
         }
 
@@ -336,10 +344,9 @@ export default function Index() {
                     🎵 Última Sesión Completa
                   </h3>
                   <p className="text-forest-green/70">
-                    {youtubeData?.latest ?
-                      `Publicado ${new Date(youtubeData.latest.publishedAt).toLocaleDateString()}` :
-                      "Disfruta la sesión completa de 1 hora desde nuestro canal de YouTube"
-                    }
+                    {youtubeData?.latest
+                      ? `Publicado ${new Date(youtubeData.latest.publishedAt).toLocaleDateString()}`
+                      : "Disfruta la sesión completa de 1 hora desde nuestro canal de YouTube"}
                   </p>
                 </div>
                 <div className="aspect-video bg-forest-green/10 rounded-xl overflow-hidden shadow-2xl">
@@ -374,79 +381,99 @@ export default function Index() {
                 {youtubeData ? "Los Más Vistos" : "Momentos únicos"}
               </h3>
               <p className="text-lg text-forest-green/70 max-w-2xl mx-auto">
-                {youtubeData ?
-                  "Nuestras sesiones más populares, elegidas por la comunidad" :
-                  "Cada sesión es una experiencia irrepetible donde la música, el café y la comunidad se encuentran"
-                }
+                {youtubeData
+                  ? "Nuestras sesiones más populares, elegidas por la comunidad"
+                  : "Cada sesión es una experiencia irrepetible donde la música, el café y la comunidad se encuentran"}
               </p>
               {videoError && (
-                <p className="text-sm text-terracotta mt-2">
-                  {videoError}
-                </p>
+                <p className="text-sm text-terracotta mt-2">{videoError}</p>
               )}
             </div>
 
             <div className="grid md:grid-cols-3 gap-8">
-              {isLoadingVideos ? (
-                // Loading skeletons
-                Array.from({ length: 3 }).map((_, index) => (
-                  <Card key={index} className="bg-white/50 border-forest-green/20 overflow-hidden">
-                    <div className="aspect-video bg-forest-green/10 animate-pulse"></div>
-                    <div className="p-6">
-                      <div className="h-5 bg-forest-green/20 rounded animate-pulse mb-2"></div>
-                      <div className="h-4 bg-forest-green/10 rounded animate-pulse"></div>
-                    </div>
-                  </Card>
-                ))
-              ) : youtubeData?.popular ? (
-                // Dynamic videos
-                youtubeData.popular.map((video, index) => (
-                  <Card key={video.id} className="group hover:scale-105 transition-all duration-500 bg-white/50 border-forest-green/20 overflow-hidden">
-                    <div className="aspect-video bg-forest-green/10 overflow-hidden">
-                      <iframe
-                        src={`https://www.youtube.com/embed/${video.id}`}
-                        className="w-full h-full group-hover:scale-110 transition-transform duration-700"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowFullScreen
-                      />
-                    </div>
-                    <div className="p-6">
-                      <h4 className="font-semibold text-forest-green mb-2 line-clamp-2">
-                        {video.title.length > 50 ? `${video.title.substring(0, 50)}...` : video.title}
-                      </h4>
-                      <p className="text-sm text-forest-green/70">
-                        {video.viewCount ? `${parseInt(video.viewCount).toLocaleString()} visualizaciones` : "Sesión especial"}
-                      </p>
-                    </div>
-                  </Card>
-                ))
-              ) : (
-                // Fallback static videos
-                [
-                  { id: "fflf6I7UHXM", title: "Jou Nielsen", description: "Una noche mágica con sonidos únicos" },
-                  { id: "zaoEoFKjoR4", title: "Noé", description: "Ritmos que conectan almas" },
-                  { id: "X52oRpXKOxM", title: "Alexx Zander Johnson", description: "Experiencias que trascienden" }
-                ].map((video, index) => (
-                  <Card key={video.id} className="group hover:scale-105 transition-all duration-500 bg-white/50 border-forest-green/20 overflow-hidden">
-                    <div className="aspect-video bg-forest-green/10 overflow-hidden">
-                      <iframe
-                        src={`https://www.youtube.com/embed/${video.id}`}
-                        className="w-full h-full group-hover:scale-110 transition-transform duration-700"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowFullScreen
-                      />
-                    </div>
-                    <div className="p-6">
-                      <h4 className="font-semibold text-forest-green mb-2">
-                        {video.title}
-                      </h4>
-                      <p className="text-sm text-forest-green/70">
-                        {video.description}
-                      </p>
-                    </div>
-                  </Card>
-                ))
-              )}
+              {isLoadingVideos
+                ? // Loading skeletons
+                  Array.from({ length: 3 }).map((_, index) => (
+                    <Card
+                      key={index}
+                      className="bg-white/50 border-forest-green/20 overflow-hidden"
+                    >
+                      <div className="aspect-video bg-forest-green/10 animate-pulse"></div>
+                      <div className="p-6">
+                        <div className="h-5 bg-forest-green/20 rounded animate-pulse mb-2"></div>
+                        <div className="h-4 bg-forest-green/10 rounded animate-pulse"></div>
+                      </div>
+                    </Card>
+                  ))
+                : youtubeData?.popular
+                  ? // Dynamic videos
+                    youtubeData.popular.map((video, index) => (
+                      <Card
+                        key={video.id}
+                        className="group hover:scale-105 transition-all duration-500 bg-white/50 border-forest-green/20 overflow-hidden"
+                      >
+                        <div className="aspect-video bg-forest-green/10 overflow-hidden">
+                          <iframe
+                            src={`https://www.youtube.com/embed/${video.id}`}
+                            className="w-full h-full group-hover:scale-110 transition-transform duration-700"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowFullScreen
+                          />
+                        </div>
+                        <div className="p-6">
+                          <h4 className="font-semibold text-forest-green mb-2 line-clamp-2">
+                            {video.title.length > 50
+                              ? `${video.title.substring(0, 50)}...`
+                              : video.title}
+                          </h4>
+                          <p className="text-sm text-forest-green/70">
+                            {video.viewCount
+                              ? `${parseInt(video.viewCount).toLocaleString()} visualizaciones`
+                              : "Sesión especial"}
+                          </p>
+                        </div>
+                      </Card>
+                    ))
+                  : // Fallback static videos
+                    [
+                      {
+                        id: "fflf6I7UHXM",
+                        title: "Jou Nielsen",
+                        description: "Una noche mágica con sonidos únicos",
+                      },
+                      {
+                        id: "zaoEoFKjoR4",
+                        title: "Noé",
+                        description: "Ritmos que conectan almas",
+                      },
+                      {
+                        id: "X52oRpXKOxM",
+                        title: "Alexx Zander Johnson",
+                        description: "Experiencias que trascienden",
+                      },
+                    ].map((video, index) => (
+                      <Card
+                        key={video.id}
+                        className="group hover:scale-105 transition-all duration-500 bg-white/50 border-forest-green/20 overflow-hidden"
+                      >
+                        <div className="aspect-video bg-forest-green/10 overflow-hidden">
+                          <iframe
+                            src={`https://www.youtube.com/embed/${video.id}`}
+                            className="w-full h-full group-hover:scale-110 transition-transform duration-700"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowFullScreen
+                          />
+                        </div>
+                        <div className="p-6">
+                          <h4 className="font-semibold text-forest-green mb-2">
+                            {video.title}
+                          </h4>
+                          <p className="text-sm text-forest-green/70">
+                            {video.description}
+                          </p>
+                        </div>
+                      </Card>
+                    ))}
             </div>
           </div>
 
