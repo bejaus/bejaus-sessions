@@ -313,17 +313,32 @@ export default function Index() {
                     🎵 Última Sesión Completa
                   </h3>
                   <p className="text-forest-green/70">
-                    Disfruta la sesión completa de 1 hora desde nuestro canal de
-                    YouTube
+                    {youtubeData?.latest ?
+                      `${youtubeData.latest.title} - Publicado ${new Date(youtubeData.latest.publishedAt).toLocaleDateString()}` :
+                      "Disfruta la sesión completa de 1 hora desde nuestro canal de YouTube"
+                    }
                   </p>
                 </div>
                 <div className="aspect-video bg-forest-green/10 rounded-xl overflow-hidden shadow-2xl">
-                  <iframe
-                    src="https://www.youtube.com/embed/bR29G5pSpaQ"
-                    className="w-full h-full"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                  />
+                  {isLoadingVideos ? (
+                    <div className="w-full h-full flex items-center justify-center">
+                      <Loader2 className="h-8 w-8 animate-spin text-forest-green" />
+                    </div>
+                  ) : youtubeData?.latest ? (
+                    <iframe
+                      src={`https://www.youtube.com/embed/${youtubeData.latest.id}`}
+                      className="w-full h-full"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                    />
+                  ) : (
+                    <iframe
+                      src="https://www.youtube.com/embed/bR29G5pSpaQ"
+                      className="w-full h-full"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                    />
+                  )}
                 </div>
               </Card>
             </div>
