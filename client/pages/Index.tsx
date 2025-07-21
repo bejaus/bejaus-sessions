@@ -378,7 +378,7 @@ export default function Index() {
                 />
               </div>
               <div className="p-6">
-                <h3 className="text-xl font-semibold text-forest-green mb-2">
+                <h3 className="text-xl font-semibold text-forest-green mb-2 min-h-[3.5rem] flex items-center">
                   Hoodie Bejaus Sessions
                 </h3>
                 <p className="text-forest-green/70 text-sm mb-4">
