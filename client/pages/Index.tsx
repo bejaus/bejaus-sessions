@@ -21,17 +21,28 @@ export default function Index() {
 
         {/* Hero Content */}
         <div className="relative z-10 text-center text-beige px-6 max-w-4xl mx-auto">
-          <Button
-            size="lg"
-            className="bg-terracotta hover:bg-terracotta/90 text-beige px-8 py-4 text-lg"
-            onClick={() => {
-              const nextSection = document.querySelector('#sobre-bejaus');
-              nextSection?.scrollIntoView({ behavior: 'smooth' });
-            }}
-          >
-            Conócenos
-            <ChevronDown className="ml-2 h-5 w-5" />
-          </Button>
+          <h1 className="text-6xl md:text-8xl font-bold mb-6 tracking-tight">
+            Bejaus Sessions
+          </h1>
+          <p className="text-xl md:text-2xl mb-12 font-light leading-relaxed">
+            Música en vivo. Comunidad local. Buen café. Mejor vibra.
+          </p>
+        </div>
+
+        {/* Scroll Indicator */}
+        <div
+          className="absolute bottom-8 left-1/2 transform -translate-x-1/2 cursor-pointer group"
+          onClick={() => {
+            const nextSection = document.querySelector('#sobre-bejaus');
+            nextSection?.scrollIntoView({ behavior: 'smooth' });
+          }}
+        >
+          <div className="flex flex-col items-center space-y-2 animate-bounce">
+            <span className="text-beige/70 text-sm font-medium group-hover:text-beige transition-colors">
+              Conócenos
+            </span>
+            <ChevronDown className="h-6 w-6 text-beige/70 group-hover:text-beige transition-colors" />
+          </div>
         </div>
       </section>
 
