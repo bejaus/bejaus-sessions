@@ -130,16 +130,31 @@ export default function Index() {
             </div>
           </div>
 
-          {/* Future videos placeholder */}
+          {/* Additional videos */}
           <div className="grid md:grid-cols-3 gap-6 mt-12">
-            <div className="aspect-video bg-forest-green/10 rounded-lg flex items-center justify-center">
-              <p className="text-forest-green/60">Próximo video</p>
+            <div className="aspect-video bg-forest-green/10 rounded-lg overflow-hidden">
+              <iframe
+                src="https://www.youtube.com/embed/fflf6I7UHXM"
+                className="w-full h-full"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              />
             </div>
-            <div className="aspect-video bg-forest-green/10 rounded-lg flex items-center justify-center">
-              <p className="text-forest-green/60">Próximo video</p>
+            <div className="aspect-video bg-forest-green/10 rounded-lg overflow-hidden">
+              <iframe
+                src="https://www.youtube.com/embed/zaoEoFKjoR4"
+                className="w-full h-full"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              />
             </div>
-            <div className="aspect-video bg-forest-green/10 rounded-lg flex items-center justify-center">
-              <p className="text-forest-green/60">Próximo video</p>
+            <div className="aspect-video bg-forest-green/10 rounded-lg overflow-hidden">
+              <iframe
+                src="https://www.youtube.com/embed/I12W9RiDqF8"
+                className="w-full h-full"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              />
             </div>
           </div>
         </div>
