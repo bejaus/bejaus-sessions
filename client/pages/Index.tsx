@@ -229,7 +229,7 @@ export default function Index() {
               </div>
 
               {/* CTA Section */}
-              <Card className="bg-gradient-to-r from-terracotta to-terracotta/90 border-0 p-8">
+              <Card className="bg-beige/20 backdrop-blur-sm border border-beige/30 p-8">
                 <div className="text-center">
                   <h3 className="text-2xl font-bold text-beige mb-4">
                     ¿Listo para vivir la experiencia Bejaus?
@@ -240,7 +240,7 @@ export default function Index() {
                   <div className="flex flex-col sm:flex-row gap-4 justify-center">
                     <Button
                       size="lg"
-                      className="bg-beige hover:bg-beige/90 text-terracotta px-8 py-4 text-lg font-semibold"
+                      className="bg-terracotta hover:bg-terracotta/90 text-beige px-8 py-4 text-lg font-semibold"
                     >
                       Comprar entradas - 15€
                     </Button>
