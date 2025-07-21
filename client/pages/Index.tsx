@@ -11,8 +11,8 @@ export default function Index() {
         {/* YouTube Video Background */}
         <div className="absolute inset-0 w-full h-full">
           <iframe
-            src="https://www.youtube.com/embed/bR29G5pSpaQ?autoplay=1&mute=1&loop=1&playlist=bR29G5pSpaQ&controls=0&showinfo=0&rel=0&iv_load_policy=3&modestbranding=1"
-            className="w-full h-full object-cover scale-150"
+            src="https://www.youtube.com/embed/bR29G5pSpaQ?autoplay=1&mute=1&loop=1&playlist=bR29G5pSpaQ&controls=0&showinfo=0&rel=0&iv_load_policy=3&modestbranding=1&start=0&end=20"
+            className="w-full h-full object-cover scale-125"
             allow="autoplay; encrypted-media"
             allowFullScreen
           />
