@@ -159,7 +159,7 @@ export default function Index() {
           {/* Header */}
           <div className="text-center mb-20">
             <h2 className="text-4xl md:text-5xl font-bold text-forest-green mb-6">
-              Quién somos
+              Sobre nosotros
             </h2>
           </div>
 
