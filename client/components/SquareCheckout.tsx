@@ -4,7 +4,7 @@ import { Card } from './ui/card';
 import { Loader2, CreditCard, Smartphone } from 'lucide-react';
 import { useCart } from '../contexts/CartContext';
 import { useToast } from '../hooks/use-toast';
-import { SQUARE_CONFIG, SquarePaymentRequest } from '../../shared/square';
+import { SquarePaymentRequest, SquareConfig, DEFAULT_SQUARE_CONFIG } from '../../shared/square';
 
 // Declare Square global type
 declare global {
