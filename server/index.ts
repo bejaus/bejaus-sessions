@@ -22,6 +22,7 @@ export function createServer() {
 
   app.get("/api/demo", handleDemo);
   app.get("/api/youtube-videos", handleYouTubeVideos);
+  app.get("/api/square-config", handleSquareConfig);
   app.post("/api/square-payment", handleSquarePayment);
 
   return app;
