@@ -25,8 +25,15 @@ export interface SquarePaymentResponse {
   };
 }
 
-export const SQUARE_CONFIG = {
-  applicationId: process.env.SQUARE_APPLICATION_ID || 'sandbox-sq0idb-your-app-id',
-  locationId: process.env.SQUARE_LOCATION_ID || 'your-location-id',
-  environment: (process.env.NODE_ENV === 'production' ? 'production' : 'sandbox') as 'production' | 'sandbox',
+export interface SquareConfig {
+  applicationId: string;
+  locationId: string;
+  environment: 'production' | 'sandbox';
+}
+
+// Default configuration for development/demo
+export const DEFAULT_SQUARE_CONFIG: SquareConfig = {
+  applicationId: 'sandbox-sq0idb-demo-app-id',
+  locationId: 'demo-location-id',
+  environment: 'sandbox',
 };
