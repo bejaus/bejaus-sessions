@@ -7,8 +7,8 @@ export const handleYouTubeVideos: RequestHandler = async (req, res) => {
     const CHANNEL_ID = process.env.YOUTUBE_CHANNEL_ID;
 
     console.log("YouTube API Request started");
-    console.log("API_KEY configured:", !!API_KEY);
-    console.log("CHANNEL_ID configured:", !!CHANNEL_ID);
+    console.log("API_KEY configured:", API_KEY);
+    console.log("CHANNEL_ID configured:", CHANNEL_ID);
 
     if (!API_KEY || !CHANNEL_ID) {
       console.log("YouTube API not fully configured, returning mock data");

@@ -38,14 +38,31 @@ netlify/functions/        # Netlify serverless functions (for deployment)
 - **Type Safety:** Shared types/interfaces between client and server in `shared/`.
 - **Testing:** Vitest for unit and integration tests.
 
+## Getting Started
+
+### Install pnpm (if you don't have it)
+
+```bash
+npm install -g pnpm
+```
+
+### Clean Install
+
+To do a clean install (recommended):
+
+```bash
+rm -rf node_modules
+pnpm install
+```
+
 ## Development Commands
 
 ```bash
-npm run dev        # Start dev server (client + server)
-npm run build      # Production build
-npm run start      # Start production server
-npm run typecheck  # TypeScript validation
-npm test           # Run Vitest tests
+pnpm run dev        # Start dev server (client + server)
+pnpm run build      # Production build
+pnpm run start      # Start production server
+pnpm run typecheck  # TypeScript validation
+pnpm test           # Run Vitest tests
 ```
 
 ## Adding Features
@@ -53,44 +70,46 @@ npm test           # Run Vitest tests
 ### Add a New API Route
 
 1. (Optional) Create a shared interface in `shared/api.ts`:
-    ```typescript
-    export interface MyRouteResponse {
-      message: string;
-    }
-    ```
+   ```typescript
+   export interface MyRouteResponse {
+     message: string;
+   }
+   ```
 2. Create a new route handler in `server/routes/my-route.ts`:
-    ```typescript
-    import { RequestHandler } from "express";
-    import { MyRouteResponse } from "@shared/api";
 
-    export const handleMyRoute: RequestHandler = (req, res) => {
-      const response: MyRouteResponse = { message: 'Hello from my endpoint!' };
-      res.json(response);
-    };
-    ```
+   ```typescript
+   import { RequestHandler } from "express";
+   import { MyRouteResponse } from "@shared/api";
+
+   export const handleMyRoute: RequestHandler = (req, res) => {
+     const response: MyRouteResponse = { message: "Hello from my endpoint!" };
+     res.json(response);
+   };
+   ```
+
 3. Register the route in `server/index.ts`:
-    ```typescript
-    import { handleMyRoute } from "./routes/my-route";
-    app.get("/api/my-endpoint", handleMyRoute);
-    ```
+   ```typescript
+   import { handleMyRoute } from "./routes/my-route";
+   app.get("/api/my-endpoint", handleMyRoute);
+   ```
 4. Use in React components with type safety:
-    ```typescript
-    import { MyRouteResponse } from '@shared/api';
-    const response = await fetch('/api/my-endpoint');
-    const data: MyRouteResponse = await response.json();
-    ```
+   ```typescript
+   import { MyRouteResponse } from "@shared/api";
+   const response = await fetch("/api/my-endpoint");
+   const data: MyRouteResponse = await response.json();
+   ```
 
 ### Add a New Page Route
 
 1. Create a component in `client/pages/MyPage.tsx`.
 2. Add the route in `client/App.tsx`:
-    ```typescript
-    <Route path="/my-page" element={<MyPage />} />
-    ```
+   ```typescript
+   <Route path="/my-page" element={<MyPage />} />
+   ```
 
 ## Production Deployment
 
-- **Standard:** `npm run build` + `npm start`
+- **Standard:** `pnpm run build` + `pnpm run start`
 - **Netlify:** Uses Netlify Functions for serverless deployment. See `netlify.toml` for configuration.
 - **Docker:** Dockerfile included (if present).
 - **Binary:** Self-contained executables (Linux, macOS, Windows).
@@ -107,4 +126,4 @@ npm test           # Run Vitest tests
 
 ---
 
-Feel free to customize this README further to match your project’s branding or specific requirements. 
+Feel free to customize this README further to match your project’s branding or specific requirements.
