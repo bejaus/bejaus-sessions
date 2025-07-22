@@ -6,6 +6,7 @@ import { Badge } from "../components/ui/badge";
 import { ShoppingCart, Filter, Grid3X3, List } from "lucide-react";
 import { mockProducts, Product } from "../../shared/types";
 import { useCart } from "../contexts/CartContext";
+import { CartPreview } from "../components/CartPreview";
 
 export default function Shop() {
   const { addToCart, cart } = useCart();
