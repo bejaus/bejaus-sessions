@@ -146,9 +146,9 @@ export default function ProductDetail() {
                         key={size}
                         variant={selectedSize === size ? "default" : "outline"}
                         onClick={() => setSelectedSize(size)}
-                        className={selectedSize === size 
-                          ? "bg-forest-green text-beige hover:bg-forest-green/90" 
-                          : "border-forest-green text-forest-green hover:bg-forest-green hover:text-beige"
+                        className={selectedSize === size
+                          ? "bg-terracotta text-beige hover:bg-terracotta/90"
+                          : "border-terracotta text-terracotta hover:bg-terracotta hover:text-beige"
                         }
                       >
                         {size}
@@ -170,9 +170,9 @@ export default function ProductDetail() {
                         key={color}
                         variant={selectedColor === color ? "default" : "outline"}
                         onClick={() => setSelectedColor(color)}
-                        className={selectedColor === color 
-                          ? "bg-forest-green text-beige hover:bg-forest-green/90" 
-                          : "border-forest-green text-forest-green hover:bg-forest-green hover:text-beige"
+                        className={selectedColor === color
+                          ? "bg-terracotta text-beige hover:bg-terracotta/90"
+                          : "border-terracotta text-terracotta hover:bg-terracotta hover:text-beige"
                         }
                       >
                         {color}
@@ -193,7 +193,7 @@ export default function ProductDetail() {
                     size="sm"
                     onClick={decrementQuantity}
                     disabled={quantity <= 1}
-                    className="border-forest-green text-forest-green hover:bg-forest-green hover:text-beige"
+                    className="border-terracotta text-terracotta hover:bg-terracotta hover:text-beige"
                   >
                     <Minus className="w-4 h-4" />
                   </Button>
@@ -204,7 +204,7 @@ export default function ProductDetail() {
                     variant="outline"
                     size="sm"
                     onClick={incrementQuantity}
-                    className="border-forest-green text-forest-green hover:bg-forest-green hover:text-beige"
+                    className="border-terracotta text-terracotta hover:bg-terracotta hover:text-beige"
                   >
                     <Plus className="w-4 h-4" />
                   </Button>
@@ -229,7 +229,7 @@ export default function ProductDetail() {
               <Button
                 onClick={handleAddToCart}
                 disabled={!product.inStock}
-                className="w-full bg-forest-green hover:bg-forest-green/90 text-beige text-lg py-3"
+                className="w-full bg-terracotta hover:bg-terracotta/90 text-beige text-lg py-3"
               >
                 <ShoppingCart className="w-5 h-5 mr-2" />
                 {getCartItemCount() > 0 
@@ -241,14 +241,14 @@ export default function ProductDetail() {
               <div className="flex gap-3">
                 <Button
                   variant="outline"
-                  className="flex-1 border-forest-green text-forest-green hover:bg-forest-green hover:text-beige"
+                  className="flex-1 border-terracotta text-terracotta hover:bg-terracotta hover:text-beige"
                 >
                   <Heart className="w-4 h-4 mr-2" />
                   Favoritos
                 </Button>
                 <Button
                   variant="outline"
-                  className="flex-1 border-forest-green text-forest-green hover:bg-forest-green hover:text-beige"
+                  className="flex-1 border-terracotta text-terracotta hover:bg-terracotta hover:text-beige"
                 >
                   <Share2 className="w-4 h-4 mr-2" />
                   Compartir
