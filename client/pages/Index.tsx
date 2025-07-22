@@ -10,6 +10,7 @@ import {
   Loader2,
 } from "lucide-react";
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { YouTubeApiResponse, YouTubeVideo } from "@shared/api";
 
 export default function Index() {
@@ -555,9 +556,11 @@ export default function Index() {
                     S, M, L, XL
                   </span>
                 </div>
-                <Button className="w-full bg-terracotta hover:bg-terracotta/90 text-beige">
-                  Añadir al carrito
-                </Button>
+                <Link to="/shop">
+                  <Button className="w-full bg-forest-green hover:bg-forest-green/90 text-beige">
+                    Ver en tienda
+                  </Button>
+                </Link>
               </div>
             </Card>
 
@@ -585,9 +588,11 @@ export default function Index() {
                     S, M, L, XL
                   </span>
                 </div>
-                <Button className="w-full bg-terracotta hover:bg-terracotta/90 text-beige">
-                  Añadir al carrito
-                </Button>
+                <Link to="/shop">
+                  <Button className="w-full bg-forest-green hover:bg-forest-green/90 text-beige">
+                    Ver en tienda
+                  </Button>
+                </Link>
               </div>
             </Card>
 
@@ -613,9 +618,11 @@ export default function Index() {
                   </span>
                   <span className="text-sm text-forest-green/60">330ml</span>
                 </div>
-                <Button className="w-full bg-terracotta hover:bg-terracotta/90 text-beige">
-                  Añadir al carrito
-                </Button>
+                <Link to="/shop">
+                  <Button className="w-full bg-forest-green hover:bg-forest-green/90 text-beige">
+                    Ver en tienda
+                  </Button>
+                </Link>
               </div>
             </Card>
 
@@ -641,21 +648,25 @@ export default function Index() {
                   </span>
                   <span className="text-sm text-forest-green/60">40x35cm</span>
                 </div>
-                <Button className="w-full bg-terracotta hover:bg-terracotta/90 text-beige">
-                  Añadir al carrito
-                </Button>
+                <Link to="/shop">
+                  <Button className="w-full bg-forest-green hover:bg-forest-green/90 text-beige">
+                    Ver en tienda
+                  </Button>
+                </Link>
               </div>
             </Card>
           </div>
 
           {/* Ver toda la tienda */}
           <div className="text-center mt-16">
-            <Button
-              size="lg"
-              className="bg-terracotta hover:bg-terracotta/90 text-beige px-8 py-4 text-lg"
-            >
-              Ver toda la tienda
-            </Button>
+            <Link to="/shop">
+              <Button
+                size="lg"
+                className="bg-beige hover:bg-beige/90 text-forest-green px-8 py-4 text-lg"
+              >
+                Ver toda la tienda
+              </Button>
+            </Link>
           </div>
         </div>
       </section>
