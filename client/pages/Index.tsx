@@ -557,7 +557,7 @@ export default function Index() {
                   </span>
                 </div>
                 <Link to="/shop">
-                  <Button className="w-full bg-forest-green hover:bg-forest-green/90 text-beige">
+                  <Button className="w-full bg-terracotta hover:bg-terracotta/90 text-beige">
                     Ver en tienda
                   </Button>
                 </Link>
@@ -589,7 +589,7 @@ export default function Index() {
                   </span>
                 </div>
                 <Link to="/shop">
-                  <Button className="w-full bg-forest-green hover:bg-forest-green/90 text-beige">
+                  <Button className="w-full bg-terracotta hover:bg-terracotta/90 text-beige">
                     Ver en tienda
                   </Button>
                 </Link>
@@ -619,7 +619,7 @@ export default function Index() {
                   <span className="text-sm text-forest-green/60">330ml</span>
                 </div>
                 <Link to="/shop">
-                  <Button className="w-full bg-forest-green hover:bg-forest-green/90 text-beige">
+                  <Button className="w-full bg-terracotta hover:bg-terracotta/90 text-beige">
                     Ver en tienda
                   </Button>
                 </Link>
@@ -649,7 +649,7 @@ export default function Index() {
                   <span className="text-sm text-forest-green/60">40x35cm</span>
                 </div>
                 <Link to="/shop">
-                  <Button className="w-full bg-forest-green hover:bg-forest-green/90 text-beige">
+                  <Button className="w-full bg-terracotta hover:bg-terracotta/90 text-beige">
                     Ver en tienda
                   </Button>
                 </Link>
