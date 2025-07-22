@@ -66,7 +66,10 @@ export default function Index() {
         setYoutubeData(data);
       } catch (error) {
         // Silently handle all errors and use fallback content
-        console.log("YouTube fetch failed, using fallback content:", error instanceof Error ? error.message : 'Unknown error');
+        console.log(
+          "YouTube fetch failed, using fallback content:",
+          error instanceof Error ? error.message : "Unknown error",
+        );
         setVideoError("");
         // Keep static content as fallback
       } finally {
@@ -570,14 +573,19 @@ export default function Index() {
                 </div>
                 <div className="flex gap-2">
                   <Link to="/product/bejaus-tshirt" className="flex-1">
-                    <Button variant="outline" className="w-full border-terracotta text-terracotta hover:bg-terracotta hover:text-beige">
+                    <Button
+                      variant="outline"
+                      className="w-full border-terracotta text-terracotta hover:bg-terracotta hover:text-beige"
+                    >
                       Ver producto
                     </Button>
                   </Link>
                   <Button
                     className="flex-1 bg-terracotta hover:bg-terracotta/90 text-beige"
                     onClick={() => {
-                      const product = mockProducts.find(p => p.id === 'bejaus-tshirt');
+                      const product = mockProducts.find(
+                        (p) => p.id === "bejaus-tshirt",
+                      );
                       if (product) {
                         addToCart(product, 1);
                         toast({
@@ -623,14 +631,19 @@ export default function Index() {
                 </div>
                 <div className="flex gap-2">
                   <Link to="/product/bejaus-hoodie" className="flex-1">
-                    <Button variant="outline" className="w-full border-terracotta text-terracotta hover:bg-terracotta hover:text-beige">
+                    <Button
+                      variant="outline"
+                      className="w-full border-terracotta text-terracotta hover:bg-terracotta hover:text-beige"
+                    >
                       Ver producto
                     </Button>
                   </Link>
                   <Button
                     className="flex-1 bg-terracotta hover:bg-terracotta/90 text-beige"
                     onClick={() => {
-                      const product = mockProducts.find(p => p.id === 'bejaus-hoodie');
+                      const product = mockProducts.find(
+                        (p) => p.id === "bejaus-hoodie",
+                      );
                       if (product) {
                         addToCart(product, 1);
                         toast({
@@ -674,14 +687,19 @@ export default function Index() {
                 </div>
                 <div className="flex gap-2">
                   <Link to="/product/bejaus-vinyl" className="flex-1">
-                    <Button variant="outline" className="w-full border-terracotta text-terracotta hover:bg-terracotta hover:text-beige">
+                    <Button
+                      variant="outline"
+                      className="w-full border-terracotta text-terracotta hover:bg-terracotta hover:text-beige"
+                    >
                       Ver producto
                     </Button>
                   </Link>
                   <Button
                     className="flex-1 bg-terracotta hover:bg-terracotta/90 text-beige"
                     onClick={() => {
-                      const product = mockProducts.find(p => p.id === 'bejaus-vinyl');
+                      const product = mockProducts.find(
+                        (p) => p.id === "bejaus-vinyl",
+                      );
                       if (product) {
                         addToCart(product, 1);
                         toast({
@@ -721,18 +739,25 @@ export default function Index() {
                   <span className="text-2xl font-bold text-forest-green">
                     15€
                   </span>
-                  <span className="text-sm text-forest-green/60">Ecológico</span>
+                  <span className="text-sm text-forest-green/60">
+                    Ecológico
+                  </span>
                 </div>
                 <div className="flex gap-2">
                   <Link to="/product/bejaus-tote" className="flex-1">
-                    <Button variant="outline" className="w-full border-terracotta text-terracotta hover:bg-terracotta hover:text-beige">
+                    <Button
+                      variant="outline"
+                      className="w-full border-terracotta text-terracotta hover:bg-terracotta hover:text-beige"
+                    >
                       Ver producto
                     </Button>
                   </Link>
                   <Button
                     className="flex-1 bg-terracotta hover:bg-terracotta/90 text-beige"
                     onClick={() => {
-                      const product = mockProducts.find(p => p.id === 'bejaus-tote');
+                      const product = mockProducts.find(
+                        (p) => p.id === "bejaus-tote",
+                      );
                       if (product) {
                         addToCart(product, 1);
                         toast({
