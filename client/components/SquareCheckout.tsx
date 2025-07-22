@@ -215,8 +215,50 @@ export function SquareCheckout({ onSuccess, onError, customerEmail }: SquareChec
   };
 
   const handleCardPayment = () => {
-    if (card) {
+    if (demoMode) {
+      handleDemoPayment();
+    } else if (card) {
       handlePayment(card);
+    }
+  };
+
+  const handleDemoPayment = async () => {
+    if (isProcessing) return;
+
+    setIsProcessing(true);
+
+    try {
+      // Simulate processing time
+      await new Promise(resolve => setTimeout(resolve, 2000));
+
+      // Simulate successful payment
+      const demoResult = {
+        success: true,
+        transactionId: `demo_${Date.now()}`,
+        receipt: {
+          receiptNumber: `DEMO-${Date.now()}`,
+          amount: finalTotalCents / 100,
+          currency: 'EUR',
+        },
+      };
+
+      clearCart();
+      toast({
+        title: "¡Pago demo exitoso!",
+        description: `Simulación de pago completada. Recibo: ${demoResult.receipt.receiptNumber}`,
+      });
+      onSuccess?.(demoResult);
+
+    } catch (error) {
+      console.error('Demo payment error:', error);
+      toast({
+        title: "Error en pago demo",
+        description: "Error en la simulación de pago",
+        variant: "destructive",
+      });
+      onError?.(error);
+    } finally {
+      setIsProcessing(false);
     }
   };
 
