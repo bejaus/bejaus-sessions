@@ -4,6 +4,7 @@ import express from "express";
 import cors from "cors";
 import { handleDemo } from "./routes/demo";
 import { handleYouTubeVideos } from "./routes/youtube";
+import { handleSquarePayment } from "./routes/square";
 
 export function createServer() {
   const app = express();
