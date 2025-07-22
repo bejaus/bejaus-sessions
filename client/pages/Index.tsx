@@ -168,7 +168,7 @@ export default function Index() {
                 <Button
                   variant="outline"
                   size="sm"
-                  className="border-beige text-beige hover:bg-beige hover:text-forest-green"
+                  className="bg-transparent border-beige text-beige hover:bg-beige hover:text-forest-green"
                 >
                   <ShoppingCart className="w-4 h-4 mr-2" />
                   Carrito
