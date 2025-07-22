@@ -70,10 +70,10 @@ export default function Shop() {
                 Productos únicos para amantes de la música y el café
               </p>
             </div>
-            <Link to="/cart" className="relative">
+            <CartPreview>
               <Button
                 size="lg"
-                className="bg-beige text-forest-green hover:bg-beige/90 hover:text-forest-green"
+                className="bg-beige text-forest-green hover:bg-beige/90 hover:text-forest-green relative"
               >
                 <ShoppingCart className="w-5 h-5 mr-2" />
                 Carrito
@@ -83,7 +83,7 @@ export default function Shop() {
                   </Badge>
                 )}
               </Button>
-            </Link>
+            </CartPreview>
           </div>
         </div>
       </div>
