@@ -14,7 +14,6 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { YouTubeApiResponse, YouTubeVideo } from "@shared/api";
 import { useCart } from "../contexts/CartContext";
-import { mockProducts } from "../../shared/types";
 import { useToast } from "../hooks/use-toast";
 import { Badge } from "../components/ui/badge";
 import { CartPreview } from "../components/CartPreview";
@@ -28,6 +27,9 @@ export default function Index() {
   const [videoError, setVideoError] = useState<string | null>(null);
   const { addToCart, cart } = useCart();
   const { toast } = useToast();
+  const [products, setProducts] = useState([]);
+  const [isLoadingProducts, setIsLoadingProducts] = useState(true);
+  const [productsError, setProductsError] = useState<string | null>(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -79,20 +81,37 @@ export default function Index() {
 
     fetchYouTubeVideos();
   }, []);
+
+  // Fetch products for merch section
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        setIsLoadingProducts(true);
+        setProductsError(null);
+        const response = await fetch("/api/square-products");
+        if (!response.ok) throw new Error("Error fetching products");
+        const data = await response.json();
+        setProducts(data.products || []);
+      } catch (err) {
+        setProductsError("No se pudieron cargar los productos");
+      } finally {
+        setIsLoadingProducts(false);
+      }
+    };
+    fetchProducts();
+  }, []);
   return (
     <div className="min-h-screen bg-beige">
       {/* Header */}
       <header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-in-out ${
-          isScrolled
-            ? "bg-forest-green/95 backdrop-blur-md shadow-lg"
-            : "bg-transparent"
-        }`}
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-in-out ${isScrolled
+          ? "bg-forest-green/95 backdrop-blur-md shadow-lg"
+          : "bg-transparent"
+          }`}
       >
         <div
-          className={`w-full px-6 xl:px-16 2xl:px-24 transition-all duration-300 ease-in-out ${
-            isScrolled ? "py-2" : "py-4"
-          }`}
+          className={`w-full px-6 xl:px-16 2xl:px-24 transition-all duration-300 ease-in-out ${isScrolled ? "py-2" : "py-4"
+            }`}
         >
           <div className="flex items-center justify-between">
             <div className="flex items-center">
@@ -108,7 +127,7 @@ export default function Index() {
             <nav className="hidden md:flex items-center space-x-8">
               <button
                 onClick={() => {
-                  const section = document.querySelector("#sobre-bejaus");
+                  const section = document.querySelector("#sobre-bejaus") as HTMLElement | null;
                   if (section) {
                     const offsetTop = section.offsetTop - 80;
                     window.scrollTo({
@@ -123,7 +142,7 @@ export default function Index() {
               </button>
               <button
                 onClick={() => {
-                  const section = document.querySelector("#eventos");
+                  const section = document.querySelector("#eventos") as HTMLElement | null;
                   if (section) {
                     const offsetTop = section.offsetTop - 80;
                     window.scrollTo({
@@ -138,7 +157,7 @@ export default function Index() {
               </button>
               <button
                 onClick={() => {
-                  const section = document.querySelector("#merch");
+                  const section = document.querySelector("#merch") as HTMLElement | null;
                   if (section) {
                     const offsetTop = section.offsetTop - 80;
                     window.scrollTo({
@@ -153,7 +172,7 @@ export default function Index() {
               </button>
               <button
                 onClick={() => {
-                  const section = document.querySelector("#contacto");
+                  const section = document.querySelector("#contacto") as HTMLElement | null;
                   if (section) {
                     const offsetTop = section.offsetTop - 80;
                     window.scrollTo({
@@ -405,87 +424,87 @@ export default function Index() {
             <div className="grid md:grid-cols-3 gap-8">
               {isLoadingVideos
                 ? // Loading skeletons
-                  Array.from({ length: 3 }).map((_, index) => (
+                Array.from({ length: 3 }).map((_, index) => (
+                  <Card
+                    key={index}
+                    className="bg-white/50 border-forest-green/20 overflow-hidden"
+                  >
+                    <div className="aspect-video bg-forest-green/10 animate-pulse"></div>
+                    <div className="p-6">
+                      <div className="h-5 bg-forest-green/20 rounded animate-pulse mb-2"></div>
+                      <div className="h-4 bg-forest-green/10 rounded animate-pulse"></div>
+                    </div>
+                  </Card>
+                ))
+                : youtubeData?.popular
+                  ? // Dynamic videos
+                  youtubeData.popular.map((video, index) => (
                     <Card
-                      key={index}
-                      className="bg-white/50 border-forest-green/20 overflow-hidden"
+                      key={video.id}
+                      className="group hover:scale-105 transition-all duration-500 bg-white/50 border-forest-green/20 overflow-hidden"
                     >
-                      <div className="aspect-video bg-forest-green/10 animate-pulse"></div>
+                      <div className="aspect-video bg-forest-green/10 overflow-hidden">
+                        <iframe
+                          src={`https://www.youtube.com/embed/${video.id}`}
+                          className="w-full h-full group-hover:scale-110 transition-transform duration-700"
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                          allowFullScreen
+                        />
+                      </div>
                       <div className="p-6">
-                        <div className="h-5 bg-forest-green/20 rounded animate-pulse mb-2"></div>
-                        <div className="h-4 bg-forest-green/10 rounded animate-pulse"></div>
+                        <h4 className="font-semibold text-forest-green mb-2 line-clamp-2">
+                          {video.title.length > 50
+                            ? `${video.title.substring(0, 50)}...`
+                            : video.title}
+                        </h4>
+                        <p className="text-sm text-forest-green/70">
+                          {video.viewCount
+                            ? `${parseInt(video.viewCount).toLocaleString()} visualizaciones`
+                            : "Sesión especial"}
+                        </p>
                       </div>
                     </Card>
                   ))
-                : youtubeData?.popular
-                  ? // Dynamic videos
-                    youtubeData.popular.map((video, index) => (
-                      <Card
-                        key={video.id}
-                        className="group hover:scale-105 transition-all duration-500 bg-white/50 border-forest-green/20 overflow-hidden"
-                      >
-                        <div className="aspect-video bg-forest-green/10 overflow-hidden">
-                          <iframe
-                            src={`https://www.youtube.com/embed/${video.id}`}
-                            className="w-full h-full group-hover:scale-110 transition-transform duration-700"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                            allowFullScreen
-                          />
-                        </div>
-                        <div className="p-6">
-                          <h4 className="font-semibold text-forest-green mb-2 line-clamp-2">
-                            {video.title.length > 50
-                              ? `${video.title.substring(0, 50)}...`
-                              : video.title}
-                          </h4>
-                          <p className="text-sm text-forest-green/70">
-                            {video.viewCount
-                              ? `${parseInt(video.viewCount).toLocaleString()} visualizaciones`
-                              : "Sesión especial"}
-                          </p>
-                        </div>
-                      </Card>
-                    ))
                   : // Fallback static videos
-                    [
-                      {
-                        id: "fflf6I7UHXM",
-                        title: "Jou Nielsen",
-                        description: "Una noche mágica con sonidos únicos",
-                      },
-                      {
-                        id: "zaoEoFKjoR4",
-                        title: "Noé",
-                        description: "Ritmos que conectan almas",
-                      },
-                      {
-                        id: "X52oRpXKOxM",
-                        title: "Alexx Zander Johnson",
-                        description: "Experiencias que trascienden",
-                      },
-                    ].map((video, index) => (
-                      <Card
-                        key={video.id}
-                        className="group hover:scale-105 transition-all duration-500 bg-white/50 border-forest-green/20 overflow-hidden"
-                      >
-                        <div className="aspect-video bg-forest-green/10 overflow-hidden">
-                          <iframe
-                            src={`https://www.youtube.com/embed/${video.id}`}
-                            className="w-full h-full group-hover:scale-110 transition-transform duration-700"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                            allowFullScreen
-                          />
-                        </div>
-                        <div className="p-6">
-                          <h4 className="font-semibold text-forest-green mb-2">
-                            {video.title}
-                          </h4>
-                          <p className="text-sm text-forest-green/70">
-                            {video.description}
-                          </p>
-                        </div>
-                      </Card>
-                    ))}
+                  [
+                    {
+                      id: "fflf6I7UHXM",
+                      title: "Jou Nielsen",
+                      description: "Una noche mágica con sonidos únicos",
+                    },
+                    {
+                      id: "zaoEoFKjoR4",
+                      title: "Noé",
+                      description: "Ritmos que conectan almas",
+                    },
+                    {
+                      id: "X52oRpXKOxM",
+                      title: "Alexx Zander Johnson",
+                      description: "Experiencias que trascienden",
+                    },
+                  ].map((video, index) => (
+                    <Card
+                      key={video.id}
+                      className="group hover:scale-105 transition-all duration-500 bg-white/50 border-forest-green/20 overflow-hidden"
+                    >
+                      <div className="aspect-video bg-forest-green/10 overflow-hidden">
+                        <iframe
+                          src={`https://www.youtube.com/embed/${video.id}`}
+                          className="w-full h-full group-hover:scale-110 transition-transform duration-700"
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                          allowFullScreen
+                        />
+                      </div>
+                      <div className="p-6">
+                        <h4 className="font-semibold text-forest-green mb-2">
+                          {video.title}
+                        </h4>
+                        <p className="text-sm text-forest-green/70">
+                          {video.description}
+                        </p>
+                      </div>
+                    </Card>
+                  ))}
             </div>
           </div>
 
@@ -542,237 +561,86 @@ export default function Index() {
             comunidad musical de Barcelona.
           </p>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {/* Product 1 - Camiseta */}
-            <Card className="bg-beige border-0 overflow-hidden group hover:scale-105 transition-transform duration-300">
-              <Link to="/product/bejaus-tshirt">
-                <div className="aspect-square bg-forest-green/10 overflow-hidden cursor-pointer">
-                  <img
-                    src="/placeholder.svg"
-                    alt="Camiseta Bejaus Sessions"
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                  />
-                </div>
-              </Link>
-              <div className="p-6">
-                <Link to="/product/bejaus-tshirt">
-                  <h3 className="text-xl font-semibold text-forest-green mb-2 min-h-[3.5rem] flex items-center hover:text-forest-green/80 cursor-pointer">
-                    Camiseta Bejaus Sessions
-                  </h3>
-                </Link>
-                <p className="text-forest-green/70 text-sm mb-4">
-                  100% Algodón orgánico
-                </p>
-                <div className="flex justify-between items-center mb-4">
-                  <span className="text-2xl font-bold text-forest-green">
-                    25€
-                  </span>
-                  <span className="text-sm text-forest-green/60">
-                    S, M, L, XL
-                  </span>
-                </div>
-                <div className="flex gap-2">
-                  <Link to="/product/bejaus-tshirt" className="flex-1">
-                    <Button
-                      variant="outline"
-                      className="w-full border-terracotta text-terracotta hover:bg-terracotta hover:text-beige"
-                    >
-                      Ver producto
-                    </Button>
-                  </Link>
-                  <Button
-                    className="flex-1 bg-terracotta hover:bg-terracotta/90 text-beige"
-                    onClick={() => {
-                      const product = mockProducts.find(
-                        (p) => p.id === "bejaus-tshirt",
-                      );
-                      if (product) {
-                        addToCart(product, 1);
-                        toast({
-                          title: "¡Producto añadido!",
-                          description: `${product.name} se ha añadido al carrito`,
-                        });
-                      }
-                    }}
-                  >
-                    Añadir
-                  </Button>
-                </div>
-              </div>
-            </Card>
-
-            {/* Product 2 - Hoodie */}
-            <Card className="bg-beige border-0 overflow-hidden group hover:scale-105 transition-transform duration-300">
-              <Link to="/product/bejaus-hoodie">
-                <div className="aspect-square bg-forest-green/10 overflow-hidden cursor-pointer">
-                  <img
-                    src="/placeholder.svg"
-                    alt="Hoodie Bejaus Sessions"
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                  />
-                </div>
-              </Link>
-              <div className="p-6">
-                <Link to="/product/bejaus-hoodie">
-                  <h3 className="text-xl font-semibold text-forest-green mb-2 min-h-[3.5rem] flex items-center hover:text-forest-green/80 cursor-pointer">
-                    Hoodie Bejaus Sessions
-                  </h3>
-                </Link>
-                <p className="text-forest-green/70 text-sm mb-4">
-                  80% Algodón, 20% Poliéster
-                </p>
-                <div className="flex justify-between items-center mb-4">
-                  <span className="text-2xl font-bold text-forest-green">
-                    45€
-                  </span>
-                  <span className="text-sm text-forest-green/60">
-                    S, M, L, XL
-                  </span>
-                </div>
-                <div className="flex gap-2">
-                  <Link to="/product/bejaus-hoodie" className="flex-1">
-                    <Button
-                      variant="outline"
-                      className="w-full border-terracotta text-terracotta hover:bg-terracotta hover:text-beige"
-                    >
-                      Ver producto
-                    </Button>
-                  </Link>
-                  <Button
-                    className="flex-1 bg-terracotta hover:bg-terracotta/90 text-beige"
-                    onClick={() => {
-                      const product = mockProducts.find(
-                        (p) => p.id === "bejaus-hoodie",
-                      );
-                      if (product) {
-                        addToCart(product, 1);
-                        toast({
-                          title: "¡Producto añadido!",
-                          description: `${product.name} se ha añadido al carrito`,
-                        });
-                      }
-                    }}
-                  >
-                    Añadir
-                  </Button>
-                </div>
-              </div>
-            </Card>
-
-            {/* Product 3 - Vinyl */}
-            <Card className="bg-beige border-0 overflow-hidden group hover:scale-105 transition-transform duration-300">
-              <Link to="/product/bejaus-vinyl">
-                <div className="aspect-square bg-forest-green/10 overflow-hidden cursor-pointer">
-                  <img
-                    src="/placeholder.svg"
-                    alt="Compilation Vinyl Vol.1"
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                  />
-                </div>
-              </Link>
-              <div className="p-6">
-                <Link to="/product/bejaus-vinyl">
-                  <h3 className="text-xl font-semibold text-forest-green mb-2 min-h-[3.5rem] flex items-center hover:text-forest-green/80 cursor-pointer">
-                    Compilation Vinyl Vol.1
-                  </h3>
-                </Link>
-                <p className="text-forest-green/70 text-sm mb-4">
-                  Edición limitada numerada
-                </p>
-                <div className="flex justify-between items-center mb-4">
-                  <span className="text-2xl font-bold text-forest-green">
-                    35€
-                  </span>
-                  <span className="text-sm text-forest-green/60">Vinilo</span>
-                </div>
-                <div className="flex gap-2">
-                  <Link to="/product/bejaus-vinyl" className="flex-1">
-                    <Button
-                      variant="outline"
-                      className="w-full border-terracotta text-terracotta hover:bg-terracotta hover:text-beige"
-                    >
-                      Ver producto
-                    </Button>
-                  </Link>
-                  <Button
-                    className="flex-1 bg-terracotta hover:bg-terracotta/90 text-beige"
-                    onClick={() => {
-                      const product = mockProducts.find(
-                        (p) => p.id === "bejaus-vinyl",
-                      );
-                      if (product) {
-                        addToCart(product, 1);
-                        toast({
-                          title: "¡Producto añadido!",
-                          description: `${product.name} se ha añadido al carrito`,
-                        });
-                      }
-                    }}
-                  >
-                    Añadir
-                  </Button>
-                </div>
-              </div>
-            </Card>
-
-            {/* Product 4 - Tote Bag */}
-            <Card className="bg-beige border-0 overflow-hidden group hover:scale-105 transition-transform duration-300">
-              <Link to="/product/bejaus-tote">
-                <div className="aspect-square bg-forest-green/10 overflow-hidden cursor-pointer">
-                  <img
-                    src="/placeholder.svg"
-                    alt="Tote Bag Bejaus"
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                  />
-                </div>
-              </Link>
-              <div className="p-6">
-                <Link to="/product/bejaus-tote">
-                  <h3 className="text-xl font-semibold text-forest-green mb-2 min-h-[3.5rem] flex items-center hover:text-forest-green/80 cursor-pointer">
-                    Tote Bag Bejaus
-                  </h3>
-                </Link>
-                <p className="text-forest-green/70 text-sm mb-4">
-                  Algodón sostenible
-                </p>
-                <div className="flex justify-between items-center mb-4">
-                  <span className="text-2xl font-bold text-forest-green">
-                    15€
-                  </span>
-                  <span className="text-sm text-forest-green/60">
-                    Ecológico
-                  </span>
-                </div>
-                <div className="flex gap-2">
-                  <Link to="/product/bejaus-tote" className="flex-1">
-                    <Button
-                      variant="outline"
-                      className="w-full border-terracotta text-terracotta hover:bg-terracotta hover:text-beige"
-                    >
-                      Ver producto
-                    </Button>
-                  </Link>
-                  <Button
-                    className="flex-1 bg-terracotta hover:bg-terracotta/90 text-beige"
-                    onClick={() => {
-                      const product = mockProducts.find(
-                        (p) => p.id === "bejaus-tote",
-                      );
-                      if (product) {
-                        addToCart(product, 1);
-                        toast({
-                          title: "¡Producto añadido!",
-                          description: `${product.name} se ha añadido al carrito`,
-                        });
-                      }
-                    }}
-                  >
-                    Añadir
-                  </Button>
-                </div>
-              </div>
-            </Card>
-          </div>
+          {isLoadingProducts ? (
+            <div className="text-center py-12">
+              <Loader2 className="mx-auto h-8 w-8 animate-spin text-beige" />
+              <p className="text-beige/80 mt-4">Cargando productos...</p>
+            </div>
+          ) : productsError ? (
+            <div className="text-center py-12">
+              <p className="text-beige/80">{productsError}</p>
+            </div>
+          ) : (
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+              {products.slice(0, 4).map((product) => {
+                // Map Square product to expected Product shape for cart
+                const mappedProduct = {
+                  id: product.id,
+                  name: product.name,
+                  description: product.description || '',
+                  price: product.price / 100, // Convert cents to euros
+                  images: [product.imageUrl || '/placeholder.svg'],
+                  category: product.category || '',
+                  sizes: [],
+                  colors: [],
+                  inStock: product.inStock !== false,
+                  stockCount: undefined,
+                  featured: false,
+                };
+                return (
+                  <Card key={product.id} className="bg-beige border-0 overflow-hidden group hover:scale-105 transition-transform duration-300">
+                    <Link to={`/product/${product.id}`}>
+                      <div className="aspect-square bg-forest-green/10 overflow-hidden cursor-pointer">
+                        <img
+                          src={product.imageUrl || '/placeholder.svg'}
+                          alt={product.name}
+                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                        />
+                      </div>
+                    </Link>
+                    <div className="p-6">
+                      <Link to={`/product/${product.id}`}>
+                        <h3 className="text-xl font-semibold text-forest-green mb-2 min-h-[3.5rem] flex items-center hover:text-forest-green/80 cursor-pointer">
+                          {product.name}
+                        </h3>
+                      </Link>
+                      <p className="text-forest-green/70 text-sm mb-4">
+                        {product.description}
+                      </p>
+                      <div className="flex justify-between items-center mb-4">
+                        <span className="text-2xl font-bold text-forest-green">
+                          {mappedProduct.price.toFixed(2)}€
+                        </span>
+                      </div>
+                      <div className="flex gap-2">
+                        <Link to={`/product/${product.id}`} className="flex-1">
+                          <Button
+                            variant="outline"
+                            className="w-full border-terracotta text-terracotta hover:bg-terracotta hover:text-beige"
+                          >
+                            Ver producto
+                          </Button>
+                        </Link>
+                        <Button
+                          className="flex-1 bg-terracotta hover:bg-terracotta/90 text-beige"
+                          onClick={() => {
+                            addToCart(mappedProduct, 1);
+                            toast({
+                              title: '¡Producto añadido!',
+                              description: `${product.name} se ha añadido al carrito`,
+                            });
+                          }}
+                          disabled={!mappedProduct.inStock}
+                        >
+                          Añadir
+                        </Button>
+                      </div>
+                    </div>
+                  </Card>
+                );
+              })}
+            </div>
+          )}
 
           {/* Ver toda la tienda */}
           <div className="text-center mt-16">

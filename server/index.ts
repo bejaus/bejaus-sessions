@@ -4,7 +4,7 @@ import express from "express";
 import cors from "cors";
 import { handleDemo } from "./routes/demo";
 import { handleYouTubeVideos } from "./routes/youtube";
-import { handleSquarePayment } from "./routes/square";
+import { handleSquarePayment, handleSquareProducts } from "./routes/square";
 import { handleSquareConfig } from "./routes/square-config";
 
 export function createServer() {
@@ -23,6 +23,7 @@ export function createServer() {
   app.get("/api/demo", handleDemo);
   app.get("/api/youtube-videos", handleYouTubeVideos);
   app.get("/api/square-config", handleSquareConfig);
+  app.get("/api/square-products", handleSquareProducts);
   app.post("/api/square-payment", handleSquarePayment);
 
   return app;
