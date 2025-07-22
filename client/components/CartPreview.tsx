@@ -178,17 +178,14 @@ export function CartPreview({ children }: CartPreviewProps) {
               </Button>
             </Link>
 
-            <Button
-              variant="outline"
-              className="w-full border-terracotta text-terracotta hover:bg-terracotta hover:text-beige"
-              onClick={() => {
-                setIsOpen(false);
-                // Future: Connect to Square checkout
-                alert("Checkout será integrado con Square próximamente");
-              }}
-            >
-              Proceder al pago
-            </Button>
+            <Link to="/checkout" onClick={() => setIsOpen(false)} className="block">
+              <Button
+                variant="outline"
+                className="w-full border-terracotta text-terracotta hover:bg-terracotta hover:text-beige"
+              >
+                Proceder al pago
+              </Button>
+            </Link>
           </div>
         </div>
       </PopoverContent>
