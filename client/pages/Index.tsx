@@ -44,7 +44,9 @@ export default function Index() {
         const controller = new AbortController();
         const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
 
-        const response = await fetch("/api/youtube-videos", {
+        // Use native fetch to avoid FullStory interference
+        const nativeFetch = window.fetch.bind(window);
+        const response = await nativeFetch("/api/youtube-videos", {
           signal: controller.signal,
           headers: {
             'Accept': 'application/json',
