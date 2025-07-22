@@ -84,9 +84,9 @@ export default function Shop() {
                 key={category.id}
                 variant={selectedCategory === category.id ? "default" : "outline"}
                 onClick={() => setSelectedCategory(category.id)}
-                className={selectedCategory === category.id 
-                  ? "bg-forest-green text-beige hover:bg-forest-green/90" 
-                  : "border-forest-green text-forest-green hover:bg-forest-green hover:text-beige"
+                className={selectedCategory === category.id
+                  ? "bg-terracotta text-beige hover:bg-terracotta/90"
+                  : "border-terracotta text-terracotta hover:bg-terracotta hover:text-beige"
                 }
               >
                 {category.name}
@@ -113,9 +113,9 @@ export default function Shop() {
                 variant={viewMode === 'grid' ? "default" : "ghost"}
                 size="sm"
                 onClick={() => setViewMode('grid')}
-                className={viewMode === 'grid' 
-                  ? "bg-forest-green text-beige" 
-                  : "text-forest-green hover:bg-forest-green/10"
+                className={viewMode === 'grid'
+                  ? "bg-terracotta text-beige"
+                  : "text-terracotta hover:bg-terracotta/10"
                 }
               >
                 <Grid3X3 className="w-4 h-4" />
@@ -124,9 +124,9 @@ export default function Shop() {
                 variant={viewMode === 'list' ? "default" : "ghost"}
                 size="sm"
                 onClick={() => setViewMode('list')}
-                className={viewMode === 'list' 
-                  ? "bg-forest-green text-beige" 
-                  : "text-forest-green hover:bg-forest-green/10"
+                className={viewMode === 'list'
+                  ? "bg-terracotta text-beige"
+                  : "text-terracotta hover:bg-terracotta/10"
                 }
               >
                 <List className="w-4 h-4" />
@@ -192,7 +192,7 @@ export default function Shop() {
                   <Button
                     onClick={() => handleAddToCart(product)}
                     disabled={!product.inStock}
-                    className="flex-1 bg-forest-green hover:bg-forest-green/90 text-beige"
+                    className="flex-1 bg-terracotta hover:bg-terracotta/90 text-beige"
                   >
                     <ShoppingCart className="w-4 h-4 mr-2" />
                     {getCartItemCount(product.id) > 0 
@@ -202,7 +202,7 @@ export default function Shop() {
                   </Button>
                   
                   <Link to={`/product/${product.id}`}>
-                    <Button variant="outline" className="border-forest-green text-forest-green hover:bg-forest-green hover:text-beige">
+                    <Button variant="outline" className="border-terracotta text-terracotta hover:bg-terracotta hover:text-beige">
                       Ver
                     </Button>
                   </Link>
@@ -217,7 +217,7 @@ export default function Shop() {
             <p className="text-forest-green/70 text-lg mb-4">No se encontraron productos en esta categoría</p>
             <Button 
               onClick={() => setSelectedCategory('all')}
-              className="bg-forest-green hover:bg-forest-green/90 text-beige"
+              className="bg-terracotta hover:bg-terracotta/90 text-beige"
             >
               Ver todos los productos
             </Button>
