@@ -342,8 +342,17 @@ export function SquareCheckout({ onSuccess, onError, customerEmail }: SquareChec
 
         {/* Security Notice */}
         <div className="text-xs text-forest-green/60 text-center">
-          <p>🔒 Pago seguro procesado por Square</p>
-          <p>Tus datos están protegidos con cifrado SSL</p>
+          {demoMode ? (
+            <>
+              <p>🎭 Modo demostración activo</p>
+              <p>No se procesarán pagos reales</p>
+            </>
+          ) : (
+            <>
+              <p>🔒 Pago seguro procesado por Square</p>
+              <p>Tus datos están protegidos con cifrado SSL</p>
+            </>
+          )}
         </div>
       </div>
     </Card>
