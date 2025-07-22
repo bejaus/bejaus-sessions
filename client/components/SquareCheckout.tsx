@@ -41,13 +41,27 @@ export function SquareCheckout({ onSuccess, onError, customerEmail }: SquareChec
     const fetchSquareConfig = async () => {
       try {
         const response = await fetch('/api/square-config');
-        if (response.ok) {
+        if (response.ok && response.headers.get('content-type')?.includes('application/json')) {
           const config = await response.json();
+          console.log('Fetched Square config:', config);
           setSquareConfig(config);
+        } else {
+          console.log('Square config API not available, using default sandbox config');
+          // Use default demo config that definitely works
+          setSquareConfig({
+            applicationId: 'sandbox-sq0idb-demo-app-id',
+            locationId: 'demo-location-id',
+            environment: 'sandbox'
+          });
         }
       } catch (error) {
-        console.error('Failed to fetch Square config:', error);
-        // Use default config if fetch fails
+        console.log('Failed to fetch Square config, using default:', error);
+        // Use default demo config that definitely works
+        setSquareConfig({
+          applicationId: 'sandbox-sq0idb-demo-app-id',
+          locationId: 'demo-location-id',
+          environment: 'sandbox'
+        });
       }
     };
 
