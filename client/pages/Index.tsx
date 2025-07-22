@@ -533,36 +533,51 @@ export default function Index() {
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             {/* Product 1 - Camiseta */}
-            <Link to="/product/bejaus-tshirt" className="block">
-              <Card className="bg-beige border-0 overflow-hidden group hover:scale-105 transition-transform duration-300 cursor-pointer">
-                <div className="aspect-square bg-forest-green/10 overflow-hidden">
+            <Card className="bg-beige border-0 overflow-hidden group hover:scale-105 transition-transform duration-300">
+              <Link to="/product/bejaus-tshirt">
+                <div className="aspect-square bg-forest-green/10 overflow-hidden cursor-pointer">
                   <img
                     src="/placeholder.svg"
                     alt="Camiseta Bejaus Sessions"
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                   />
                 </div>
-                <div className="p-6">
-                  <h3 className="text-xl font-semibold text-forest-green mb-2 min-h-[3.5rem] flex items-center">
+              </Link>
+              <div className="p-6">
+                <Link to="/product/bejaus-tshirt">
+                  <h3 className="text-xl font-semibold text-forest-green mb-2 min-h-[3.5rem] flex items-center hover:text-forest-green/80 cursor-pointer">
                     Camiseta Bejaus Sessions
                   </h3>
-                  <p className="text-forest-green/70 text-sm mb-4">
-                    100% Algodón orgánico
-                  </p>
-                  <div className="flex justify-between items-center mb-4">
-                    <span className="text-2xl font-bold text-forest-green">
-                      25€
-                    </span>
-                    <span className="text-sm text-forest-green/60">
-                      S, M, L, XL
-                    </span>
-                  </div>
-                  <Button className="w-full bg-terracotta hover:bg-terracotta/90 text-beige pointer-events-none">
-                    Ver producto
+                </Link>
+                <p className="text-forest-green/70 text-sm mb-4">
+                  100% Algodón orgánico
+                </p>
+                <div className="flex justify-between items-center mb-4">
+                  <span className="text-2xl font-bold text-forest-green">
+                    25€
+                  </span>
+                  <span className="text-sm text-forest-green/60">
+                    S, M, L, XL
+                  </span>
+                </div>
+                <div className="flex gap-2">
+                  <Link to="/product/bejaus-tshirt" className="flex-1">
+                    <Button variant="outline" className="w-full border-terracotta text-terracotta hover:bg-terracotta hover:text-beige">
+                      Ver producto
+                    </Button>
+                  </Link>
+                  <Button
+                    className="flex-1 bg-terracotta hover:bg-terracotta/90 text-beige"
+                    onClick={() => {
+                      // Add to cart functionality - will be connected to cart context
+                      alert('Producto añadido al carrito');
+                    }}
+                  >
+                    Añadir
                   </Button>
                 </div>
-              </Card>
-            </Link>
+              </div>
+            </Card>
 
             {/* Product 2 - Hoodie */}
             <Link to="/product/bejaus-hoodie" className="block">
@@ -678,7 +693,7 @@ export default function Index() {
             Sé parte de la vibra Bejaus
           </h2>
           <p className="text-xl text-forest-green mb-12 leading-relaxed">
-            Apúntate para recibir noticias de próximos eventos, descuentos y
+            Apúntate para recibir noticias de pr��ximos eventos, descuentos y
             sesiones exclusivas.
           </p>
 
