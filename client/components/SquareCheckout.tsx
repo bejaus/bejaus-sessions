@@ -307,26 +307,34 @@ export function SquareCheckout({ onSuccess, onError, customerEmail }: SquareChec
           <div className="space-y-4">
             <div className="flex items-center gap-2 text-sm text-forest-green/70">
               <CreditCard className="w-4 h-4" />
-              <span>O paga con tarjeta</span>
+              <span>{demoMode ? 'Pago de demostración' : 'O paga con tarjeta'}</span>
             </div>
-            
-            <div 
-              ref={cardRef} 
-              className="min-h-[56px] border border-forest-green/20 rounded-md p-3"
-            ></div>
+
+            {demoMode ? (
+              <div className="min-h-[56px] border border-forest-green/20 rounded-md p-3 bg-forest-green/5 flex items-center justify-center">
+                <span className="text-forest-green/70 text-sm">
+                  🎭 Modo demostración - simula un pago exitoso
+                </span>
+              </div>
+            ) : (
+              <div
+                ref={cardRef}
+                className="min-h-[56px] border border-forest-green/20 rounded-md p-3"
+              ></div>
+            )}
 
             <Button
               onClick={handleCardPayment}
-              disabled={!card || isProcessing}
+              disabled={(!card && !demoMode) || isProcessing}
               className="w-full bg-terracotta hover:bg-terracotta/90 text-beige"
             >
               {isProcessing ? (
                 <>
                   <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                  Procesando pago...
+                  {demoMode ? 'Procesando demo...' : 'Procesando pago...'}
                 </>
               ) : (
-                `Pagar ${(finalTotalCents / 100).toFixed(2)}€`
+                `${demoMode ? 'Simular pago' : 'Pagar'} ${(finalTotalCents / 100).toFixed(2)}€`
               )}
             </Button>
           </div>
