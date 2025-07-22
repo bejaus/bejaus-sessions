@@ -39,8 +39,20 @@ export default function Index() {
         setVideoError(null);
 
         console.log("Fetching YouTube videos from /api/youtube-videos");
-        const response = await fetch("/api/youtube-videos");
 
+        // Add timeout and better error handling
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
+
+        const response = await fetch("/api/youtube-videos", {
+          signal: controller.signal,
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+        });
+
+        clearTimeout(timeoutId);
         console.log("Response status:", response.status, response.statusText);
 
         if (!response.ok) {
