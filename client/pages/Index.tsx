@@ -15,6 +15,8 @@ import { Link } from "react-router-dom";
 import { YouTubeApiResponse, YouTubeVideo } from "@shared/api";
 import { useCart } from "../contexts/CartContext";
 import { mockProducts } from "../../shared/types";
+import { useToast } from "../hooks/use-toast";
+import { Badge } from "../components/ui/badge";
 
 export default function Index() {
   const [isScrolled, setIsScrolled] = useState(false);
