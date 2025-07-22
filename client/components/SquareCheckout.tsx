@@ -70,6 +70,13 @@ export function SquareCheckout({ onSuccess, onError, customerEmail }: SquareChec
   }, []);
 
   useEffect(() => {
+    // Only load Square SDK if not in demo mode
+    if (demoMode) {
+      console.log('Demo mode active - skipping Square SDK initialization');
+      setIsSquareLoaded(true);
+      return;
+    }
+
     // Load Square Web Payments SDK
     const loadSquareSDK = async () => {
       if (window.Square) {
@@ -147,7 +154,7 @@ export function SquareCheckout({ onSuccess, onError, customerEmail }: SquareChec
     };
 
     loadSquareSDK();
-  }, [squareConfig]);
+  }, [squareConfig, demoMode]);
 
   const handlePayment = async (paymentMethod: any) => {
     if (!payments || isProcessing) return;
