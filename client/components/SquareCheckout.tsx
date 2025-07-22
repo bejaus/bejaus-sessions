@@ -132,7 +132,7 @@ export function SquareCheckout({ onSuccess, onError, customerEmail }: SquareChec
     };
 
     loadSquareSDK();
-  }, []);
+  }, [squareConfig]);
 
   const handlePayment = async (paymentMethod: any) => {
     if (!payments || isProcessing) return;
