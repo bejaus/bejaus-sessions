@@ -37,6 +37,24 @@ export function SquareCheckout({ onSuccess, onError, customerEmail }: SquareChec
   const finalTotalCents = totalCents + shippingCents;
 
   useEffect(() => {
+    // Fetch Square configuration from server
+    const fetchSquareConfig = async () => {
+      try {
+        const response = await fetch('/api/square-config');
+        if (response.ok) {
+          const config = await response.json();
+          setSquareConfig(config);
+        }
+      } catch (error) {
+        console.error('Failed to fetch Square config:', error);
+        // Use default config if fetch fails
+      }
+    };
+
+    fetchSquareConfig();
+  }, []);
+
+  useEffect(() => {
     // Load Square Web Payments SDK
     const loadSquareSDK = async () => {
       if (window.Square) {
@@ -67,8 +85,8 @@ export function SquareCheckout({ onSuccess, onError, customerEmail }: SquareChec
 
       try {
         const paymentsInstance = window.Square.payments(
-          SQUARE_CONFIG.applicationId,
-          SQUARE_CONFIG.locationId
+          squareConfig.applicationId,
+          squareConfig.locationId
         );
         setPayments(paymentsInstance);
 
