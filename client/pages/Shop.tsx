@@ -60,7 +60,7 @@ export default function Shop() {
               <p className="text-beige/80">Productos únicos para amantes de la música y el café</p>
             </div>
             <Link to="/cart" className="relative">
-              <Button variant="outline" size="lg" className="bg-transparent border-beige text-beige hover:bg-beige hover:text-forest-green">
+              <Button variant="outline" size="lg" className="border-beige text-beige hover:bg-beige hover:text-forest-green">
                 <ShoppingCart className="w-5 h-5 mr-2" />
                 Carrito
                 {cart.itemCount > 0 && (
