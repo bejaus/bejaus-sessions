@@ -164,12 +164,12 @@ export default function Index() {
                 Contacto
               </button>
 
-              {/* Cart Button */}
-              <Link to="/cart" className="relative">
+              {/* Cart Button with Preview */}
+              <CartPreview>
                 <Button
                   variant="outline"
                   size="sm"
-                  className="bg-transparent border-beige text-beige hover:bg-beige hover:text-forest-green"
+                  className="bg-transparent border-beige text-beige hover:bg-beige hover:text-forest-green relative"
                 >
                   <ShoppingCart className="w-4 h-4 mr-2" />
                   Carrito
@@ -179,7 +179,7 @@ export default function Index() {
                     </Badge>
                   )}
                 </Button>
-              </Link>
+              </CartPreview>
             </nav>
           </div>
         </div>
