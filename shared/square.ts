@@ -31,9 +31,9 @@ export interface SquareConfig {
   environment: 'production' | 'sandbox';
 }
 
-// Default configuration for development/demo
+// Default configuration for development/demo using Square's demo credentials
 export const DEFAULT_SQUARE_CONFIG: SquareConfig = {
-  applicationId: 'sandbox-sq0idb-demo-app-id',
-  locationId: 'demo-location-id',
+  applicationId: 'sandbox-sq0idb-your-sandbox-app-id',
+  locationId: 'main',
   environment: 'sandbox',
 };
