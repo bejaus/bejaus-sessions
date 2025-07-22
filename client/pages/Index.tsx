@@ -162,6 +162,23 @@ export default function Index() {
               >
                 Contacto
               </button>
+
+              {/* Cart Button */}
+              <Link to="/cart" className="relative">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="border-beige text-beige hover:bg-beige hover:text-forest-green"
+                >
+                  <ShoppingCart className="w-4 h-4 mr-2" />
+                  Carrito
+                  {cart.itemCount > 0 && (
+                    <Badge className="absolute -top-2 -right-2 bg-terracotta text-beige border-0 text-xs">
+                      {cart.itemCount}
+                    </Badge>
+                  )}
+                </Button>
+              </Link>
             </nav>
           </div>
         </div>
