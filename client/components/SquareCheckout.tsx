@@ -25,6 +25,7 @@ export function SquareCheckout({ onSuccess, onError, customerEmail }: SquareChec
   const [isSquareLoaded, setIsSquareLoaded] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
   const [squareConfig, setSquareConfig] = useState<SquareConfig>(DEFAULT_SQUARE_CONFIG);
+  const [demoMode, setDemoMode] = useState(true); // Use demo mode until Square is properly configured
   const cardRef = useRef<HTMLDivElement>(null);
   const googlePayRef = useRef<HTMLDivElement>(null);
   const applePayRef = useRef<HTMLDivElement>(null);
