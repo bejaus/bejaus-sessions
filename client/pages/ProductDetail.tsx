@@ -1,20 +1,27 @@
-import { useState } from 'react';
-import { useParams, Link, Navigate } from 'react-router-dom';
-import { Card } from '../components/ui/card';
-import { Button } from '../components/ui/button';
-import { Badge } from '../components/ui/badge';
-import { ShoppingCart, ArrowLeft, Plus, Minus, Heart, Share2 } from 'lucide-react';
-import { mockProducts } from '../../shared/types';
-import { useCart } from '../contexts/CartContext';
+import { useState } from "react";
+import { useParams, Link, Navigate } from "react-router-dom";
+import { Card } from "../components/ui/card";
+import { Button } from "../components/ui/button";
+import { Badge } from "../components/ui/badge";
+import {
+  ShoppingCart,
+  ArrowLeft,
+  Plus,
+  Minus,
+  Heart,
+  Share2,
+} from "lucide-react";
+import { mockProducts } from "../../shared/types";
+import { useCart } from "../contexts/CartContext";
 
 export default function ProductDetail() {
   const { productId } = useParams<{ productId: string }>();
   const { addToCart, cart } = useCart();
-  
-  const product = mockProducts.find(p => p.id === productId);
-  
-  const [selectedSize, setSelectedSize] = useState<string>('');
-  const [selectedColor, setSelectedColor] = useState<string>('');
+
+  const product = mockProducts.find((p) => p.id === productId);
+
+  const [selectedSize, setSelectedSize] = useState<string>("");
+  const [selectedColor, setSelectedColor] = useState<string>("");
   const [quantity, setQuantity] = useState(1);
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
 
@@ -24,27 +31,27 @@ export default function ProductDetail() {
 
   const handleAddToCart = () => {
     if (product.sizes && !selectedSize) {
-      alert('Por favor selecciona una talla');
+      alert("Por favor selecciona una talla");
       return;
     }
-    
+
     addToCart(product, quantity, selectedSize, selectedColor);
-    
+
     // Reset selections after adding
     setQuantity(1);
   };
 
   const getCartItemCount = () => {
     return cart.items
-      .filter(item => 
-        item.product.id === product.id && 
-        item.selectedSize === selectedSize
+      .filter(
+        (item) =>
+          item.product.id === product.id && item.selectedSize === selectedSize,
       )
       .reduce((sum, item) => sum + item.quantity, 0);
   };
 
-  const incrementQuantity = () => setQuantity(prev => prev + 1);
-  const decrementQuantity = () => setQuantity(prev => Math.max(1, prev - 1));
+  const incrementQuantity = () => setQuantity((prev) => prev + 1);
+  const decrementQuantity = () => setQuantity((prev) => Math.max(1, prev - 1));
 
   return (
     <div className="min-h-screen bg-beige">
@@ -52,18 +59,27 @@ export default function ProductDetail() {
       <div className="bg-white border-b border-forest-green/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex items-center text-sm text-forest-green/70">
-            <Link to="/" className="hover:text-forest-green">Inicio</Link>
+            <Link to="/" className="hover:text-forest-green">
+              Inicio
+            </Link>
             <span className="mx-2">/</span>
-            <Link to="/shop" className="hover:text-forest-green">Tienda</Link>
+            <Link to="/shop" className="hover:text-forest-green">
+              Tienda
+            </Link>
             <span className="mx-2">/</span>
-            <span className="text-forest-green font-medium">{product.name}</span>
+            <span className="text-forest-green font-medium">
+              {product.name}
+            </span>
           </div>
         </div>
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Back Button */}
-        <Link to="/shop" className="inline-flex items-center text-forest-green hover:text-forest-green/80 mb-6">
+        <Link
+          to="/shop"
+          className="inline-flex items-center text-forest-green hover:text-forest-green/80 mb-6"
+        >
           <ArrowLeft className="w-4 h-4 mr-2" />
           Volver a la tienda
         </Link>
@@ -102,9 +118,9 @@ export default function ProductDetail() {
                     key={index}
                     onClick={() => setSelectedImageIndex(index)}
                     className={`w-20 h-20 rounded-md overflow-hidden border-2 ${
-                      selectedImageIndex === index 
-                        ? 'border-forest-green' 
-                        : 'border-transparent hover:border-forest-green/50'
+                      selectedImageIndex === index
+                        ? "border-forest-green"
+                        : "border-transparent hover:border-forest-green/50"
                     }`}
                   >
                     <img
@@ -141,14 +157,15 @@ export default function ProductDetail() {
                     Talla *
                   </label>
                   <div className="flex flex-wrap gap-2">
-                    {product.sizes.map(size => (
+                    {product.sizes.map((size) => (
                       <Button
                         key={size}
                         variant={selectedSize === size ? "default" : "outline"}
                         onClick={() => setSelectedSize(size)}
-                        className={selectedSize === size
-                          ? "bg-terracotta text-beige hover:bg-terracotta/90"
-                          : "border-terracotta text-terracotta hover:bg-terracotta hover:text-beige"
+                        className={
+                          selectedSize === size
+                            ? "bg-terracotta text-beige hover:bg-terracotta/90"
+                            : "border-terracotta text-terracotta hover:bg-terracotta hover:text-beige"
                         }
                       >
                         {size}
@@ -165,14 +182,17 @@ export default function ProductDetail() {
                     Color
                   </label>
                   <div className="flex flex-wrap gap-2">
-                    {product.colors.map(color => (
+                    {product.colors.map((color) => (
                       <Button
                         key={color}
-                        variant={selectedColor === color ? "default" : "outline"}
+                        variant={
+                          selectedColor === color ? "default" : "outline"
+                        }
                         onClick={() => setSelectedColor(color)}
-                        className={selectedColor === color
-                          ? "bg-terracotta text-beige hover:bg-terracotta/90"
-                          : "border-terracotta text-terracotta hover:bg-terracotta hover:text-beige"
+                        className={
+                          selectedColor === color
+                            ? "bg-terracotta text-beige hover:bg-terracotta/90"
+                            : "border-terracotta text-terracotta hover:bg-terracotta hover:text-beige"
                         }
                       >
                         {color}
@@ -215,12 +235,11 @@ export default function ProductDetail() {
             {/* Stock Information */}
             {product.stockCount && (
               <div className="text-sm text-forest-green/70">
-                {product.stockCount > 10 
+                {product.stockCount > 10
                   ? `✓ En stock (${product.stockCount} disponibles)`
                   : product.stockCount > 0
-                  ? `⚠️ Últimas ${product.stockCount} unidades`
-                  : '❌ Agotado'
-                }
+                    ? `⚠️ Últimas ${product.stockCount} unidades`
+                    : "❌ Agotado"}
               </div>
             )}
 
@@ -232,10 +251,9 @@ export default function ProductDetail() {
                 className="w-full bg-terracotta hover:bg-terracotta/90 text-beige text-lg py-3"
               >
                 <ShoppingCart className="w-5 h-5 mr-2" />
-                {getCartItemCount() > 0 
-                  ? `Añadir al carrito (${getCartItemCount()} en carrito)` 
-                  : 'Añadir al carrito'
-                }
+                {getCartItemCount() > 0
+                  ? `Añadir al carrito (${getCartItemCount()} en carrito)`
+                  : "Añadir al carrito"}
               </Button>
 
               <div className="flex gap-3">
@@ -258,18 +276,27 @@ export default function ProductDetail() {
 
             {/* Product Details */}
             <Card className="p-4 bg-white border-forest-green/10">
-              <h3 className="font-semibold text-forest-green mb-2">Detalles del producto</h3>
+              <h3 className="font-semibold text-forest-green mb-2">
+                Detalles del producto
+              </h3>
               <ul className="text-sm text-forest-green/80 space-y-1">
-                <li>• Categoría: {
+                <li>
+                  • Categoría:{" "}
                   {
-                    'clothing': 'Ropa',
-                    'accessories': 'Accesorios',
-                    'vinyl': 'Vinilos',
-                    'coffee': 'Café'
-                  }[product.category]
-                }</li>
-                {product.sizes && <li>• Tallas disponibles: {product.sizes.join(', ')}</li>}
-                {product.colors && <li>• Colores disponibles: {product.colors.join(', ')}</li>}
+                    {
+                      clothing: "Ropa",
+                      accessories: "Accesorios",
+                      vinyl: "Vinilos",
+                      coffee: "Café",
+                    }[product.category]
+                  }
+                </li>
+                {product.sizes && (
+                  <li>• Tallas disponibles: {product.sizes.join(", ")}</li>
+                )}
+                {product.colors && (
+                  <li>• Colores disponibles: {product.colors.join(", ")}</li>
+                )}
                 <li>• Envío gratuito en pedidos superiores a 50€</li>
                 <li>• Devoluciones gratuitas en 30 días</li>
               </ul>
@@ -279,13 +306,20 @@ export default function ProductDetail() {
 
         {/* Related Products */}
         <div className="mt-16">
-          <h2 className="text-2xl font-bold text-forest-green mb-6">Productos relacionados</h2>
+          <h2 className="text-2xl font-bold text-forest-green mb-6">
+            Productos relacionados
+          </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {mockProducts
-              .filter(p => p.id !== product.id && p.category === product.category)
+              .filter(
+                (p) => p.id !== product.id && p.category === product.category,
+              )
               .slice(0, 4)
-              .map(relatedProduct => (
-                <Card key={relatedProduct.id} className="group overflow-hidden bg-white border-forest-green/10 hover:shadow-lg transition-all duration-300">
+              .map((relatedProduct) => (
+                <Card
+                  key={relatedProduct.id}
+                  className="group overflow-hidden bg-white border-forest-green/10 hover:shadow-lg transition-all duration-300"
+                >
                   <Link to={`/product/${relatedProduct.id}`}>
                     <div className="aspect-square bg-forest-green/5 overflow-hidden">
                       <img

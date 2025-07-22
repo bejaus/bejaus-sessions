@@ -1,35 +1,40 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { Card } from '../components/ui/card';
-import { Button } from '../components/ui/button';
-import { Badge } from '../components/ui/badge';
-import { ShoppingCart, Filter, Grid3X3, List } from 'lucide-react';
-import { mockProducts, Product } from '../../shared/types';
-import { useCart } from '../contexts/CartContext';
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import { Card } from "../components/ui/card";
+import { Button } from "../components/ui/button";
+import { Badge } from "../components/ui/badge";
+import { ShoppingCart, Filter, Grid3X3, List } from "lucide-react";
+import { mockProducts, Product } from "../../shared/types";
+import { useCart } from "../contexts/CartContext";
 
 export default function Shop() {
   const { addToCart, cart } = useCart();
-  const [selectedCategory, setSelectedCategory] = useState<string>('all');
-  const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
-  const [sortBy, setSortBy] = useState<'name' | 'price' | 'featured'>('featured');
+  const [selectedCategory, setSelectedCategory] = useState<string>("all");
+  const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
+  const [sortBy, setSortBy] = useState<"name" | "price" | "featured">(
+    "featured",
+  );
 
   const categories = [
-    { id: 'all', name: 'Todos los productos' },
-    { id: 'clothing', name: 'Ropa' },
-    { id: 'accessories', name: 'Accesorios' },
-    { id: 'vinyl', name: 'Vinilos' },
-    { id: 'coffee', name: 'Café' }
+    { id: "all", name: "Todos los productos" },
+    { id: "clothing", name: "Ropa" },
+    { id: "accessories", name: "Accesorios" },
+    { id: "vinyl", name: "Vinilos" },
+    { id: "coffee", name: "Café" },
   ];
 
   const filteredProducts = mockProducts
-    .filter(product => selectedCategory === 'all' || product.category === selectedCategory)
+    .filter(
+      (product) =>
+        selectedCategory === "all" || product.category === selectedCategory,
+    )
     .sort((a, b) => {
       switch (sortBy) {
-        case 'name':
+        case "name":
           return a.name.localeCompare(b.name);
-        case 'price':
+        case "price":
           return a.price - b.price;
-        case 'featured':
+        case "featured":
           return Number(b.featured) - Number(a.featured);
         default:
           return 0;
@@ -42,7 +47,7 @@ export default function Shop() {
 
   const getCartItemCount = (productId: string) => {
     return cart.items
-      .filter(item => item.product.id === productId)
+      .filter((item) => item.product.id === productId)
       .reduce((sum, item) => sum + item.quantity, 0);
   };
 
@@ -53,14 +58,23 @@ export default function Shop() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between">
             <div>
-              <Link to="/" className="text-beige/70 hover:text-beige text-sm mb-2 block">
+              <Link
+                to="/"
+                className="text-beige/70 hover:text-beige text-sm mb-2 block"
+              >
                 ← Volver al inicio
               </Link>
               <h1 className="text-4xl font-bold mb-2">Tienda Bejaus</h1>
-              <p className="text-beige/80">Productos únicos para amantes de la música y el café</p>
+              <p className="text-beige/80">
+                Productos únicos para amantes de la música y el café
+              </p>
             </div>
             <Link to="/cart" className="relative">
-              <Button variant="outline" size="lg" className="border-beige text-beige hover:bg-beige hover:text-forest-green">
+              <Button
+                variant="outline"
+                size="lg"
+                className="border-beige text-beige hover:bg-beige hover:text-forest-green"
+              >
                 <ShoppingCart className="w-5 h-5 mr-2" />
                 Carrito
                 {cart.itemCount > 0 && (
@@ -79,14 +93,17 @@ export default function Shop() {
         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-8 gap-4">
           {/* Categories */}
           <div className="flex flex-wrap gap-2">
-            {categories.map(category => (
+            {categories.map((category) => (
               <Button
                 key={category.id}
-                variant={selectedCategory === category.id ? "default" : "outline"}
+                variant={
+                  selectedCategory === category.id ? "default" : "outline"
+                }
                 onClick={() => setSelectedCategory(category.id)}
-                className={selectedCategory === category.id
-                  ? "bg-terracotta text-beige hover:bg-terracotta/90"
-                  : "border-terracotta text-terracotta hover:bg-terracotta hover:text-beige"
+                className={
+                  selectedCategory === category.id
+                    ? "bg-terracotta text-beige hover:bg-terracotta/90"
+                    : "border-terracotta text-terracotta hover:bg-terracotta hover:text-beige"
                 }
               >
                 {category.name}
@@ -110,23 +127,25 @@ export default function Shop() {
             {/* View Mode */}
             <div className="flex border border-forest-green/20 rounded-md overflow-hidden">
               <Button
-                variant={viewMode === 'grid' ? "default" : "ghost"}
+                variant={viewMode === "grid" ? "default" : "ghost"}
                 size="sm"
-                onClick={() => setViewMode('grid')}
-                className={viewMode === 'grid'
-                  ? "bg-terracotta text-beige"
-                  : "text-terracotta hover:bg-terracotta/10"
+                onClick={() => setViewMode("grid")}
+                className={
+                  viewMode === "grid"
+                    ? "bg-terracotta text-beige"
+                    : "text-terracotta hover:bg-terracotta/10"
                 }
               >
                 <Grid3X3 className="w-4 h-4" />
               </Button>
               <Button
-                variant={viewMode === 'list' ? "default" : "ghost"}
+                variant={viewMode === "list" ? "default" : "ghost"}
                 size="sm"
-                onClick={() => setViewMode('list')}
-                className={viewMode === 'list'
-                  ? "bg-terracotta text-beige"
-                  : "text-terracotta hover:bg-terracotta/10"
+                onClick={() => setViewMode("list")}
+                className={
+                  viewMode === "list"
+                    ? "bg-terracotta text-beige"
+                    : "text-terracotta hover:bg-terracotta/10"
                 }
               >
                 <List className="w-4 h-4" />
@@ -136,18 +155,26 @@ export default function Shop() {
         </div>
 
         {/* Products Grid */}
-        <div className={viewMode === 'grid' 
-          ? "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
-          : "space-y-6"
-        }>
-          {filteredProducts.map(product => (
-            <Card key={product.id} className={`group overflow-hidden bg-white border-forest-green/10 hover:shadow-lg transition-all duration-300 ${
-              viewMode === 'list' ? 'flex' : ''
-            }`}>
+        <div
+          className={
+            viewMode === "grid"
+              ? "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+              : "space-y-6"
+          }
+        >
+          {filteredProducts.map((product) => (
+            <Card
+              key={product.id}
+              className={`group overflow-hidden bg-white border-forest-green/10 hover:shadow-lg transition-all duration-300 ${
+                viewMode === "list" ? "flex" : ""
+              }`}
+            >
               {/* Product Image */}
-              <div className={`bg-forest-green/5 overflow-hidden ${
-                viewMode === 'list' ? 'w-48 flex-shrink-0' : 'aspect-square'
-              }`}>
+              <div
+                className={`bg-forest-green/5 overflow-hidden ${
+                  viewMode === "list" ? "w-48 flex-shrink-0" : "aspect-square"
+                }`}
+              >
                 <img
                   src={product.images[0]}
                   alt={product.name}
@@ -172,7 +199,7 @@ export default function Shop() {
                     {product.name}
                   </h3>
                 </Link>
-                
+
                 <p className="text-forest-green/70 text-sm mb-3 line-clamp-2">
                   {product.description}
                 </p>
@@ -183,7 +210,7 @@ export default function Shop() {
                   </span>
                   {product.sizes && (
                     <span className="text-xs text-forest-green/60">
-                      {product.sizes.join(', ')}
+                      {product.sizes.join(", ")}
                     </span>
                   )}
                 </div>
@@ -195,14 +222,16 @@ export default function Shop() {
                     className="flex-1 bg-terracotta hover:bg-terracotta/90 text-beige"
                   >
                     <ShoppingCart className="w-4 h-4 mr-2" />
-                    {getCartItemCount(product.id) > 0 
-                      ? `En carrito (${getCartItemCount(product.id)})` 
-                      : 'Añadir'
-                    }
+                    {getCartItemCount(product.id) > 0
+                      ? `En carrito (${getCartItemCount(product.id)})`
+                      : "Añadir"}
                   </Button>
-                  
+
                   <Link to={`/product/${product.id}`}>
-                    <Button variant="outline" className="border-terracotta text-terracotta hover:bg-terracotta hover:text-beige">
+                    <Button
+                      variant="outline"
+                      className="border-terracotta text-terracotta hover:bg-terracotta hover:text-beige"
+                    >
                       Ver
                     </Button>
                   </Link>
@@ -214,9 +243,11 @@ export default function Shop() {
 
         {filteredProducts.length === 0 && (
           <div className="text-center py-12">
-            <p className="text-forest-green/70 text-lg mb-4">No se encontraron productos en esta categoría</p>
-            <Button 
-              onClick={() => setSelectedCategory('all')}
+            <p className="text-forest-green/70 text-lg mb-4">
+              No se encontraron productos en esta categoría
+            </p>
+            <Button
+              onClick={() => setSelectedCategory("all")}
               className="bg-terracotta hover:bg-terracotta/90 text-beige"
             >
               Ver todos los productos
