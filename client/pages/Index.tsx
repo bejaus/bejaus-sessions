@@ -83,8 +83,14 @@ export default function Index() {
             errorMessage = "";
           } else if (error.message.includes("404")) {
             errorMessage = "Canal no encontrado. Usando contenido de ejemplo.";
+          } else if (error.name === 'AbortError') {
+            console.log("Request timed out, using fallback content");
+            errorMessage = "";
+          } else if (error.message.includes("Failed to fetch") || error.message.includes("fetch")) {
+            console.log("Network error, using fallback content");
+            errorMessage = "";
           } else {
-            errorMessage = "Usando videos de ejemplo.";
+            errorMessage = "";
           }
         }
 
