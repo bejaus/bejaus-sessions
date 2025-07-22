@@ -44,9 +44,7 @@ export default function Index() {
         const controller = new AbortController();
         const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
 
-        // Use native fetch to avoid FullStory interference
-        const nativeFetch = window.fetch.bind(window);
-        const response = await nativeFetch("/api/youtube-videos", {
+        const response = await fetch("/api/youtube-videos", {
           signal: controller.signal,
           headers: {
             'Accept': 'application/json',
@@ -344,7 +342,7 @@ export default function Index() {
           {/* Header */}
           <div className="text-center mb-20">
             <span className="inline-block bg-forest-green/10 text-forest-green px-6 py-3 rounded-full text-sm font-semibold mb-6 tracking-wide uppercase">
-              🎵 Bejaus Sessions
+              ���� Bejaus Sessions
             </span>
             <h2 className="text-4xl md:text-6xl font-bold text-forest-green mb-6">
               Vibra con nosotros
