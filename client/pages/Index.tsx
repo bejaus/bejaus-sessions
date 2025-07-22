@@ -25,7 +25,8 @@ export default function Index() {
   );
   const [isLoadingVideos, setIsLoadingVideos] = useState(true);
   const [videoError, setVideoError] = useState<string | null>(null);
-  const { addToCart } = useCart();
+  const { addToCart, cart } = useCart();
+  const { toast } = useToast();
 
   useEffect(() => {
     const handleScroll = () => {
