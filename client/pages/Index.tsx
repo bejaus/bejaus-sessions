@@ -565,36 +565,36 @@ export default function Index() {
             </Link>
 
             {/* Product 2 - Hoodie */}
-            <Card className="bg-beige border-0 overflow-hidden group hover:scale-105 transition-transform duration-300">
-              <div className="aspect-square bg-forest-green/10 overflow-hidden">
-                <img
-                  src="/placeholder.svg"
-                  alt="Hoodie Bejaus Sessions"
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                />
-              </div>
-              <div className="p-6">
-                <h3 className="text-xl font-semibold text-forest-green mb-2 min-h-[3.5rem] flex items-center">
-                  Hoodie Bejaus Sessions
-                </h3>
-                <p className="text-forest-green/70 text-sm mb-4">
-                  80% Algodón, 20% Poliéster
-                </p>
-                <div className="flex justify-between items-center mb-4">
-                  <span className="text-2xl font-bold text-forest-green">
-                    45€
-                  </span>
-                  <span className="text-sm text-forest-green/60">
-                    S, M, L, XL
-                  </span>
+            <Link to="/product/bejaus-hoodie" className="block">
+              <Card className="bg-beige border-0 overflow-hidden group hover:scale-105 transition-transform duration-300 cursor-pointer">
+                <div className="aspect-square bg-forest-green/10 overflow-hidden">
+                  <img
+                    src="/placeholder.svg"
+                    alt="Hoodie Bejaus Sessions"
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                  />
                 </div>
-                <Link to="/shop">
-                  <Button className="w-full bg-terracotta hover:bg-terracotta/90 text-beige">
-                    Ver en tienda
+                <div className="p-6">
+                  <h3 className="text-xl font-semibold text-forest-green mb-2 min-h-[3.5rem] flex items-center">
+                    Hoodie Bejaus Sessions
+                  </h3>
+                  <p className="text-forest-green/70 text-sm mb-4">
+                    80% Algodón, 20% Poliéster
+                  </p>
+                  <div className="flex justify-between items-center mb-4">
+                    <span className="text-2xl font-bold text-forest-green">
+                      45€
+                    </span>
+                    <span className="text-sm text-forest-green/60">
+                      S, M, L, XL
+                    </span>
+                  </div>
+                  <Button className="w-full bg-terracotta hover:bg-terracotta/90 text-beige pointer-events-none">
+                    Ver producto
                   </Button>
-                </Link>
-              </div>
-            </Card>
+                </div>
+              </Card>
+            </Link>
 
             {/* Product 3 - Taza */}
             <Card className="bg-beige border-0 overflow-hidden group hover:scale-105 transition-transform duration-300">
