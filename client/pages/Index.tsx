@@ -57,32 +57,9 @@ export default function Index() {
         console.log("YouTube data received:", data);
         setYoutubeData(data);
       } catch (error) {
-        console.error("Error fetching YouTube videos:", error);
-
-        // Don't show error for expected development scenarios
-        let errorMessage = "";
-
-        if (error instanceof Error) {
-          if (
-            error.message.includes("API key not configured") ||
-            error.message.includes("Channel ID not configured")
-          ) {
-            // Don't show error for development mode
-            errorMessage = "";
-          } else if (error.message.includes("404")) {
-            errorMessage = "Canal no encontrado. Usando contenido de ejemplo.";
-          } else if (error.name === 'AbortError') {
-            console.log("Request timed out, using fallback content");
-            errorMessage = "";
-          } else if (error.message.includes("Failed to fetch") || error.message.includes("fetch")) {
-            console.log("Network error, using fallback content");
-            errorMessage = "";
-          } else {
-            errorMessage = "";
-          }
-        }
-
-        setVideoError(errorMessage);
+        // Silently handle all errors and use fallback content
+        console.log("YouTube fetch failed, using fallback content:", error instanceof Error ? error.message : 'Unknown error');
+        setVideoError("");
         // Keep static content as fallback
       } finally {
         setIsLoadingVideos(false);
