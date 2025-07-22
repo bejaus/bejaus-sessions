@@ -71,9 +71,8 @@ export default function Shop() {
             </div>
             <Link to="/cart" className="relative">
               <Button
-                variant="outline"
                 size="lg"
-                className="border-beige text-beige hover:bg-beige hover:text-forest-green bg-transparent"
+                className="bg-beige text-forest-green hover:bg-beige/90 hover:text-forest-green"
               >
                 <ShoppingCart className="w-5 h-5 mr-2" />
                 Carrito
