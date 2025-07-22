@@ -230,15 +230,11 @@ export default function Cart() {
                 </div>
               )}
 
-              <Button
-                className="w-full bg-terracotta hover:bg-terracotta/90 text-beige text-lg py-3 mb-3"
-                onClick={() => {
-                  // This will be connected to Square later
-                  alert("Checkout será integrado con Square próximamente");
-                }}
-              >
-                Proceder al pago
-              </Button>
+              <Link to="/checkout">
+                <Button className="w-full bg-terracotta hover:bg-terracotta/90 text-beige text-lg py-3 mb-3">
+                  Proceder al pago
+                </Button>
+              </Link>
 
               <Link to="/shop">
                 <Button
