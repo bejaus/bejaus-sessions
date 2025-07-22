@@ -35,7 +35,7 @@ export default function Cart() {
             <h2 className="text-2xl font-bold text-forest-green mb-4">Tu carrito está vacío</h2>
             <p className="text-forest-green/70 mb-8">¡Descubre nuestros productos únicos y añade algunos a tu carrito!</p>
             <Link to="/shop">
-              <Button className="bg-forest-green hover:bg-forest-green/90 text-beige text-lg px-8 py-3">
+              <Button className="bg-terracotta hover:bg-terracotta/90 text-beige text-lg px-8 py-3">
                 Explorar tienda
               </Button>
             </Link>
@@ -109,7 +109,7 @@ export default function Cart() {
                           size="sm"
                           onClick={() => handleUpdateQuantity(item.product.id, item.quantity - 1, item.selectedSize)}
                           disabled={item.quantity <= 1}
-                          className="w-8 h-8 p-0 border-forest-green text-forest-green hover:bg-forest-green hover:text-beige"
+                          className="w-8 h-8 p-0 border-terracotta text-terracotta hover:bg-terracotta hover:text-beige"
                         >
                           <Minus className="w-3 h-3" />
                         </Button>
@@ -120,7 +120,7 @@ export default function Cart() {
                           variant="outline"
                           size="sm"
                           onClick={() => handleUpdateQuantity(item.product.id, item.quantity + 1, item.selectedSize)}
-                          className="w-8 h-8 p-0 border-forest-green text-forest-green hover:bg-forest-green hover:text-beige"
+                          className="w-8 h-8 p-0 border-terracotta text-terracotta hover:bg-terracotta hover:text-beige"
                         >
                           <Plus className="w-3 h-3" />
                         </Button>
@@ -186,7 +186,7 @@ export default function Cart() {
               )}
 
               <Button 
-                className="w-full bg-forest-green hover:bg-forest-green/90 text-beige text-lg py-3 mb-3"
+                className="w-full bg-terracotta hover:bg-terracotta/90 text-beige text-lg py-3 mb-3"
                 onClick={() => {
                   // This will be connected to Square later
                   alert('Checkout será integrado con Square próximamente');
@@ -196,7 +196,7 @@ export default function Cart() {
               </Button>
 
               <Link to="/shop">
-                <Button variant="outline" className="w-full border-forest-green text-forest-green hover:bg-forest-green hover:text-beige">
+                <Button variant="outline" className="w-full border-terracotta text-terracotta hover:bg-terracotta hover:text-beige">
                   Continuar comprando
                 </Button>
               </Link>
