@@ -304,11 +304,13 @@ export function SquareCheckout({ onSuccess, onError, customerEmail }: SquareChec
         <div>
           <h3 className="text-lg font-semibold text-forest-green mb-4">Método de pago</h3>
           
-          {/* Digital Wallets */}
-          <div className="space-y-3 mb-6">
-            <div ref={googlePayRef} className="min-h-[40px]"></div>
-            <div ref={applePayRef} className="min-h-[40px]"></div>
-          </div>
+          {/* Digital Wallets - Only show in production mode */}
+          {!demoMode && (
+            <div className="space-y-3 mb-6">
+              <div ref={googlePayRef} className="min-h-[40px]"></div>
+              <div ref={applePayRef} className="min-h-[40px]"></div>
+            </div>
+          )}
 
           {/* Card Payment */}
           <div className="space-y-4">
