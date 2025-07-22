@@ -580,96 +580,138 @@ export default function Index() {
             </Card>
 
             {/* Product 2 - Hoodie */}
-            <Link to="/product/bejaus-hoodie" className="block">
-              <Card className="bg-beige border-0 overflow-hidden group hover:scale-105 transition-transform duration-300 cursor-pointer">
-                <div className="aspect-square bg-forest-green/10 overflow-hidden">
+            <Card className="bg-beige border-0 overflow-hidden group hover:scale-105 transition-transform duration-300">
+              <Link to="/product/bejaus-hoodie">
+                <div className="aspect-square bg-forest-green/10 overflow-hidden cursor-pointer">
                   <img
                     src="/placeholder.svg"
                     alt="Hoodie Bejaus Sessions"
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                   />
                 </div>
-                <div className="p-6">
-                  <h3 className="text-xl font-semibold text-forest-green mb-2 min-h-[3.5rem] flex items-center">
+              </Link>
+              <div className="p-6">
+                <Link to="/product/bejaus-hoodie">
+                  <h3 className="text-xl font-semibold text-forest-green mb-2 min-h-[3.5rem] flex items-center hover:text-forest-green/80 cursor-pointer">
                     Hoodie Bejaus Sessions
                   </h3>
-                  <p className="text-forest-green/70 text-sm mb-4">
-                    80% Algodón, 20% Poliéster
-                  </p>
-                  <div className="flex justify-between items-center mb-4">
-                    <span className="text-2xl font-bold text-forest-green">
-                      45€
-                    </span>
-                    <span className="text-sm text-forest-green/60">
-                      S, M, L, XL
-                    </span>
-                  </div>
-                  <Button className="w-full bg-terracotta hover:bg-terracotta/90 text-beige pointer-events-none">
-                    Ver producto
+                </Link>
+                <p className="text-forest-green/70 text-sm mb-4">
+                  80% Algodón, 20% Poliéster
+                </p>
+                <div className="flex justify-between items-center mb-4">
+                  <span className="text-2xl font-bold text-forest-green">
+                    45€
+                  </span>
+                  <span className="text-sm text-forest-green/60">
+                    S, M, L, XL
+                  </span>
+                </div>
+                <div className="flex gap-2">
+                  <Link to="/product/bejaus-hoodie" className="flex-1">
+                    <Button variant="outline" className="w-full border-terracotta text-terracotta hover:bg-terracotta hover:text-beige">
+                      Ver producto
+                    </Button>
+                  </Link>
+                  <Button
+                    className="flex-1 bg-terracotta hover:bg-terracotta/90 text-beige"
+                    onClick={() => {
+                      alert('Producto añadido al carrito');
+                    }}
+                  >
+                    Añadir
                   </Button>
                 </div>
-              </Card>
-            </Link>
+              </div>
+            </Card>
 
             {/* Product 3 - Vinyl */}
-            <Link to="/product/bejaus-vinyl" className="block">
-              <Card className="bg-beige border-0 overflow-hidden group hover:scale-105 transition-transform duration-300 cursor-pointer">
-                <div className="aspect-square bg-forest-green/10 overflow-hidden">
+            <Card className="bg-beige border-0 overflow-hidden group hover:scale-105 transition-transform duration-300">
+              <Link to="/product/bejaus-vinyl">
+                <div className="aspect-square bg-forest-green/10 overflow-hidden cursor-pointer">
                   <img
                     src="/placeholder.svg"
                     alt="Compilation Vinyl Vol.1"
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                   />
                 </div>
-                <div className="p-6">
-                  <h3 className="text-xl font-semibold text-forest-green mb-2 min-h-[3.5rem] flex items-center">
+              </Link>
+              <div className="p-6">
+                <Link to="/product/bejaus-vinyl">
+                  <h3 className="text-xl font-semibold text-forest-green mb-2 min-h-[3.5rem] flex items-center hover:text-forest-green/80 cursor-pointer">
                     Compilation Vinyl Vol.1
                   </h3>
-                  <p className="text-forest-green/70 text-sm mb-4">
-                    Edición limitada numerada
-                  </p>
-                  <div className="flex justify-between items-center mb-4">
-                    <span className="text-2xl font-bold text-forest-green">
-                      35€
-                    </span>
-                    <span className="text-sm text-forest-green/60">Vinilo</span>
-                  </div>
-                  <Button className="w-full bg-terracotta hover:bg-terracotta/90 text-beige pointer-events-none">
-                    Ver producto
+                </Link>
+                <p className="text-forest-green/70 text-sm mb-4">
+                  Edición limitada numerada
+                </p>
+                <div className="flex justify-between items-center mb-4">
+                  <span className="text-2xl font-bold text-forest-green">
+                    35€
+                  </span>
+                  <span className="text-sm text-forest-green/60">Vinilo</span>
+                </div>
+                <div className="flex gap-2">
+                  <Link to="/product/bejaus-vinyl" className="flex-1">
+                    <Button variant="outline" className="w-full border-terracotta text-terracotta hover:bg-terracotta hover:text-beige">
+                      Ver producto
+                    </Button>
+                  </Link>
+                  <Button
+                    className="flex-1 bg-terracotta hover:bg-terracotta/90 text-beige"
+                    onClick={() => {
+                      alert('Producto añadido al carrito');
+                    }}
+                  >
+                    Añadir
                   </Button>
                 </div>
-              </Card>
-            </Link>
+              </div>
+            </Card>
 
             {/* Product 4 - Tote Bag */}
-            <Link to="/product/bejaus-tote" className="block">
-              <Card className="bg-beige border-0 overflow-hidden group hover:scale-105 transition-transform duration-300 cursor-pointer">
-                <div className="aspect-square bg-forest-green/10 overflow-hidden">
+            <Card className="bg-beige border-0 overflow-hidden group hover:scale-105 transition-transform duration-300">
+              <Link to="/product/bejaus-tote">
+                <div className="aspect-square bg-forest-green/10 overflow-hidden cursor-pointer">
                   <img
                     src="/placeholder.svg"
                     alt="Tote Bag Bejaus"
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                   />
                 </div>
-                <div className="p-6">
-                  <h3 className="text-xl font-semibold text-forest-green mb-2 min-h-[3.5rem] flex items-center">
+              </Link>
+              <div className="p-6">
+                <Link to="/product/bejaus-tote">
+                  <h3 className="text-xl font-semibold text-forest-green mb-2 min-h-[3.5rem] flex items-center hover:text-forest-green/80 cursor-pointer">
                     Tote Bag Bejaus
                   </h3>
-                  <p className="text-forest-green/70 text-sm mb-4">
-                    Algodón sostenible
-                  </p>
-                  <div className="flex justify-between items-center mb-4">
-                    <span className="text-2xl font-bold text-forest-green">
-                      15€
-                    </span>
-                    <span className="text-sm text-forest-green/60">Ecológico</span>
-                  </div>
-                  <Button className="w-full bg-terracotta hover:bg-terracotta/90 text-beige pointer-events-none">
-                    Ver producto
+                </Link>
+                <p className="text-forest-green/70 text-sm mb-4">
+                  Algodón sostenible
+                </p>
+                <div className="flex justify-between items-center mb-4">
+                  <span className="text-2xl font-bold text-forest-green">
+                    15€
+                  </span>
+                  <span className="text-sm text-forest-green/60">Ecológico</span>
+                </div>
+                <div className="flex gap-2">
+                  <Link to="/product/bejaus-tote" className="flex-1">
+                    <Button variant="outline" className="w-full border-terracotta text-terracotta hover:bg-terracotta hover:text-beige">
+                      Ver producto
+                    </Button>
+                  </Link>
+                  <Button
+                    className="flex-1 bg-terracotta hover:bg-terracotta/90 text-beige"
+                    onClick={() => {
+                      alert('Producto añadido al carrito');
+                    }}
+                  >
+                    Añadir
                   </Button>
                 </div>
-              </Card>
-            </Link>
+              </div>
+            </Card>
           </div>
 
           {/* Ver toda la tienda */}
@@ -693,7 +735,7 @@ export default function Index() {
             Sé parte de la vibra Bejaus
           </h2>
           <p className="text-xl text-forest-green mb-12 leading-relaxed">
-            Apúntate para recibir noticias de pr��ximos eventos, descuentos y
+            Apúntate para recibir noticias de próximos eventos, descuentos y
             sesiones exclusivas.
           </p>
 
