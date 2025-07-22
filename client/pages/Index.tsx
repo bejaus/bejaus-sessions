@@ -683,6 +683,10 @@ export default function Index() {
                       const product = mockProducts.find(p => p.id === 'bejaus-vinyl');
                       if (product) {
                         addToCart(product, 1);
+                        toast({
+                          title: "¡Producto añadido!",
+                          description: `${product.name} se ha añadido al carrito`,
+                        });
                       }
                     }}
                   >
