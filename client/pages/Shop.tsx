@@ -4,12 +4,15 @@ import { Card } from "../components/ui/card";
 import { Button } from "../components/ui/button";
 import { Badge } from "../components/ui/badge";
 import { ShoppingCart, Filter, Grid3X3, List } from "lucide-react";
-import { mockProducts, Product } from "../../shared/types";
+import { useEffect } from "react";
 import { useCart } from "../contexts/CartContext";
 import { CartPreview } from "../components/CartPreview";
 
 export default function Shop() {
   const { addToCart, cart } = useCart();
+  const [products, setProducts] = useState([]);
+  const [isLoadingProducts, setIsLoadingProducts] = useState(true);
+  const [productsError, setProductsError] = useState<string | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
   const [sortBy, setSortBy] = useState<"name" | "price" | "featured">(
@@ -24,7 +27,35 @@ export default function Shop() {
     { id: "coffee", name: "Café" },
   ];
 
-  const filteredProducts = mockProducts
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        setIsLoadingProducts(true);
+        setProductsError(null);
+        const response = await fetch("/api/square-products");
+        if (!response.ok) throw new Error("Error fetching products");
+        const data = await response.json();
+        setProducts(data.products || []);
+      } catch (err) {
+        setProductsError("No se pudieron cargar los productos");
+      } finally {
+        setIsLoadingProducts(false);
+      }
+    };
+    fetchProducts();
+  }, []);
+
+  const filteredProducts = products
+    .map((product) => ({
+      ...product,
+      // Map to expected Product shape for cart logic and display
+      price: product.price / 100, // Convert cents to euros
+      images: [product.imageUrl || '/placeholder.svg'],
+      sizes: [],
+      colors: [],
+      inStock: product.inStock !== false,
+      featured: false,
+    }))
     .filter(
       (product) =>
         selectedCategory === "all" || product.category === selectedCategory,
@@ -42,7 +73,7 @@ export default function Shop() {
       }
     });
 
-  const handleAddToCart = (product: Product) => {
+  const handleAddToCart = (product: any) => {
     addToCart(product, 1);
   };
 
@@ -154,106 +185,116 @@ export default function Shop() {
           </div>
         </div>
 
-        {/* Products Grid */}
-        <div
-          className={
-            viewMode === "grid"
-              ? "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
-              : "space-y-6"
-          }
-        >
-          {filteredProducts.map((product) => (
-            <Card
-              key={product.id}
-              className={`group overflow-hidden bg-white border-forest-green/10 hover:shadow-lg transition-all duration-300 ${
-                viewMode === "list" ? "flex" : ""
-              }`}
+        {/* Products Section */}
+        <>
+          {isLoadingProducts ? (
+            <div className="text-center py-12">
+              <span className="text-forest-green/70 text-lg mb-4">Cargando productos...</span>
+            </div>
+          ) : productsError ? (
+            <div className="text-center py-12">
+              <span className="text-forest-green/70 text-lg mb-4">{productsError}</span>
+            </div>
+          ) : (
+            <div
+              className={
+                viewMode === "grid"
+                  ? "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+                  : "space-y-6"
+              }
             >
-              {/* Product Image */}
-              <div
-                className={`bg-forest-green/5 overflow-hidden ${
-                  viewMode === "list" ? "w-48 flex-shrink-0" : "aspect-square"
-                }`}
-              >
-                <img
-                  src={product.images[0]}
-                  alt={product.name}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                />
-                {product.featured && (
-                  <Badge className="absolute top-2 left-2 bg-terracotta text-beige border-0">
-                    Destacado
-                  </Badge>
-                )}
-                {!product.inStock && (
-                  <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
-                    <Badge variant="destructive">Agotado</Badge>
-                  </div>
-                )}
-              </div>
-
-              {/* Product Info */}
-              <div className="p-4 flex-1">
-                <Link to={`/product/${product.id}`}>
-                  <h3 className="font-semibold text-forest-green mb-2 hover:text-forest-green/80 transition-colors">
-                    {product.name}
-                  </h3>
-                </Link>
-
-                <p className="text-forest-green/70 text-sm mb-3 line-clamp-2">
-                  {product.description}
-                </p>
-
-                <div className="flex items-center justify-between mb-3">
-                  <span className="text-xl font-bold text-forest-green">
-                    {product.price}€
-                  </span>
-                  {product.sizes && (
-                    <span className="text-xs text-forest-green/60">
-                      {product.sizes.join(", ")}
-                    </span>
-                  )}
-                </div>
-
-                <div className="flex gap-2">
-                  <Button
-                    onClick={() => handleAddToCart(product)}
-                    disabled={!product.inStock}
-                    className="flex-1 bg-terracotta hover:bg-terracotta/90 text-beige"
+              {filteredProducts.map((product) => (
+                <Card
+                  key={product.id}
+                  className={`group overflow-hidden bg-white border-forest-green/10 hover:shadow-lg transition-all duration-300 ${viewMode === "list" ? "flex" : ""
+                    }`}
+                >
+                  {/* Product Image */}
+                  <div
+                    className={`bg-forest-green/5 overflow-hidden ${viewMode === "list" ? "w-48 flex-shrink-0" : "aspect-square"
+                      }`}
                   >
-                    <ShoppingCart className="w-4 h-4 mr-2" />
-                    {getCartItemCount(product.id) > 0
-                      ? `En carrito (${getCartItemCount(product.id)})`
-                      : "Añadir"}
-                  </Button>
+                    <img
+                      src={product.images[0]}
+                      alt={product.name}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    />
+                    {product.featured && (
+                      <Badge className="absolute top-2 left-2 bg-terracotta text-beige border-0">
+                        Destacado
+                      </Badge>
+                    )}
+                    {!product.inStock && (
+                      <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
+                        <Badge variant="destructive">Agotado</Badge>
+                      </div>
+                    )}
+                  </div>
 
-                  <Link to={`/product/${product.id}`}>
-                    <Button
-                      variant="outline"
-                      className="border-terracotta text-terracotta hover:bg-terracotta hover:text-beige"
-                    >
-                      Ver
-                    </Button>
-                  </Link>
-                </div>
-              </div>
-            </Card>
-          ))}
-        </div>
+                  {/* Product Info */}
+                  <div className="p-4 flex-1">
+                    <Link to={`/product/${product.id}`}>
+                      <h3 className="font-semibold text-forest-green mb-2 hover:text-forest-green/80 transition-colors">
+                        {product.name}
+                      </h3>
+                    </Link>
 
-        {filteredProducts.length === 0 && (
-          <div className="text-center py-12">
-            <p className="text-forest-green/70 text-lg mb-4">
-              No se encontraron productos en esta categoría
-            </p>
-            <Button
-              onClick={() => setSelectedCategory("all")}
-              className="bg-terracotta hover:bg-terracotta/90 text-beige"
-            >
-              Ver todos los productos
-            </Button>
-          </div>
-        )}
+                    <p className="text-forest-green/70 text-sm mb-3 line-clamp-2">
+                      {product.description}
+                    </p>
+
+                    <div className="flex items-center justify-between mb-3">
+                      <span className="text-xl font-bold text-forest-green">
+                        {product.price.toFixed(2)}€
+                      </span>
+                      {product.sizes && (
+                        <span className="text-xs text-forest-green/60">
+                          {product.sizes.join(", ")}
+                        </span>
+                      )}
+                    </div>
+
+                    <div className="flex gap-2">
+                      <Button
+                        onClick={() => handleAddToCart(product)}
+                        disabled={!product.inStock}
+                        className="flex-1 bg-terracotta hover:bg-terracotta/90 text-beige"
+                      >
+                        <ShoppingCart className="w-4 h-4 mr-2" />
+                        {getCartItemCount(product.id) > 0
+                          ? `En carrito (${getCartItemCount(product.id)})`
+                          : "Añadir"}
+                      </Button>
+
+                      <Link to={`/product/${product.id}`}>
+                        <Button
+                          variant="outline"
+                          className="border-terracotta text-terracotta hover:bg-terracotta hover:text-beige"
+                        >
+                          Ver
+                        </Button>
+                      </Link>
+                    </div>
+                  </div>
+                </Card>
+              ))}
+            </div>
+          )}
+
+          {filteredProducts.length === 0 && !isLoadingProducts && !productsError && (
+            <div className="text-center py-12">
+              <p className="text-forest-green/70 text-lg mb-4">
+                No se encontraron productos en esta categoría
+              </p>
+              <Button
+                onClick={() => setSelectedCategory("all")}
+                className="bg-terracotta hover:bg-terracotta/90 text-beige"
+              >
+                Ver todos los productos
+              </Button>
+            </div>
+          )}
+        </>
       </div>
     </div>
   );

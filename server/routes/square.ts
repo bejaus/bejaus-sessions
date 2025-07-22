@@ -3,12 +3,45 @@ import {
   SquarePaymentRequest,
   SquarePaymentResponse,
 } from "../../shared/square";
+import fs from "fs";
 
 // You'll need to install: npm install squareup
 // import { Client, Environment, ApiError } from 'squareup';
 
 // Add at the top if not present:
 // import fetch from 'node-fetch';
+
+const CACHE_FILE = "merch.json";
+function loadImageCache() {
+  if (fs.existsSync(CACHE_FILE)) {
+    return JSON.parse(fs.readFileSync(CACHE_FILE, "utf-8"));
+  }
+  return {};
+}
+function saveImageCache(cache) {
+  fs.writeFileSync(CACHE_FILE, JSON.stringify(cache, null, 2), "utf-8");
+}
+async function fetchImageUrl(imageId, accessToken, cache) {
+  if (cache[imageId]) {
+    return cache[imageId];
+  }
+  const response = await fetch(
+    `https://connect.squareup.com/v2/catalog/object/${imageId}`,
+    {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        Accept: "application/json",
+      },
+    },
+  );
+  const data = await response.json();
+  const url = data.object?.image_data?.url || null;
+  if (url) {
+    cache[imageId] = url;
+    saveImageCache(cache);
+  }
+  return url;
+}
 
 export const handleSquarePayment: RequestHandler = async (req, res) => {
   try {
@@ -139,7 +172,6 @@ export const handleSquareProducts: RequestHandler = async (_req, res) => {
         imagesById[obj.id] = obj.image_data.url;
       }
     });
-    console.log(imagesById);
     // Filter items by merch category
     const items = (data.objects || []).filter(
       (obj) =>
@@ -149,18 +181,21 @@ export const handleSquareProducts: RequestHandler = async (_req, res) => {
         obj.item_data.categories.some((cat) => cat.id === MERCH_CATEGORY_ID),
     );
 
-    // Map to a simplified product structure, resolving imageUrl from image_ids
-
-    const products = items.map((obj) => {
+    const imageCache = loadImageCache();
+    const products = [];
+    for (const obj of items) {
       let imageUrl = null;
-      // Only use image_ids and IMAGE objects for product images
       if (
         Array.isArray(obj.item_data.image_ids) &&
         obj.item_data.image_ids.length > 0
       ) {
-        imageUrl = imagesById[obj.item_data.image_ids[0]] || null;
+        imageUrl = await fetchImageUrl(
+          obj.item_data.image_ids[0],
+          process.env.SQUARE_ACCESS_TOKEN,
+          imageCache,
+        );
       }
-      return {
+      products.push({
         id: obj.id,
         name: obj.item_data.name,
         description: obj.item_data.description,
@@ -172,9 +207,9 @@ export const handleSquareProducts: RequestHandler = async (_req, res) => {
             ?.currency || "EUR",
         imageUrl,
         category: MERCH_CATEGORY_ID,
-        inStock: true, // Square Catalog API does not provide stock by default
-      };
-    });
+        inStock: true,
+      });
+    }
 
     res.json({ products });
   } catch (error) {
