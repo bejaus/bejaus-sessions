@@ -604,7 +604,10 @@ export default function Index() {
                   <Button
                     className="flex-1 bg-terracotta hover:bg-terracotta/90 text-beige"
                     onClick={() => {
-                      alert('Producto añadido al carrito');
+                      const product = mockProducts.find(p => p.id === 'bejaus-hoodie');
+                      if (product) {
+                        addToCart(product, 1);
+                      }
                     }}
                   >
                     Añadir
