@@ -28,12 +28,12 @@ export interface SquarePaymentResponse {
 export interface SquareConfig {
   applicationId: string;
   locationId: string;
-  environment: 'production' | 'sandbox';
+  environment: "production" | "sandbox";
 }
 
 // Default configuration for development/demo using Square's demo credentials
 export const DEFAULT_SQUARE_CONFIG: SquareConfig = {
-  applicationId: 'sandbox-sq0idb-your-sandbox-app-id',
-  locationId: 'main',
-  environment: 'sandbox',
+  applicationId: "sandbox-sq0idb-your-sandbox-app-id",
+  locationId: "main",
+  environment: "sandbox",
 };

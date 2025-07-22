@@ -178,7 +178,11 @@ export function CartPreview({ children }: CartPreviewProps) {
               </Button>
             </Link>
 
-            <Link to="/checkout" onClick={() => setIsOpen(false)} className="block">
+            <Link
+              to="/checkout"
+              onClick={() => setIsOpen(false)}
+              className="block"
+            >
               <Button
                 variant="outline"
                 className="w-full border-terracotta text-terracotta hover:bg-terracotta hover:text-beige"

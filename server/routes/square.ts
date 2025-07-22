@@ -1,22 +1,26 @@
 import { RequestHandler } from "express";
-import { SquarePaymentRequest, SquarePaymentResponse } from "../../shared/square";
+import {
+  SquarePaymentRequest,
+  SquarePaymentResponse,
+} from "../../shared/square";
 
 // You'll need to install: npm install squareup
 // import { Client, Environment, ApiError } from 'squareup';
 
 export const handleSquarePayment: RequestHandler = async (req, res) => {
   try {
-    const { sourceId, amount, currency, items, customer } = req.body as SquarePaymentRequest & { sourceId: string };
+    const { sourceId, amount, currency, items, customer } =
+      req.body as SquarePaymentRequest & { sourceId: string };
 
     // For development/demo purposes, return a mock successful response
     // In production, you would use the actual Square SDK here
-    
+
     if (!process.env.SQUARE_ACCESS_TOKEN) {
-      console.log('Square payment simulation - no access token configured');
-      
+      console.log("Square payment simulation - no access token configured");
+
       // Simulate processing time
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+
       // Mock successful response
       const mockResponse: SquarePaymentResponse = {
         success: true,
@@ -24,15 +28,15 @@ export const handleSquarePayment: RequestHandler = async (req, res) => {
         receipt: {
           receiptNumber: `RCP-${Date.now()}`,
           amount: amount / 100, // Convert back to euros
-          currency: currency || 'EUR',
+          currency: currency || "EUR",
         },
       };
 
-      console.log('Mock payment processed:', {
+      console.log("Mock payment processed:", {
         amount: amount / 100,
         currency,
         items: items?.length || 0,
-        customer: customer?.email || 'anonymous',
+        customer: customer?.email || "anonymous",
       });
 
       res.json(mockResponse);
@@ -79,15 +83,15 @@ export const handleSquarePayment: RequestHandler = async (req, res) => {
       throw new Error('Payment processing failed');
     }
     */
-
   } catch (error) {
-    console.error('Square payment error:', error);
-    
+    console.error("Square payment error:", error);
+
     const errorResponse: SquarePaymentResponse = {
       success: false,
-      error: error instanceof Error ? error.message : 'Payment processing failed',
+      error:
+        error instanceof Error ? error.message : "Payment processing failed",
     };
-    
+
     res.status(400).json(errorResponse);
   }
 };

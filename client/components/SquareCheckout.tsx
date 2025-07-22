@@ -1,10 +1,14 @@
-import { useEffect, useRef, useState } from 'react';
-import { Button } from './ui/button';
-import { Card } from './ui/card';
-import { Loader2, CreditCard, Smartphone } from 'lucide-react';
-import { useCart } from '../contexts/CartContext';
-import { useToast } from '../hooks/use-toast';
-import { SquarePaymentRequest, SquareConfig, DEFAULT_SQUARE_CONFIG } from '../../shared/square';
+import { useEffect, useRef, useState } from "react";
+import { Button } from "./ui/button";
+import { Card } from "./ui/card";
+import { Loader2, CreditCard, Smartphone } from "lucide-react";
+import { useCart } from "../contexts/CartContext";
+import { useToast } from "../hooks/use-toast";
+import {
+  SquarePaymentRequest,
+  SquareConfig,
+  DEFAULT_SQUARE_CONFIG,
+} from "../../shared/square";
 
 // Declare Square global type
 declare global {
@@ -19,12 +23,18 @@ interface SquareCheckoutProps {
   customerEmail?: string;
 }
 
-export function SquareCheckout({ onSuccess, onError, customerEmail }: SquareCheckoutProps) {
+export function SquareCheckout({
+  onSuccess,
+  onError,
+  customerEmail,
+}: SquareCheckoutProps) {
   const { cart, clearCart } = useCart();
   const { toast } = useToast();
   const [isSquareLoaded, setIsSquareLoaded] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
-  const [squareConfig, setSquareConfig] = useState<SquareConfig>(DEFAULT_SQUARE_CONFIG);
+  const [squareConfig, setSquareConfig] = useState<SquareConfig>(
+    DEFAULT_SQUARE_CONFIG,
+  );
   const [demoMode, setDemoMode] = useState(true); // Use demo mode until Square is properly configured
   const cardRef = useRef<HTMLDivElement>(null);
   const googlePayRef = useRef<HTMLDivElement>(null);
@@ -41,27 +51,32 @@ export function SquareCheckout({ onSuccess, onError, customerEmail }: SquareChec
     // Fetch Square configuration from server
     const fetchSquareConfig = async () => {
       try {
-        const response = await fetch('/api/square-config');
-        if (response.ok && response.headers.get('content-type')?.includes('application/json')) {
+        const response = await fetch("/api/square-config");
+        if (
+          response.ok &&
+          response.headers.get("content-type")?.includes("application/json")
+        ) {
           const config = await response.json();
-          console.log('Fetched Square config:', config);
+          console.log("Fetched Square config:", config);
           setSquareConfig(config);
         } else {
-          console.log('Square config API not available, using default sandbox config');
+          console.log(
+            "Square config API not available, using default sandbox config",
+          );
           // Use default demo config that definitely works
           setSquareConfig({
-            applicationId: 'sandbox-sq0idb-demo-app-id',
-            locationId: 'demo-location-id',
-            environment: 'sandbox'
+            applicationId: "sandbox-sq0idb-demo-app-id",
+            locationId: "demo-location-id",
+            environment: "sandbox",
           });
         }
       } catch (error) {
-        console.log('Failed to fetch Square config, using default:', error);
+        console.log("Failed to fetch Square config, using default:", error);
         // Use default demo config that definitely works
         setSquareConfig({
-          applicationId: 'sandbox-sq0idb-demo-app-id',
-          locationId: 'demo-location-id',
-          environment: 'sandbox'
+          applicationId: "sandbox-sq0idb-demo-app-id",
+          locationId: "demo-location-id",
+          environment: "sandbox",
         });
       }
     };
@@ -72,7 +87,7 @@ export function SquareCheckout({ onSuccess, onError, customerEmail }: SquareChec
   useEffect(() => {
     // Only load Square SDK if not in demo mode
     if (demoMode) {
-      console.log('Demo mode active - skipping Square SDK initialization');
+      console.log("Demo mode active - skipping Square SDK initialization");
       setIsSquareLoaded(true);
       return;
     }
@@ -84,18 +99,19 @@ export function SquareCheckout({ onSuccess, onError, customerEmail }: SquareChec
         return;
       }
 
-      const script = document.createElement('script');
-      script.src = 'https://web.squarecdn.com/v1/square.js';
+      const script = document.createElement("script");
+      script.src = "https://web.squarecdn.com/v1/square.js";
       script.async = true;
       script.onload = () => {
         setIsSquareLoaded(true);
         initializeSquare();
       };
       script.onerror = () => {
-        console.error('Failed to load Square SDK');
+        console.error("Failed to load Square SDK");
         toast({
           title: "Error de pago",
-          description: "No se pudo cargar el sistema de pagos. Inténtalo de nuevo.",
+          description:
+            "No se pudo cargar el sistema de pagos. Inténtalo de nuevo.",
           variant: "destructive",
         });
       };
@@ -108,7 +124,7 @@ export function SquareCheckout({ onSuccess, onError, customerEmail }: SquareChec
       try {
         const paymentsInstance = window.Square.payments(
           squareConfig.applicationId,
-          squareConfig.locationId
+          squareConfig.locationId,
         );
         setPayments(paymentsInstance);
 
@@ -121,30 +137,29 @@ export function SquareCheckout({ onSuccess, onError, customerEmail }: SquareChec
         try {
           const googlePay = await paymentsInstance.googlePay({
             buttonOptions: {
-              buttonColor: 'default',
-              buttonType: 'pay',
+              buttonColor: "default",
+              buttonType: "pay",
             },
           });
           await googlePay.attach(googlePayRef.current);
         } catch (e) {
-          console.log('Google Pay not available');
+          console.log("Google Pay not available");
         }
 
         // Initialize Apple Pay (if available)
         try {
           const applePay = await paymentsInstance.applePay({
             buttonOptions: {
-              buttonColor: 'black',
-              buttonType: 'pay',
+              buttonColor: "black",
+              buttonType: "pay",
             },
           });
           await applePay.attach(applePayRef.current);
         } catch (e) {
-          console.log('Apple Pay not available');
+          console.log("Apple Pay not available");
         }
-
       } catch (error) {
-        console.error('Error initializing Square:', error);
+        console.error("Error initializing Square:", error);
         toast({
           title: "Error de configuración",
           description: "Problema al configurar el sistema de pagos.",
@@ -164,13 +179,13 @@ export function SquareCheckout({ onSuccess, onError, customerEmail }: SquareChec
     try {
       // Tokenize the payment method
       const result = await paymentMethod.tokenize();
-      
-      if (result.status === 'OK') {
+
+      if (result.status === "OK") {
         // Send payment request to your backend
         const paymentRequest: SquarePaymentRequest = {
           amount: finalTotalCents,
-          currency: 'EUR',
-          items: cart.items.map(item => ({
+          currency: "EUR",
+          items: cart.items.map((item) => ({
             id: item.product.id,
             name: item.product.name,
             quantity: item.quantity,
@@ -181,10 +196,10 @@ export function SquareCheckout({ onSuccess, onError, customerEmail }: SquareChec
           },
         };
 
-        const response = await fetch('/api/square-payment', {
-          method: 'POST',
+        const response = await fetch("/api/square-payment", {
+          method: "POST",
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
           body: JSON.stringify({
             sourceId: result.token,
@@ -203,16 +218,19 @@ export function SquareCheckout({ onSuccess, onError, customerEmail }: SquareChec
           });
           onSuccess?.(paymentResult);
         } else {
-          throw new Error(paymentResult.error || 'Payment failed');
+          throw new Error(paymentResult.error || "Payment failed");
         }
       } else {
-        throw new Error(result.errors?.[0]?.detail || 'Tokenization failed');
+        throw new Error(result.errors?.[0]?.detail || "Tokenization failed");
       }
     } catch (error) {
-      console.error('Payment error:', error);
+      console.error("Payment error:", error);
       toast({
         title: "Error en el pago",
-        description: error instanceof Error ? error.message : "Ocurrió un error procesando el pago",
+        description:
+          error instanceof Error
+            ? error.message
+            : "Ocurrió un error procesando el pago",
         variant: "destructive",
       });
       onError?.(error);
@@ -236,7 +254,7 @@ export function SquareCheckout({ onSuccess, onError, customerEmail }: SquareChec
 
     try {
       // Simulate processing time
-      await new Promise(resolve => setTimeout(resolve, 2000));
+      await new Promise((resolve) => setTimeout(resolve, 2000));
 
       // Simulate successful payment
       const demoResult = {
@@ -245,7 +263,7 @@ export function SquareCheckout({ onSuccess, onError, customerEmail }: SquareChec
         receipt: {
           receiptNumber: `DEMO-${Date.now()}`,
           amount: finalTotalCents / 100,
-          currency: 'EUR',
+          currency: "EUR",
         },
       };
 
@@ -255,9 +273,8 @@ export function SquareCheckout({ onSuccess, onError, customerEmail }: SquareChec
         description: `Simulación de pago completada. Recibo: ${demoResult.receipt.receiptNumber}`,
       });
       onSuccess?.(demoResult);
-
     } catch (error) {
-      console.error('Demo payment error:', error);
+      console.error("Demo payment error:", error);
       toast({
         title: "Error en pago demo",
         description: "Error en la simulación de pago",
@@ -282,7 +299,9 @@ export function SquareCheckout({ onSuccess, onError, customerEmail }: SquareChec
       <div className="space-y-6">
         {/* Order Summary */}
         <div>
-          <h3 className="text-lg font-semibold text-forest-green mb-4">Resumen del pedido</h3>
+          <h3 className="text-lg font-semibold text-forest-green mb-4">
+            Resumen del pedido
+          </h3>
           <div className="space-y-2 text-sm">
             <div className="flex justify-between">
               <span>Subtotal ({cart.itemCount} artículos)</span>
@@ -290,7 +309,7 @@ export function SquareCheckout({ onSuccess, onError, customerEmail }: SquareChec
             </div>
             <div className="flex justify-between">
               <span>Envío</span>
-              <span>{cart.total >= 50 ? 'Gratis' : '5.99€'}</span>
+              <span>{cart.total >= 50 ? "Gratis" : "5.99€"}</span>
             </div>
             <hr className="border-forest-green/20" />
             <div className="flex justify-between font-semibold text-lg">
@@ -302,8 +321,10 @@ export function SquareCheckout({ onSuccess, onError, customerEmail }: SquareChec
 
         {/* Payment Methods */}
         <div>
-          <h3 className="text-lg font-semibold text-forest-green mb-4">Método de pago</h3>
-          
+          <h3 className="text-lg font-semibold text-forest-green mb-4">
+            Método de pago
+          </h3>
+
           {/* Digital Wallets - Only show in production mode */}
           {!demoMode && (
             <div className="space-y-3 mb-6">
@@ -316,7 +337,9 @@ export function SquareCheckout({ onSuccess, onError, customerEmail }: SquareChec
           <div className="space-y-4">
             <div className="flex items-center gap-2 text-sm text-forest-green/70">
               <CreditCard className="w-4 h-4" />
-              <span>{demoMode ? 'Pago de demostración' : 'O paga con tarjeta'}</span>
+              <span>
+                {demoMode ? "Pago de demostración" : "O paga con tarjeta"}
+              </span>
             </div>
 
             {demoMode ? (
@@ -340,10 +363,10 @@ export function SquareCheckout({ onSuccess, onError, customerEmail }: SquareChec
               {isProcessing ? (
                 <>
                   <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                  {demoMode ? 'Procesando demo...' : 'Procesando pago...'}
+                  {demoMode ? "Procesando demo..." : "Procesando pago..."}
                 </>
               ) : (
-                `${demoMode ? 'Simular pago' : 'Pagar'} ${(finalTotalCents / 100).toFixed(2)}€`
+                `${demoMode ? "Simular pago" : "Pagar"} ${(finalTotalCents / 100).toFixed(2)}€`
               )}
             </Button>
           </div>
