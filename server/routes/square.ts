@@ -10,20 +10,8 @@ import {
   SquareError,
 } from "square";
 
-const CACHE_FILE = "merch.json";
-function loadImageCache() {
-  if (fs.existsSync(CACHE_FILE)) {
-    return JSON.parse(fs.readFileSync(CACHE_FILE, "utf-8"));
-  }
-  return {};
-}
-function saveImageCache(cache) {
-  fs.writeFileSync(CACHE_FILE, JSON.stringify(cache, null, 2), "utf-8");
-}
-async function fetchImageUrl(imageId, accessToken, cache) {
-  if (cache[imageId]) {
-    return cache[imageId];
-  }
+async function fetchImageUrl(imageId, accessToken) {
+  // Always fetch from Square
   const response = await fetch(
     `https://connect.squareup.com/v2/catalog/object/${imageId}`,
     {
@@ -34,12 +22,7 @@ async function fetchImageUrl(imageId, accessToken, cache) {
     },
   );
   const data = await response.json();
-  const url = data.object?.image_data?.url || null;
-  if (url) {
-    cache[imageId] = url;
-    saveImageCache(cache);
-  }
-  return url;
+  return data.object?.image_data?.url || null;
 }
 
 export const handleSquarePayment: RequestHandler = async (req, res) => {
@@ -152,7 +135,7 @@ export const handleSquareProducts: RequestHandler = async (_req, res) => {
         obj.item_data.categories.some((cat) => cat.id === MERCH_CATEGORY_ID),
     );
 
-    const imageCache = loadImageCache();
+    // Remove imageCache and cache usage
     const products = [];
     for (const obj of items) {
       let imageUrl = null;
@@ -163,7 +146,6 @@ export const handleSquareProducts: RequestHandler = async (_req, res) => {
         imageUrl = await fetchImageUrl(
           obj.item_data.image_ids[0],
           process.env.SQUARE_ACCESS_TOKEN,
-          imageCache,
         );
       }
       products.push({
