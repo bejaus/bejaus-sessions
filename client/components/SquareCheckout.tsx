@@ -123,6 +123,11 @@ export function SquareCheckout({
       if (!window.Square) return;
 
       try {
+        // Validate application ID format
+        if (!squareConfig.applicationId || squareConfig.applicationId.includes('your-real-application-id')) {
+          throw new Error('Invalid or placeholder Square Application ID');
+        }
+
         const paymentsInstance = window.Square.payments(
           squareConfig.applicationId,
           squareConfig.locationId,
