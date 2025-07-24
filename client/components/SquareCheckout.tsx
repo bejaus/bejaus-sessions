@@ -166,10 +166,14 @@ export function SquareCheckout({
         }
       } catch (error) {
         console.error("Error initializing Square:", error);
+
+        // Fall back to demo mode if Square initialization fails
+        setSquareInitFailed(true);
+        setDemoMode(true);
+
         toast({
-          title: "Error de configuración",
-          description: "Problema al configurar el sistema de pagos.",
-          variant: "destructive",
+          title: "Usando modo demostración",
+          description: "Square no está configurado correctamente. Usando pagos simulados.",
         });
       }
     };
