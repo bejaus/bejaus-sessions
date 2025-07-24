@@ -179,7 +179,7 @@ export function SquareCheckout({
     };
 
     loadSquareSDK();
-  }, [squareConfig, demoMode]);
+  }, [squareConfig, demoMode, squareInitFailed]);
 
   const handlePayment = async (paymentMethod: any) => {
     if (!payments || isProcessing) return;
