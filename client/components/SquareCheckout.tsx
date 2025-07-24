@@ -86,9 +86,9 @@ export function SquareCheckout({
   }, []);
 
   useEffect(() => {
-    // Only load Square SDK if not in demo mode
-    if (demoMode) {
-      console.log("Demo mode active - skipping Square SDK initialization");
+    // Only load Square SDK if not in demo mode and Square init hasn't failed
+    if (demoMode || squareInitFailed) {
+      console.log("Demo mode active or Square init failed - skipping Square SDK initialization");
       setIsSquareLoaded(true);
       return;
     }
