@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useParams, Link, Navigate } from "react-router-dom";
 import { Card } from "../components/ui/card";
 import { Button } from "../components/ui/button";
@@ -11,21 +11,61 @@ import {
   Heart,
   Share2,
 } from "lucide-react";
-import { mockProducts } from "../../shared/types";
 import { useCart } from "../contexts/CartContext";
 
 export default function ProductDetail() {
   const { productId } = useParams<{ productId: string }>();
   const { addToCart, cart } = useCart();
 
-  const product = mockProducts.find((p) => p.id === productId);
+  const [products, setProducts] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [product, setProduct] = useState<any>(null);
+  const [relatedProducts, setRelatedProducts] = useState<any[]>([]);
 
   const [selectedSize, setSelectedSize] = useState<string>("");
   const [selectedColor, setSelectedColor] = useState<string>("");
   const [quantity, setQuantity] = useState(1);
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
 
-  if (!product) {
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        setIsLoading(true);
+        setError(null);
+        const response = await fetch("/api/square-products");
+        if (!response.ok) throw new Error("Error fetching products");
+        const data = await response.json();
+        const mapped = (data.products || []).map((p: any) => ({
+          ...p,
+          price: p.price / 100,
+          images: [p.imageUrl || '/placeholder.svg'],
+          sizes: [],
+          colors: [],
+          inStock: p.inStock !== false,
+          featured: false,
+        }));
+        setProducts(mapped);
+        const found = mapped.find((p) => p.id === productId);
+        setProduct(found || null);
+        if (found) {
+          setRelatedProducts(
+            mapped.filter((p) => p.id !== found.id && p.category === found.category).slice(0, 4)
+          );
+        }
+      } catch (err) {
+        setError("No se pudo cargar el producto");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchProducts();
+  }, [productId]);
+
+  if (isLoading) {
+    return <div className="min-h-screen flex items-center justify-center bg-beige text-forest-green text-lg">Cargando producto...</div>;
+  }
+  if (error || !product) {
     return <Navigate to="/shop" replace />;
   }
 
@@ -117,11 +157,10 @@ export default function ProductDetail() {
                   <button
                     key={index}
                     onClick={() => setSelectedImageIndex(index)}
-                    className={`w-20 h-20 rounded-md overflow-hidden border-2 ${
-                      selectedImageIndex === index
+                    className={`w-20 h-20 rounded-md overflow-hidden border-2 ${selectedImageIndex === index
                         ? "border-forest-green"
                         : "border-transparent hover:border-forest-green/50"
-                    }`}
+                      }`}
                   >
                     <img
                       src={image}
@@ -141,7 +180,7 @@ export default function ProductDetail() {
                 {product.name}
               </h1>
               <p className="text-2xl font-semibold text-forest-green mb-4">
-                {product.price}€
+                {product.price.toFixed(2)}€
               </p>
               <p className="text-forest-green/80 leading-relaxed">
                 {product.description}
@@ -310,35 +349,30 @@ export default function ProductDetail() {
             Productos relacionados
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {mockProducts
-              .filter(
-                (p) => p.id !== product.id && p.category === product.category,
-              )
-              .slice(0, 4)
-              .map((relatedProduct) => (
-                <Card
-                  key={relatedProduct.id}
-                  className="group overflow-hidden bg-white border-forest-green/10 hover:shadow-lg transition-all duration-300"
-                >
-                  <Link to={`/product/${relatedProduct.id}`}>
-                    <div className="aspect-square bg-forest-green/5 overflow-hidden">
-                      <img
-                        src={relatedProduct.images[0]}
-                        alt={relatedProduct.name}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                      />
-                    </div>
-                    <div className="p-4">
-                      <h3 className="font-semibold text-forest-green mb-2 group-hover:text-forest-green/80">
-                        {relatedProduct.name}
-                      </h3>
-                      <p className="text-lg font-bold text-forest-green">
-                        {relatedProduct.price}€
-                      </p>
-                    </div>
-                  </Link>
-                </Card>
-              ))}
+            {relatedProducts.map((relatedProduct) => (
+              <Card
+                key={relatedProduct.id}
+                className="group overflow-hidden bg-white border-forest-green/10 hover:shadow-lg transition-all duration-300"
+              >
+                <Link to={`/product/${relatedProduct.id}`}>
+                  <div className="aspect-square bg-forest-green/5 overflow-hidden">
+                    <img
+                      src={relatedProduct.images[0]}
+                      alt={relatedProduct.name}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    />
+                  </div>
+                  <div className="p-4">
+                    <h3 className="font-semibold text-forest-green mb-2 group-hover:text-forest-green/80">
+                      {relatedProduct.name}
+                    </h3>
+                    <p className="text-lg font-bold text-forest-green">
+                      {relatedProduct.price.toFixed(2)}€
+                    </p>
+                  </div>
+                </Link>
+              </Card>
+            ))}
           </div>
         </div>
       </div>
