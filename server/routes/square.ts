@@ -4,12 +4,11 @@ import {
   SquarePaymentResponse,
 } from "../../shared/square";
 import fs from "fs";
-
-// You'll need to install: npm install squareup
-// import { Client, Environment, ApiError } from 'squareup';
-
-// Add at the top if not present:
-// import fetch from 'node-fetch';
+import {
+  SquareClient as Client,
+  SquareEnvironment as Environment,
+  SquareError,
+} from "square";
 
 const CACHE_FILE = "merch.json";
 function loadImageCache() {
@@ -48,51 +47,23 @@ export const handleSquarePayment: RequestHandler = async (req, res) => {
     const { sourceId, amount, currency, items, customer } =
       req.body as SquarePaymentRequest & { sourceId: string };
 
-    // For development/demo purposes, return a mock successful response
-    // In production, you would use the actual Square SDK here
-
-    if (!process.env.SQUARE_ACCESS_TOKEN) {
-      console.log("Square payment simulation - no access token configured");
-
-      // Simulate processing time
-      await new Promise((resolve) => setTimeout(resolve, 2000));
-
-      // Mock successful response
-      const mockResponse: SquarePaymentResponse = {
-        success: true,
-        transactionId: `txn_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
-        receipt: {
-          receiptNumber: `RCP-${Date.now()}`,
-          amount: amount / 100, // Convert back to euros
-          currency: currency || "EUR",
-        },
-      };
-
-      console.log("Mock payment processed:", {
-        amount: amount / 100,
-        currency,
-        items: items?.length || 0,
-        customer: customer?.email || "anonymous",
-      });
-
-      res.json(mockResponse);
-      return;
-    }
-
-    // Production Square integration (uncomment when ready):
-    /*
+    console.log("Creating Square client");
     const client = new Client({
-      accessToken: process.env.SQUARE_ACCESS_TOKEN,
-      environment: process.env.NODE_ENV === 'production' ? Environment.Production : Environment.Sandbox,
+      token: process.env.SQUARE_ACCESS_TOKEN,
+      environment:
+        process.env.NODE_ENV === "production"
+          ? Environment.Production
+          : Environment.Sandbox,
     });
 
-    const { paymentsApi } = client;
-    
+    const { payments } = client;
+    console.log("Square client created", JSON.stringify(payments, null, 2));
+
     const requestBody = {
       sourceId,
       amountMoney: {
         amount: BigInt(amount),
-        currency: currency as 'EUR' | 'USD',
+        currency: currency as "EUR" | "USD",
       },
       locationId: process.env.SQUARE_LOCATION_ID!,
       idempotencyKey: `${Date.now()}-${Math.random()}`,
@@ -100,25 +71,24 @@ export const handleSquarePayment: RequestHandler = async (req, res) => {
       buyerEmailAddress: customer?.email,
     };
 
-    const response = await paymentsApi.createPayment(requestBody);
-    
-    if (response.result.payment) {
-      const payment = response.result.payment;
+    const response = await payments.create(requestBody);
+
+    if (response.payment) {
+      const payment = response.payment;
       const successResponse: SquarePaymentResponse = {
         success: true,
         transactionId: payment.id,
         receipt: {
           receiptNumber: payment.receiptNumber || `RCP-${Date.now()}`,
           amount: Number(payment.amountMoney?.amount || 0) / 100,
-          currency: payment.amountMoney?.currency || 'EUR',
+          currency: payment.amountMoney?.currency || "EUR",
         },
       };
-      
+
       res.json(successResponse);
     } else {
-      throw new Error('Payment processing failed');
+      throw new Error("Payment processing failed");
     }
-    */
   } catch (error) {
     console.error("Square payment error:", error);
 
@@ -155,6 +125,7 @@ export const handleSquareProducts: RequestHandler = async (_req, res) => {
         },
       },
     );
+    console.log("Square products response", response);
 
     if (!response.ok) {
       const errorText = await response.text();
