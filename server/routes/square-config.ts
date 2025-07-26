@@ -6,7 +6,10 @@ export const handleSquareConfig: RequestHandler = async (req, res) => {
     console.log("Square config request received");
 
     // Only return public configuration needed for client-side Square SDK
-
+    console.log("SQUARE_ACCESS_TOKEN", process.env.SQUARE_ACCESS_TOKEN);
+    console.log("SQUARE_LOCATION_ID", process.env.SQUARE_LOCATION_ID);
+    console.log("NODE_ENV", process.env.NODE_ENV);
+    console.log("SQUARE_APPLICATION_ID", process.env.SQUARE_APPLICATION_ID);
     const config: SquareConfig = {
       applicationId:
         process.env.SQUARE_APPLICATION_ID || "sandbox-sq0idb-demo-app-id",
