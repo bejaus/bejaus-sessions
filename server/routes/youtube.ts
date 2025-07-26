@@ -1,6 +1,18 @@
 import { RequestHandler } from "express";
 import { YouTubeVideo, YouTubeApiResponse } from "@shared/api";
 import { Redis } from "@upstash/redis";
+import fs from "fs";
+
+// Helper function to get mock YouTube data from JSON file
+function getMockYouTubeData(): YouTubeApiResponse {
+  try {
+    const mockData = fs.readFileSync("youtube_videos_cache.json", "utf8");
+    return JSON.parse(mockData);
+  } catch (error) {
+    console.log("Failed to read mock YouTube data:", error);
+    return getMockResponse();
+  }
+}
 
 // Helper function to get mock response
 function getMockResponse(): YouTubeApiResponse {
@@ -79,21 +91,23 @@ export const handleYouTubeVideos: RequestHandler = async (req, res) => {
 
     // Check if we have all required configurations
     if (!API_KEY || !CHANNEL_ID) {
-      console.log("YouTube API not fully configured, returning mock data");
+      console.log(
+        "YouTube API not fully configured, using mock data from JSON file",
+      );
       res.setHeader("X-Cache", "DISABLED");
-      return res.json(getMockResponse());
+      return res.json(getMockYouTubeData());
     }
 
     // Check if Redis is configured for caching
     if (!UPSTASH_REDIS_REST_URL || !UPSTASH_REDIS_REST_TOKEN) {
       console.log(
-        "Redis cache not configured - using mock data to avoid YouTube API quota issues",
+        "Redis cache not configured - using mock data from JSON file to avoid YouTube API quota issues",
       );
       console.log(
         "To enable real YouTube data, configure UPSTASH_REDIS_REST_URL and UPSTASH_REDIS_REST_TOKEN",
       );
       res.setHeader("X-Cache", "DISABLED");
-      return res.json(getMockResponse());
+      return res.json(getMockYouTubeData());
     }
 
     console.log("Fetching videos from channel:", CHANNEL_ID);
@@ -111,10 +125,9 @@ export const handleYouTubeVideos: RequestHandler = async (req, res) => {
 
     if (!channelResponse.ok) {
       const errorText = await channelResponse.text();
-      console.error("Channel API Error:", errorText);
-      throw new Error(
-        `Failed to fetch channel videos: ${channelResponse.status} - ${errorText}`,
-      );
+      console.error("Channel API Error, using mock data:", errorText);
+      res.setHeader("X-Cache", "DISABLED");
+      return res.json(getMockYouTubeData());
     }
 
     const channelData = await channelResponse.json();
@@ -144,10 +157,9 @@ export const handleYouTubeVideos: RequestHandler = async (req, res) => {
 
     if (!statsResponse.ok) {
       const errorText = await statsResponse.text();
-      console.error("Stats API Error:", errorText);
-      throw new Error(
-        `Failed to fetch video statistics: ${statsResponse.status} - ${errorText}`,
-      );
+      console.error("Stats API Error, using mock data:", errorText);
+      res.setHeader("X-Cache", "DISABLED");
+      return res.json(getMockYouTubeData());
     }
 
     const statsData = await statsResponse.json();
@@ -205,11 +217,8 @@ export const handleYouTubeVideos: RequestHandler = async (req, res) => {
 
     res.json(response);
   } catch (error) {
-    console.error("YouTube API Error:", error);
-    res.status(500).json({
-      error: "Failed to fetch YouTube videos",
-      details: error instanceof Error ? error.message : "Unknown error",
-      debug: "Check server logs for more details",
-    });
+    console.error("YouTube API Error, using mock data:", error);
+    res.setHeader("X-Cache", "DISABLED");
+    res.json(getMockYouTubeData());
   }
 };

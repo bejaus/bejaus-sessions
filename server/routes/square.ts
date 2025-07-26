@@ -11,6 +11,17 @@ import {
 } from "square";
 import { Redis } from "@upstash/redis";
 
+// Helper function to get mock Square products from JSON file
+function getMockSquareProducts() {
+  try {
+    const mockData = fs.readFileSync("square_products_cache.json", "utf8");
+    return JSON.parse(mockData);
+  } catch (error) {
+    console.log("Failed to read mock Square products:", error);
+    return [];
+  }
+}
+
 async function fetchImageUrl(imageId, accessToken) {
   // Always fetch from Square
   const response = await fetch(
@@ -104,9 +115,9 @@ export const handleSquareProducts: RequestHandler = async (_req, res) => {
   }
   try {
     if (!process.env.SQUARE_ACCESS_TOKEN) {
-      return res
-        .status(500)
-        .json({ error: "Square access token not configured" });
+      console.log("Square access token not configured, using mock data");
+      res.setHeader("X-Cache", "DISABLED");
+      return res.json({ products: getMockSquareProducts() });
     }
 
     // Check cache first
@@ -140,9 +151,9 @@ export const handleSquareProducts: RequestHandler = async (_req, res) => {
 
     if (!response.ok) {
       const errorText = await response.text();
-      return res
-        .status(500)
-        .json({ error: "Failed to fetch from Square", details: errorText });
+      console.log("Square API failed, using mock data:", errorText);
+      res.setHeader("X-Cache", "DISABLED");
+      return res.json({ products: getMockSquareProducts() });
     }
 
     const data = await response.json();
@@ -207,7 +218,8 @@ export const handleSquareProducts: RequestHandler = async (_req, res) => {
 
     res.json({ products });
   } catch (error) {
-    console.error("Error fetching Square products:", error);
-    res.status(500).json({ error: "Failed to fetch Square products" });
+    console.error("Error fetching Square products, using mock data:", error);
+    res.setHeader("X-Cache", "DISABLED");
+    res.json({ products: getMockSquareProducts() });
   }
 };
