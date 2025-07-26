@@ -172,11 +172,10 @@ export default function Index() {
               </button>
               <button
                 onClick={() => {
-                  // First try to scroll to bottom to see if section exists
-                  window.scrollTo({
-                    top: document.body.scrollHeight,
-                    behavior: "smooth",
-                  });
+                  const section = document.querySelector("#contacto");
+                  if (section) {
+                    section.scrollIntoView({ behavior: "smooth", block: "start" });
+                  }
                 }}
                 className="text-beige/80 hover:text-beige transition-colors text-sm font-medium"
               >
