@@ -172,13 +172,18 @@ export default function Index() {
               </button>
               <button
                 onClick={() => {
+                  console.log("Contact button clicked");
                   const section = document.querySelector("#contacto") as HTMLElement | null;
+                  console.log("Contact section found:", section);
                   if (section) {
                     const offsetTop = section.offsetTop - 80;
+                    console.log("Scrolling to:", offsetTop);
                     window.scrollTo({
                       top: offsetTop,
                       behavior: "smooth",
                     });
+                  } else {
+                    console.log("Contact section not found!");
                   }
                 }}
                 className="text-beige/80 hover:text-beige transition-colors text-sm font-medium"
