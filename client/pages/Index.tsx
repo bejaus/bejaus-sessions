@@ -732,7 +732,9 @@ export default function Index() {
           {formSubmitted ? (
             <div className="max-w-md mx-auto text-center space-y-4">
               <div className="text-6xl">✅</div>
-              <h3 className="text-2xl font-semibold text-beige">¡Mensaje enviado!</h3>
+              <h3 className="text-2xl font-semibold text-beige">
+                ¡Mensaje enviado!
+              </h3>
               <p className="text-beige/80">
                 Gracias por contactarnos. Te responderemos muy pronto.
               </p>
@@ -751,7 +753,9 @@ export default function Index() {
               onSubmit={async (e) => {
                 e.preventDefault();
                 const form = e.currentTarget;
-                const submitButton = form.querySelector('button[type="submit"]') as HTMLButtonElement;
+                const submitButton = form.querySelector(
+                  'button[type="submit"]',
+                ) as HTMLButtonElement;
 
                 if (submitButton) {
                   submitButton.disabled = true;
@@ -760,22 +764,27 @@ export default function Index() {
 
                 try {
                   const formData = new FormData(form);
-                  const response = await fetch("https://formspree.io/f/xzzbavqy", {
-                    method: "POST",
-                    body: formData,
-                    headers: {
-                      'Accept': 'application/json'
-                    }
-                  });
+                  const response = await fetch(
+                    "https://formspree.io/f/xzzbavqy",
+                    {
+                      method: "POST",
+                      body: formData,
+                      headers: {
+                        Accept: "application/json",
+                      },
+                    },
+                  );
 
                   if (response.ok) {
                     setFormSubmitted(true);
                     form.reset();
                   } else {
-                    throw new Error('Error sending message');
+                    throw new Error("Error sending message");
                   }
                 } catch (error) {
-                  alert("Hubo un error enviando el mensaje. Por favor intenta de nuevo.");
+                  alert(
+                    "Hubo un error enviando el mensaje. Por favor intenta de nuevo.",
+                  );
                 } finally {
                   if (submitButton) {
                     submitButton.disabled = false;
@@ -784,8 +793,16 @@ export default function Index() {
                 }
               }}
             >
-              <input type="hidden" name="_subject" value="Nuevo mensaje desde Bejaus Sessions" />
-              <input type="hidden" name="_next" value="https://bejaus.com/gracias" />
+              <input
+                type="hidden"
+                name="_subject"
+                value="Nuevo mensaje desde Bejaus Sessions"
+              />
+              <input
+                type="hidden"
+                name="_next"
+                value="https://bejaus.com/gracias"
+              />
 
               <div>
                 <input
