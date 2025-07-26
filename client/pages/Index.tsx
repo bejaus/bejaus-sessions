@@ -729,18 +729,16 @@ export default function Index() {
           </p>
 
           <form
+            action="https://formspree.io/f/xzzbavqy"
+            method="POST"
             className="max-w-md mx-auto space-y-6"
             onSubmit={(e) => {
-              e.preventDefault();
-              const formData = new FormData(e.currentTarget);
-              const data = {
-                name: formData.get("name"),
-                email: formData.get("email"),
-                message: formData.get("message"),
-              };
-              console.log("Contact form submitted:", data);
-              // TODO: Add email sending functionality
-              alert("Gracias por tu mensaje. Te contactaremos pronto!");
+              // Let Formspree handle the submission
+              const submitButton = e.currentTarget.querySelector('button[type="submit"]') as HTMLButtonElement;
+              if (submitButton) {
+                submitButton.disabled = true;
+                submitButton.textContent = "Enviando...";
+              }
             }}
           >
             <div>
