@@ -700,12 +700,56 @@ export default function Index() {
             Escríbenos y hablemos.
           </p>
 
-          <Button
-            size="lg"
-            className="bg-beige hover:bg-beige/90 text-forest-green px-8 py-4 text-lg font-semibold"
+          <form
+            className="max-w-md mx-auto space-y-6"
+            onSubmit={(e) => {
+              e.preventDefault();
+              const formData = new FormData(e.currentTarget);
+              const data = {
+                name: formData.get('name'),
+                email: formData.get('email'),
+                message: formData.get('message')
+              };
+              console.log('Contact form submitted:', data);
+              // TODO: Add email sending functionality
+              alert('Gracias por tu mensaje. Te contactaremos pronto!');
+            }}
           >
-            Contactar
-          </Button>
+            <div>
+              <input
+                type="text"
+                name="name"
+                placeholder="Tu nombre"
+                required
+                className="w-full px-4 py-3 rounded-md bg-beige/10 border border-beige/20 text-beige placeholder-beige/60 focus:outline-none focus:ring-2 focus:ring-beige focus:border-transparent"
+              />
+            </div>
+            <div>
+              <input
+                type="email"
+                name="email"
+                placeholder="Tu email"
+                required
+                className="w-full px-4 py-3 rounded-md bg-beige/10 border border-beige/20 text-beige placeholder-beige/60 focus:outline-none focus:ring-2 focus:ring-beige focus:border-transparent"
+              />
+            </div>
+            <div>
+              <textarea
+                name="message"
+                placeholder="Cuéntanos sobre tu espacio y tu idea..."
+                required
+                rows={4}
+                className="w-full px-4 py-3 rounded-md bg-beige/10 border border-beige/20 text-beige placeholder-beige/60 focus:outline-none focus:ring-2 focus:ring-beige focus:border-transparent resize-none"
+              />
+            </div>
+            <Button
+              type="submit"
+              size="lg"
+              className="w-full bg-beige hover:bg-beige/90 text-forest-green px-8 py-4 text-lg font-semibold"
+            >
+              Enviar mensaje
+            </Button>
+          </form>
         </div>
       </section>
 
