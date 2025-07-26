@@ -30,6 +30,7 @@ export default function Index() {
   const [products, setProducts] = useState([]);
   const [isLoadingProducts, setIsLoadingProducts] = useState(true);
   const [productsError, setProductsError] = useState<string | null>(null);
+  const [formSubmitted, setFormSubmitted] = useState(false);
 
   // Newsletter subscription state
   const [subscribeName, setSubscribeName] = useState("");
@@ -55,7 +56,12 @@ export default function Index() {
 
         console.log("Fetching YouTube videos from /api/youtube-videos");
 
-        const response = await fetch("/api/youtube-videos");
+        const response = await fetch("/api/youtube-videos", {
+          cache: "no-cache",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
         console.log("Response status:", response.status, response.statusText);
 
         if (!response.ok) {
@@ -93,8 +99,18 @@ export default function Index() {
       try {
         setIsLoadingProducts(true);
         setProductsError(null);
-        const response = await fetch("/api/square-products");
-        if (!response.ok) throw new Error("Error fetching products");
+        const response = await fetch("/api/square-products", {
+          cache: "no-cache",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        if (!response.ok) {
+          const errorText = await response.text().catch(() => "Unknown error");
+          throw new Error(
+            `Error fetching products: ${response.status} ${errorText}`,
+          );
+        }
         const data = await response.json();
         setProducts(data.products || []);
       } catch (err) {
@@ -173,14 +189,16 @@ export default function Index() {
     <div className="min-h-screen bg-beige">
       {/* Header */}
       <header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-in-out ${isScrolled
-          ? "bg-forest-green/95 backdrop-blur-md shadow-lg"
-          : "bg-transparent"
-          }`}
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-in-out ${
+          isScrolled
+            ? "bg-forest-green/95 backdrop-blur-md shadow-lg"
+            : "bg-transparent"
+        }`}
       >
         <div
-          className={`w-full px-6 xl:px-16 2xl:px-24 transition-all duration-300 ease-in-out ${isScrolled ? "py-2" : "py-4"
-            }`}
+          className={`w-full px-6 xl:px-16 2xl:px-24 transition-all duration-300 ease-in-out ${
+            isScrolled ? "py-2" : "py-4"
+          }`}
         >
           <div className="flex items-center justify-between">
             <div className="flex items-center">
@@ -196,7 +214,9 @@ export default function Index() {
             <nav className="hidden md:flex items-center space-x-8">
               <button
                 onClick={() => {
-                  const section = document.querySelector("#sobre-bejaus") as HTMLElement | null;
+                  const section = document.querySelector(
+                    "#sobre-bejaus",
+                  ) as HTMLElement | null;
                   if (section) {
                     const offsetTop = section.offsetTop - 80;
                     window.scrollTo({
@@ -211,7 +231,9 @@ export default function Index() {
               </button>
               <button
                 onClick={() => {
-                  const section = document.querySelector("#eventos") as HTMLElement | null;
+                  const section = document.querySelector(
+                    "#eventos",
+                  ) as HTMLElement | null;
                   if (section) {
                     const offsetTop = section.offsetTop - 80;
                     window.scrollTo({
@@ -226,7 +248,9 @@ export default function Index() {
               </button>
               <button
                 onClick={() => {
-                  const section = document.querySelector("#merch") as HTMLElement | null;
+                  const section = document.querySelector(
+                    "#merch",
+                  ) as HTMLElement | null;
                   if (section) {
                     const offsetTop = section.offsetTop - 80;
                     window.scrollTo({
@@ -241,12 +265,11 @@ export default function Index() {
               </button>
               <button
                 onClick={() => {
-                  const section = document.querySelector("#contacto") as HTMLElement | null;
+                  const section = document.querySelector("#contacto");
                   if (section) {
-                    const offsetTop = section.offsetTop - 80;
-                    window.scrollTo({
-                      top: offsetTop,
+                    section.scrollIntoView({
                       behavior: "smooth",
+                      block: "start",
                     });
                   }
                 }}
@@ -493,87 +516,87 @@ export default function Index() {
             <div className="grid md:grid-cols-3 gap-8">
               {isLoadingVideos
                 ? // Loading skeletons
-                Array.from({ length: 3 }).map((_, index) => (
-                  <Card
-                    key={index}
-                    className="bg-white/50 border-forest-green/20 overflow-hidden"
-                  >
-                    <div className="aspect-video bg-forest-green/10 animate-pulse"></div>
-                    <div className="p-6">
-                      <div className="h-5 bg-forest-green/20 rounded animate-pulse mb-2"></div>
-                      <div className="h-4 bg-forest-green/10 rounded animate-pulse"></div>
-                    </div>
-                  </Card>
-                ))
-                : youtubeData?.popular
-                  ? // Dynamic videos
-                  youtubeData.popular.map((video, index) => (
+                  Array.from({ length: 3 }).map((_, index) => (
                     <Card
-                      key={video.id}
-                      className="group hover:scale-105 transition-all duration-500 bg-white/50 border-forest-green/20 overflow-hidden"
+                      key={index}
+                      className="bg-white/50 border-forest-green/20 overflow-hidden"
                     >
-                      <div className="aspect-video bg-forest-green/10 overflow-hidden">
-                        <iframe
-                          src={`https://www.youtube.com/embed/${video.id}`}
-                          className="w-full h-full group-hover:scale-110 transition-transform duration-700"
-                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                          allowFullScreen
-                        />
-                      </div>
+                      <div className="aspect-video bg-forest-green/10 animate-pulse"></div>
                       <div className="p-6">
-                        <h4 className="font-semibold text-forest-green mb-2 line-clamp-2">
-                          {video.title.length > 50
-                            ? `${video.title.substring(0, 50)}...`
-                            : video.title}
-                        </h4>
-                        <p className="text-sm text-forest-green/70">
-                          {video.viewCount
-                            ? `${parseInt(video.viewCount).toLocaleString()} visualizaciones`
-                            : "Sesión especial"}
-                        </p>
+                        <div className="h-5 bg-forest-green/20 rounded animate-pulse mb-2"></div>
+                        <div className="h-4 bg-forest-green/10 rounded animate-pulse"></div>
                       </div>
                     </Card>
                   ))
+                : youtubeData?.popular
+                  ? // Dynamic videos
+                    youtubeData.popular.map((video, index) => (
+                      <Card
+                        key={video.id}
+                        className="group hover:scale-105 transition-all duration-500 bg-white/50 border-forest-green/20 overflow-hidden"
+                      >
+                        <div className="aspect-video bg-forest-green/10 overflow-hidden">
+                          <iframe
+                            src={`https://www.youtube.com/embed/${video.id}`}
+                            className="w-full h-full group-hover:scale-110 transition-transform duration-700"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowFullScreen
+                          />
+                        </div>
+                        <div className="p-6">
+                          <h4 className="font-semibold text-forest-green mb-2 line-clamp-2">
+                            {video.title.length > 50
+                              ? `${video.title.substring(0, 50)}...`
+                              : video.title}
+                          </h4>
+                          <p className="text-sm text-forest-green/70">
+                            {video.viewCount
+                              ? `${parseInt(video.viewCount).toLocaleString()} visualizaciones`
+                              : "Sesión especial"}
+                          </p>
+                        </div>
+                      </Card>
+                    ))
                   : // Fallback static videos
-                  [
-                    {
-                      id: "fflf6I7UHXM",
-                      title: "Jou Nielsen",
-                      description: "Una noche mágica con sonidos únicos",
-                    },
-                    {
-                      id: "zaoEoFKjoR4",
-                      title: "Noé",
-                      description: "Ritmos que conectan almas",
-                    },
-                    {
-                      id: "X52oRpXKOxM",
-                      title: "Alexx Zander Johnson",
-                      description: "Experiencias que trascienden",
-                    },
-                  ].map((video, index) => (
-                    <Card
-                      key={video.id}
-                      className="group hover:scale-105 transition-all duration-500 bg-white/50 border-forest-green/20 overflow-hidden"
-                    >
-                      <div className="aspect-video bg-forest-green/10 overflow-hidden">
-                        <iframe
-                          src={`https://www.youtube.com/embed/${video.id}`}
-                          className="w-full h-full group-hover:scale-110 transition-transform duration-700"
-                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                          allowFullScreen
-                        />
-                      </div>
-                      <div className="p-6">
-                        <h4 className="font-semibold text-forest-green mb-2">
-                          {video.title}
-                        </h4>
-                        <p className="text-sm text-forest-green/70">
-                          {video.description}
-                        </p>
-                      </div>
-                    </Card>
-                  ))}
+                    [
+                      {
+                        id: "fflf6I7UHXM",
+                        title: "Jou Nielsen",
+                        description: "Una noche mágica con sonidos únicos",
+                      },
+                      {
+                        id: "zaoEoFKjoR4",
+                        title: "Noé",
+                        description: "Ritmos que conectan almas",
+                      },
+                      {
+                        id: "X52oRpXKOxM",
+                        title: "Alexx Zander Johnson",
+                        description: "Experiencias que trascienden",
+                      },
+                    ].map((video, index) => (
+                      <Card
+                        key={video.id}
+                        className="group hover:scale-105 transition-all duration-500 bg-white/50 border-forest-green/20 overflow-hidden"
+                      >
+                        <div className="aspect-video bg-forest-green/10 overflow-hidden">
+                          <iframe
+                            src={`https://www.youtube.com/embed/${video.id}`}
+                            className="w-full h-full group-hover:scale-110 transition-transform duration-700"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowFullScreen
+                          />
+                        </div>
+                        <div className="p-6">
+                          <h4 className="font-semibold text-forest-green mb-2">
+                            {video.title}
+                          </h4>
+                          <p className="text-sm text-forest-green/70">
+                            {video.description}
+                          </p>
+                        </div>
+                      </Card>
+                    ))}
             </div>
           </div>
 
@@ -646,10 +669,10 @@ export default function Index() {
                 const mappedProduct = {
                   id: product.id,
                   name: product.name,
-                  description: product.description || '',
+                  description: product.description || "",
                   price: product.price / 100, // Convert cents to euros
-                  images: [product.imageUrl || '/placeholder.svg'],
-                  category: product.category || '',
+                  images: [product.imageUrl || "/placeholder.svg"],
+                  category: product.category || "",
                   sizes: [],
                   colors: [],
                   inStock: product.inStock !== false,
@@ -657,11 +680,14 @@ export default function Index() {
                   featured: false,
                 };
                 return (
-                  <Card key={product.id} className="bg-beige border-0 overflow-hidden group hover:scale-105 transition-transform duration-300">
+                  <Card
+                    key={product.id}
+                    className="bg-beige border-0 overflow-hidden group hover:scale-105 transition-transform duration-300"
+                  >
                     <Link to={`/product/${product.id}`}>
                       <div className="aspect-square bg-forest-green/10 overflow-hidden cursor-pointer">
                         <img
-                          src={product.imageUrl || '/placeholder.svg'}
+                          src={product.imageUrl || "/placeholder.svg"}
                           alt={product.name}
                           className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                         />
@@ -695,7 +721,7 @@ export default function Index() {
                           onClick={() => {
                             addToCart(mappedProduct, 1);
                             toast({
-                              title: '¡Producto añadido!',
+                              title: "¡Producto añadido!",
                               description: `${product.name} se ha añadido al carrito`,
                             });
                           }}
@@ -788,12 +814,117 @@ export default function Index() {
             Escríbenos y hablemos.
           </p>
 
-          <Button
-            size="lg"
-            className="bg-beige hover:bg-beige/90 text-forest-green px-8 py-4 text-lg font-semibold"
-          >
-            Contactar
-          </Button>
+          {formSubmitted ? (
+            <div className="max-w-md mx-auto text-center space-y-4">
+              <div className="text-6xl">✅</div>
+              <h3 className="text-2xl font-semibold text-beige">
+                ¡Mensaje enviado!
+              </h3>
+              <p className="text-beige/80">
+                Gracias por contactarnos. Te responderemos muy pronto.
+              </p>
+              <Button
+                onClick={() => setFormSubmitted(false)}
+                className="bg-beige hover:bg-beige/90 text-forest-green"
+              >
+                Enviar otro mensaje
+              </Button>
+            </div>
+          ) : (
+            <form
+              action="https://formspree.io/f/xzzbavqy"
+              method="POST"
+              className="max-w-md mx-auto space-y-6"
+              onSubmit={async (e) => {
+                e.preventDefault();
+                const form = e.currentTarget;
+                const submitButton = form.querySelector(
+                  'button[type="submit"]',
+                ) as HTMLButtonElement;
+
+                if (submitButton) {
+                  submitButton.disabled = true;
+                  submitButton.textContent = "Enviando...";
+                }
+
+                try {
+                  const formData = new FormData(form);
+                  const response = await fetch(
+                    "https://formspree.io/f/xzzbavqy",
+                    {
+                      method: "POST",
+                      body: formData,
+                      headers: {
+                        Accept: "application/json",
+                      },
+                    },
+                  );
+
+                  if (response.ok) {
+                    setFormSubmitted(true);
+                    form.reset();
+                  } else {
+                    throw new Error("Error sending message");
+                  }
+                } catch (error) {
+                  alert(
+                    "Hubo un error enviando el mensaje. Por favor intenta de nuevo.",
+                  );
+                } finally {
+                  if (submitButton) {
+                    submitButton.disabled = false;
+                    submitButton.textContent = "Enviar mensaje";
+                  }
+                }
+              }}
+            >
+              <input
+                type="hidden"
+                name="_subject"
+                value="Nuevo mensaje desde Bejaus Sessions"
+              />
+              <input
+                type="hidden"
+                name="_next"
+                value="https://bejaus.com/gracias"
+              />
+
+              <div>
+                <input
+                  type="text"
+                  name="name"
+                  placeholder="Tu nombre"
+                  required
+                  className="w-full px-4 py-3 rounded-md bg-beige/10 border border-beige/20 text-beige placeholder-beige/60 focus:outline-none focus:ring-2 focus:ring-beige focus:border-transparent"
+                />
+              </div>
+              <div>
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="Tu email"
+                  required
+                  className="w-full px-4 py-3 rounded-md bg-beige/10 border border-beige/20 text-beige placeholder-beige/60 focus:outline-none focus:ring-2 focus:ring-beige focus:border-transparent"
+                />
+              </div>
+              <div>
+                <textarea
+                  name="message"
+                  placeholder="Cuéntanos sobre tu espacio y tu idea..."
+                  required
+                  rows={4}
+                  className="w-full px-4 py-3 rounded-md bg-beige/10 border border-beige/20 text-beige placeholder-beige/60 focus:outline-none focus:ring-2 focus:ring-beige focus:border-transparent resize-none"
+                />
+              </div>
+              <Button
+                type="submit"
+                size="lg"
+                className="w-full bg-beige hover:bg-beige/90 text-forest-green px-8 py-4 text-lg font-semibold"
+              >
+                Enviar mensaje
+              </Button>
+            </form>
+          )}
         </div>
       </section>
 
