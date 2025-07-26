@@ -4,10 +4,10 @@ A production-ready full-stack React application template with an integrated Expr
 
 ## Tech Stack
 
-- **Frontend:** React 18, React Router 6 (SPA), TypeScript, Vite, TailwindCSS 3
+- **Frontend:** React 18, React Router 6 (SPA), TypeScript, Vite, TailwindCSS 3, React Query
 - **Backend:** Express server (integrated with Vite dev server), Netlify Functions (for serverless deployment)
 - **Testing:** Vitest
-- **UI:** Radix UI, TailwindCSS 3, Lucide React icons
+- **UI:** Radix UI, TailwindCSS 3, Lucide React icons, Toaster/Sonner notifications
 
 ## Project Structure
 
@@ -62,7 +62,7 @@ pnpm run dev        # Start dev server (client + server)
 pnpm run build      # Production build
 pnpm run start      # Start production server
 pnpm run typecheck  # TypeScript validation
-pnpm test           # Run Vitest tests
+pnpm run test       # Run Vitest tests
 ```
 
 ## Adding Features
@@ -99,6 +99,17 @@ pnpm test           # Run Vitest tests
    const data: MyRouteResponse = await response.json();
    ```
 
+### Example API Routes
+
+The project includes several example API routes:
+
+- `/api/ping` - Simple health check endpoint
+- `/api/demo` - Demo endpoint with shared types
+- `/api/youtube-videos` - YouTube API integration
+- `/api/square-config` - Square payment configuration
+- `/api/square-products` - Square products API
+- `/api/square-payment` - Square payment processing
+
 ### Add a New Page Route
 
 1. Create a component in `client/pages/MyPage.tsx`.
@@ -107,11 +118,21 @@ pnpm test           # Run Vitest tests
    <Route path="/my-page" element={<MyPage />} />
    ```
 
+### Example Page Routes
+
+The project includes several example page routes:
+
+- `/` - Home page (Index.tsx)
+- `/shop` - Shop page with product listings
+- `/product/:productId` - Product detail page
+- `/cart` - Shopping cart page
+- `/checkout` - Checkout page
+- `*` - 404 Not Found page
+
 ## Production Deployment
 
 - **Standard:** `pnpm run build` + `pnpm run start`
 - **Netlify:** Uses Netlify Functions for serverless deployment. See `netlify.toml` for configuration.
-- **Docker:** Dockerfile included (if present).
 - **Binary:** Self-contained executables (Linux, macOS, Windows).
 - Express serves the built React SPA with fallback routing support.
 
