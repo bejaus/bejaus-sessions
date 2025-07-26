@@ -93,8 +93,16 @@ export default function Index() {
       try {
         setIsLoadingProducts(true);
         setProductsError(null);
-        const response = await fetch("/api/square-products");
-        if (!response.ok) throw new Error("Error fetching products");
+        const response = await fetch("/api/square-products", {
+          cache: 'no-cache',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+        if (!response.ok) {
+          const errorText = await response.text().catch(() => 'Unknown error');
+          throw new Error(`Error fetching products: ${response.status} ${errorText}`);
+        }
         const data = await response.json();
         setProducts(data.products || []);
       } catch (err) {
