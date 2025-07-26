@@ -50,7 +50,12 @@ export default function Index() {
 
         console.log("Fetching YouTube videos from /api/youtube-videos");
 
-        const response = await fetch("/api/youtube-videos");
+        const response = await fetch("/api/youtube-videos", {
+          cache: 'no-cache',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
         console.log("Response status:", response.status, response.statusText);
 
         if (!response.ok) {
