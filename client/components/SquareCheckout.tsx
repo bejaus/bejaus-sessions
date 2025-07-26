@@ -47,7 +47,6 @@ export function SquareCheckout({
   const totalCents = Math.round(cart.total * 100);
   const shippingCents = cart.total >= 50 ? 0 : 599; // 5.99€ shipping
   const finalTotalCents = totalCents + shippingCents;
-  const demoMode = process.env.NODE_ENV !== "production";
 
   useEffect(() => {
     // Fetch Square configuration from server
