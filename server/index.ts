@@ -6,6 +6,7 @@ import { handleDemo } from "./routes/demo";
 import { handleYouTubeVideos } from "./routes/youtube";
 import { handleSquarePayment, handleSquareProducts } from "./routes/square";
 import { handleSquareConfig } from "./routes/square-config";
+import { handleSubscribe } from "./routes/subscribe";
 
 export function createServer() {
   const app = express();
@@ -25,6 +26,7 @@ export function createServer() {
   app.get("/api/square-config", handleSquareConfig);
   app.get("/api/square-products", handleSquareProducts);
   app.post("/api/square-payment", handleSquarePayment);
+  app.post("/api/subscribe", handleSubscribe);
 
   return app;
 }
