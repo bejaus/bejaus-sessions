@@ -1,53 +1,99 @@
 import { RequestHandler } from "express";
 import { YouTubeVideo, YouTubeApiResponse } from "@shared/api";
+import { Redis } from "@upstash/redis";
+
+// Helper function to get mock response
+function getMockResponse(): YouTubeApiResponse {
+  return {
+    latest: {
+      id: "bR29G5pSpaQ",
+      title: "Bejaus Sessions - Última Sesión",
+      description: "La sesión más reciente de Bejaus Sessions",
+      thumbnail: "",
+      publishedAt: new Date().toISOString(),
+      viewCount: "1500",
+    },
+    popular: [
+      {
+        id: "fflf6I7UHXM",
+        title: "Bejaus Sessions - Jou Nielsen",
+        description: "Una noche mágica con sonidos únicos",
+        thumbnail: "",
+        publishedAt: new Date(Date.now() - 86400000).toISOString(), // 1 day ago
+        viewCount: "2500",
+      },
+      {
+        id: "zaoEoFKjoR4",
+        title: "Bejaus Sessions - Noé",
+        description: "Ritmos que conectan almas",
+        thumbnail: "",
+        publishedAt: new Date(Date.now() - 172800000).toISOString(), // 2 days ago
+        viewCount: "3200",
+      },
+      {
+        id: "X52oRpXKOxM",
+        title: "Bejaus Sessions - Alexx Zander Johnson",
+        description: "Experiencias que trascienden",
+        thumbnail: "",
+        publishedAt: new Date(Date.now() - 259200000).toISOString(), // 3 days ago
+        viewCount: "1800",
+      },
+    ],
+  };
+}
 
 export const handleYouTubeVideos: RequestHandler = async (req, res) => {
   try {
     const API_KEY = process.env.YOUTUBE_API_KEY;
     const CHANNEL_ID = process.env.YOUTUBE_CHANNEL_ID;
+    const UPSTASH_REDIS_REST_URL = process.env.UPSTASH_REDIS_REST_URL;
+    const UPSTASH_REDIS_REST_TOKEN = process.env.UPSTASH_REDIS_REST_TOKEN;
 
+    // Initialize Redis cache if credentials are available
+    let redis: any = null;
+    const CACHE_KEY = "youtube_videos_cache";
+    const CACHE_DURATION = 60 * 60; // 1 hour in seconds
+
+    if (UPSTASH_REDIS_REST_URL && UPSTASH_REDIS_REST_TOKEN) {
+      try {
+        redis = new Redis({
+          url: UPSTASH_REDIS_REST_URL,
+          token: UPSTASH_REDIS_REST_TOKEN,
+        });
+        console.log("Upstash Redis cache enabled");
+
+        // Check cache first
+        const cached = await redis.get(CACHE_KEY);
+        if (cached) {
+          console.log("Returning cached YouTube data");
+          res.setHeader("X-Cache", "HIT");
+          return res.json(cached);
+        }
+      } catch (error) {
+        console.log("Redis cache error, proceeding without cache:", error);
+        redis = null;
+      }
+    } else {
+      console.log("Upstash Redis not configured, proceeding without cache");
+    }
+
+    // Check if we have all required configurations
     if (!API_KEY || !CHANNEL_ID) {
       console.log("YouTube API not fully configured, returning mock data");
+      res.setHeader("X-Cache", "DISABLED");
+      return res.json(getMockResponse());
+    }
 
-      // Return mock data for development when API is not configured
-      const mockResponse: YouTubeApiResponse = {
-        latest: {
-          id: "bR29G5pSpaQ",
-          title: "Bejaus Sessions - Última Sesión",
-          description: "La sesión más reciente de Bejaus Sessions",
-          thumbnail: "",
-          publishedAt: new Date().toISOString(),
-          viewCount: "1500",
-        },
-        popular: [
-          {
-            id: "fflf6I7UHXM",
-            title: "Bejaus Sessions - Jou Nielsen",
-            description: "Una noche mágica con sonidos únicos",
-            thumbnail: "",
-            publishedAt: new Date(Date.now() - 86400000).toISOString(), // 1 day ago
-            viewCount: "2500",
-          },
-          {
-            id: "zaoEoFKjoR4",
-            title: "Bejaus Sessions - Noé",
-            description: "Ritmos que conectan almas",
-            thumbnail: "",
-            publishedAt: new Date(Date.now() - 172800000).toISOString(), // 2 days ago
-            viewCount: "3200",
-          },
-          {
-            id: "X52oRpXKOxM",
-            title: "Bejaus Sessions - Alexx Zander Johnson",
-            description: "Experiencias que trascienden",
-            thumbnail: "",
-            publishedAt: new Date(Date.now() - 259200000).toISOString(), // 3 days ago
-            viewCount: "1800",
-          },
-        ],
-      };
-
-      return res.json(mockResponse);
+    // Check if Redis is configured for caching
+    if (!UPSTASH_REDIS_REST_URL || !UPSTASH_REDIS_REST_TOKEN) {
+      console.log(
+        "Redis cache not configured - using mock data to avoid YouTube API quota issues",
+      );
+      console.log(
+        "To enable real YouTube data, configure UPSTASH_REDIS_REST_URL and UPSTASH_REDIS_REST_TOKEN",
+      );
+      res.setHeader("X-Cache", "DISABLED");
+      return res.json(getMockResponse());
     }
 
     console.log("Fetching videos from channel:", CHANNEL_ID);
@@ -142,6 +188,20 @@ export const handleYouTubeVideos: RequestHandler = async (req, res) => {
       latestTitle: latest?.title,
       popularCount: popular.length,
     });
+
+    // Cache the response if Redis is available
+    if (redis) {
+      try {
+        await redis.set(CACHE_KEY, response, { ex: CACHE_DURATION });
+        console.log("YouTube data cached for 1 hour");
+        res.setHeader("X-Cache", "MISS");
+      } catch (error) {
+        console.log("Failed to cache response:", error);
+        res.setHeader("X-Cache", "ERROR");
+      }
+    } else {
+      res.setHeader("X-Cache", "DISABLED");
+    }
 
     res.json(response);
   } catch (error) {
