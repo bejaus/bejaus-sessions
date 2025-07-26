@@ -35,6 +35,8 @@ export function SquareCheckout({
   const [squareConfig, setSquareConfig] = useState<SquareConfig>(
     DEFAULT_SQUARE_CONFIG,
   );
+  const [demoMode, setDemoMode] = useState(true); // Set to true for demo mode, false for real Square payments
+  const [squareInitFailed, setSquareInitFailed] = useState(false);
   const cardRef = useRef<HTMLDivElement>(null);
   const googlePayRef = useRef<HTMLDivElement>(null);
   const applePayRef = useRef<HTMLDivElement>(null);
@@ -45,7 +47,6 @@ export function SquareCheckout({
   const totalCents = Math.round(cart.total * 100);
   const shippingCents = cart.total >= 50 ? 0 : 599; // 5.99€ shipping
   const finalTotalCents = totalCents + shippingCents;
-  const demoMode = process.env.NODE_ENV !== "production";
 
   useEffect(() => {
     // Fetch Square configuration from server
@@ -84,9 +85,11 @@ export function SquareCheckout({
   }, []);
 
   useEffect(() => {
-    // Only load Square SDK if not in demo mode
-    if (demoMode) {
-      console.log("Demo mode active - skipping Square SDK initialization");
+    // Only load Square SDK if not in demo mode and Square init hasn't failed
+    if (demoMode || squareInitFailed) {
+      console.log(
+        "Demo mode active or Square init failed - skipping Square SDK initialization",
+      );
       setIsSquareLoaded(true);
       return;
     }
@@ -121,6 +124,14 @@ export function SquareCheckout({
       if (!window.Square) return;
 
       try {
+        // Validate application ID format
+        if (
+          !squareConfig.applicationId ||
+          squareConfig.applicationId.includes("your-real-application-id")
+        ) {
+          throw new Error("Invalid or placeholder Square Application ID");
+        }
+
         const paymentsInstance = window.Square.payments(
           squareConfig.applicationId,
           squareConfig.locationId,
@@ -159,16 +170,21 @@ export function SquareCheckout({
         }
       } catch (error) {
         console.error("Error initializing Square:", error);
+
+        // Fall back to demo mode if Square initialization fails
+        setSquareInitFailed(true);
+        setDemoMode(true);
+
         toast({
-          title: "Error de configuración",
-          description: "Problema al configurar el sistema de pagos.",
-          variant: "destructive",
+          title: "Usando modo demostración",
+          description:
+            "Square no está configurado correctamente. Usando pagos simulados.",
         });
       }
     };
 
     loadSquareSDK();
-  }, [squareConfig, demoMode]);
+  }, [squareConfig, demoMode, squareInitFailed]);
 
   const handlePayment = async (paymentMethod: any) => {
     if (!payments || isProcessing) return;
