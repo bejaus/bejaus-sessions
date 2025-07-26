@@ -87,7 +87,9 @@ export function SquareCheckout({
   useEffect(() => {
     // Only load Square SDK if not in demo mode and Square init hasn't failed
     if (demoMode || squareInitFailed) {
-      console.log("Demo mode active or Square init failed - skipping Square SDK initialization");
+      console.log(
+        "Demo mode active or Square init failed - skipping Square SDK initialization",
+      );
       setIsSquareLoaded(true);
       return;
     }
@@ -123,8 +125,11 @@ export function SquareCheckout({
 
       try {
         // Validate application ID format
-        if (!squareConfig.applicationId || squareConfig.applicationId.includes('your-real-application-id')) {
-          throw new Error('Invalid or placeholder Square Application ID');
+        if (
+          !squareConfig.applicationId ||
+          squareConfig.applicationId.includes("your-real-application-id")
+        ) {
+          throw new Error("Invalid or placeholder Square Application ID");
         }
 
         const paymentsInstance = window.Square.payments(
@@ -172,7 +177,8 @@ export function SquareCheckout({
 
         toast({
           title: "Usando modo demostración",
-          description: "Square no está configurado correctamente. Usando pagos simulados.",
+          description:
+            "Square no está configurado correctamente. Usando pagos simulados.",
         });
       }
     };
