@@ -9,6 +9,7 @@ import {
   SquareEnvironment as Environment,
   SquareError,
 } from "square";
+import { Redis } from "@upstash/redis";
 
 async function fetchImageUrl(imageId, accessToken) {
   // Always fetch from Square
@@ -90,11 +91,38 @@ export const handleSquarePayment: RequestHandler = async (req, res) => {
  * Only includes items with 'merch', 'tshirt', or 'hoodie' in their name or category
  */
 export const handleSquareProducts: RequestHandler = async (_req, res) => {
+  const CACHE_KEY = "square_products_cache";
+  const CACHE_DURATION = 60 * 60; // 1 hour in seconds
+  const UPSTASH_REDIS_REST_URL = process.env.UPSTASH_REDIS_REST_URL;
+  const UPSTASH_REDIS_REST_TOKEN = process.env.UPSTASH_REDIS_REST_TOKEN;
+  let redis: any = null;
+  if (UPSTASH_REDIS_REST_URL && UPSTASH_REDIS_REST_TOKEN) {
+    redis = new Redis({
+      url: UPSTASH_REDIS_REST_URL,
+      token: UPSTASH_REDIS_REST_TOKEN,
+    });
+  }
   try {
     if (!process.env.SQUARE_ACCESS_TOKEN) {
       return res
         .status(500)
         .json({ error: "Square access token not configured" });
+    }
+
+    // Check cache first
+    if (redis) {
+      try {
+        const cached = await redis.get(CACHE_KEY);
+        if (cached) {
+          console.log("Returning cached Square products from Redis");
+          res.setHeader("X-Cache", "HIT");
+          return res.json({ products: cached });
+        }
+      } catch (err) {
+        console.log("Redis cache error, proceeding without cache:", err);
+      }
+    } else {
+      console.log("Upstash Redis not configured, always fetching from Square");
     }
 
     // Use fetch to call Square Catalog API (v2)
@@ -162,6 +190,19 @@ export const handleSquareProducts: RequestHandler = async (_req, res) => {
         category: MERCH_CATEGORY_ID,
         inStock: true,
       });
+    }
+
+    // Cache the products if Redis is available
+    if (redis) {
+      try {
+        await redis.set(CACHE_KEY, products, { ex: CACHE_DURATION });
+        res.setHeader("X-Cache", "MISS");
+      } catch (err) {
+        console.log("Failed to cache Square products:", err);
+        res.setHeader("X-Cache", "ERROR");
+      }
+    } else {
+      res.setHeader("X-Cache", "DISABLED");
     }
 
     res.json({ products });
