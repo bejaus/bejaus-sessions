@@ -35,11 +35,8 @@ export function SquareCheckout({
   const [squareConfig, setSquareConfig] = useState<SquareConfig>(
     DEFAULT_SQUARE_CONFIG,
   );
-<<<<<<< HEAD
-  const [demoMode, setDemoMode] = useState(false); // Set to true for demo mode, false for real Square payments
+  const [demoMode, setDemoMode] = useState(true); // Set to true for demo mode, false for real Square payments
   const [squareInitFailed, setSquareInitFailed] = useState(false);
-=======
->>>>>>> origin/main
   const cardRef = useRef<HTMLDivElement>(null);
   const googlePayRef = useRef<HTMLDivElement>(null);
   const applePayRef = useRef<HTMLDivElement>(null);
