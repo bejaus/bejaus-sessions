@@ -1,0 +1,47 @@
+[
+  {
+    "id": "BT5YSD7CKJLDCDGOVMSQW4NL",
+    "name": "Chapas",
+    "price": 200,
+    "currency": "EUR",
+    "imageUrl": null,
+    "category": "M2BJ3LCXRPCI4I4XETEORUJX",
+    "inStock": true
+  },
+  {
+    "id": "MNEOWURYJMIUWIEBJK264C3Q",
+    "name": "Vermouth Makes Friends T-Shirt",
+    "price": 2500,
+    "currency": "EUR",
+    "imageUrl": "https://items-images-production.s3.us-west-2.amazonaws.com/files/710099d4f8c0dc50e1cbbf020fe9c7551fdafe02/original.jpeg",
+    "category": "M2BJ3LCXRPCI4I4XETEORUJX",
+    "inStock": true
+  },
+  {
+    "id": "ZZ6P63WAEQNRZ5MUEO3OTTZU",
+    "name": "Sunshine & Coffee Vibes Tote Bag",
+    "price": 1500,
+    "currency": "EUR",
+    "imageUrl": "https://items-images-production.s3.us-west-2.amazonaws.com/files/95042d8f59f9c4dd1d27fedc2909c2c6b849ca90/original.jpeg",
+    "category": "M2BJ3LCXRPCI4I4XETEORUJX",
+    "inStock": true
+  },
+  {
+    "id": "ETRYD7L57ZC636IXP7GTTIBE",
+    "name": "Vermouth Makes Friends Tote Bag",
+    "price": 1500,
+    "currency": "EUR",
+    "imageUrl": "https://items-images-production.s3.us-west-2.amazonaws.com/files/cad3213a08cb5e281b480967c1f1f8752ea3f5a7/original.jpeg",
+    "category": "M2BJ3LCXRPCI4I4XETEORUJX",
+    "inStock": true
+  },
+  {
+    "id": "YV2NRKZKZAL6HTG5ESBIXKPW",
+    "name": "Fueled by Caffeine & Greens T-Shirt",
+    "price": 2500,
+    "currency": "EUR",
+    "imageUrl": "https://items-images-production.s3.us-west-2.amazonaws.com/files/a2fe9f01ed129f496ff280e6654e660607cede62/original.jpeg",
+    "category": "M2BJ3LCXRPCI4I4XETEORUJX",
+    "inStock": true
+  }
+]

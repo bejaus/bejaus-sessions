@@ -6,27 +6,16 @@ export const handleSquareConfig: RequestHandler = async (req, res) => {
     console.log("Square config request received");
 
     // Only return public configuration needed for client-side Square SDK
-    const hasSquareCredentials = !!(
-      process.env.SQUARE_APPLICATION_ID && process.env.SQUARE_LOCATION_ID
-    );
-
+    console.log("SQUARE_ACCESS_TOKEN", process.env.SQUARE_ACCESS_TOKEN);
+    console.log("SQUARE_LOCATION_ID", process.env.SQUARE_LOCATION_ID);
+    console.log("NODE_ENV", process.env.NODE_ENV);
+    console.log("SQUARE_APPLICATION_ID", process.env.SQUARE_APPLICATION_ID);
     const config: SquareConfig = {
       applicationId:
         process.env.SQUARE_APPLICATION_ID || "sandbox-sq0idb-demo-app-id",
       locationId: process.env.SQUARE_LOCATION_ID || "demo-location-id",
-      // Force sandbox if using demo credentials or if explicitly set
-      environment:
-        hasSquareCredentials && process.env.NODE_ENV === "production"
-          ? "production"
-          : "sandbox",
+      accessToken: process.env.SQUARE_ACCESS_TOKEN,
     };
-
-    console.log("Returning Square config:", {
-      applicationId: config.applicationId,
-      locationId: config.locationId,
-      environment: config.environment,
-      hasRealCredentials: hasSquareCredentials,
-    });
 
     res.json(config);
   } catch (error) {

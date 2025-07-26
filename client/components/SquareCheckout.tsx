@@ -35,8 +35,11 @@ export function SquareCheckout({
   const [squareConfig, setSquareConfig] = useState<SquareConfig>(
     DEFAULT_SQUARE_CONFIG,
   );
+<<<<<<< HEAD
   const [demoMode, setDemoMode] = useState(false); // Set to true for demo mode, false for real Square payments
   const [squareInitFailed, setSquareInitFailed] = useState(false);
+=======
+>>>>>>> origin/main
   const cardRef = useRef<HTMLDivElement>(null);
   const googlePayRef = useRef<HTMLDivElement>(null);
   const applePayRef = useRef<HTMLDivElement>(null);
@@ -47,6 +50,7 @@ export function SquareCheckout({
   const totalCents = Math.round(cart.total * 100);
   const shippingCents = cart.total >= 50 ? 0 : 599; // 5.99€ shipping
   const finalTotalCents = totalCents + shippingCents;
+  const demoMode = process.env.NODE_ENV !== "production";
 
   useEffect(() => {
     // Fetch Square configuration from server
@@ -58,7 +62,6 @@ export function SquareCheckout({
           response.headers.get("content-type")?.includes("application/json")
         ) {
           const config = await response.json();
-          console.log("Fetched Square config:", config);
           setSquareConfig(config);
         } else {
           console.log(
@@ -68,7 +71,7 @@ export function SquareCheckout({
           setSquareConfig({
             applicationId: "sandbox-sq0idb-demo-app-id",
             locationId: "demo-location-id",
-            environment: "sandbox",
+            accessToken: "",
           });
         }
       } catch (error) {
@@ -77,7 +80,7 @@ export function SquareCheckout({
         setSquareConfig({
           applicationId: "sandbox-sq0idb-demo-app-id",
           locationId: "demo-location-id",
-          environment: "sandbox",
+          accessToken: "",
         });
       }
     };
