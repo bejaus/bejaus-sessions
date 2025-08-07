@@ -818,7 +818,7 @@ export default function Index() {
               <h3 className="text-xl font-semibold text-beige mb-4">📍 Encuéntranos</h3>
               <div className="rounded-lg overflow-hidden shadow-lg">
                 <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2993.0276735936815!2d2.1247!3d41.3874!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12a498b5e1b7c0e9%3A0x5e8e0a7b1f8b7c0e!2sLes%20Corts%2C%20Barcelona%2C%20Spain!5e0!3m2!1sen!2ses!4v1640000000000!5m2!1sen!2ses"
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2993.0276735936815!2d2.1240000!3d41.3874000!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12a498c6c7d2d6e9%3A0x7c3b1f2e4d5a6b8c!2sCarrer%20de%20l'Equador%2C%2089%2C%20Les%20Corts%2C%2008029%20Barcelona%2C%20Spain!5e0!3m2!1sen!2ses!4v1640000000000!5m2!1sen!2ses"
                   width="100%"
                   height="300"
                   style={{border: 0}}
