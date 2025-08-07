@@ -175,7 +175,7 @@ export default function Index() {
                 }}
                 className="text-beige/80 hover:text-beige transition-colors text-sm font-medium"
               >
-                Eventos
+                Bejaus Sessions
               </button>
               <button
                 onClick={() => {
