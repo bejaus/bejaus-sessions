@@ -831,7 +831,7 @@ export default function Index() {
               <div className="mt-4 space-y-2 text-beige/80">
                 <p className="flex items-center">
                   <span className="mr-2">📍</span>
-                  Les Corts, Barcelona
+                  Carrer de l'Equador 89, Barcelona
                 </p>
                 <p className="flex items-center">
                   <span className="mr-2">☕</span>
