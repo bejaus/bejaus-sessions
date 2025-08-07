@@ -403,25 +403,25 @@ export default function Index() {
                 </p>
               </div>
               <div className="aspect-video bg-forest-green/10 overflow-hidden w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw]">
-                  {isLoadingVideos ? (
-                    <div className="w-full h-full flex items-center justify-center">
-                      <Loader2 className="h-8 w-8 animate-spin text-forest-green" />
-                    </div>
-                  ) : youtubeData?.latest ? (
-                    <iframe
-                      src={`https://www.youtube.com/embed/${youtubeData.latest.id}`}
-                      className="w-full h-full"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                      allowFullScreen
-                    />
-                  ) : (
-                    <iframe
-                      src="https://www.youtube.com/embed/bR29G5pSpaQ"
-                      className="w-full h-full"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                      allowFullScreen
-                    />
-                  )}
+                {isLoadingVideos ? (
+                  <div className="w-full h-full flex items-center justify-center">
+                    <Loader2 className="h-8 w-8 animate-spin text-forest-green" />
+                  </div>
+                ) : youtubeData?.latest ? (
+                  <iframe
+                    src={`https://www.youtube.com/embed/${youtubeData.latest.id}`}
+                    className="w-full h-full"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  />
+                ) : (
+                  <iframe
+                    src="https://www.youtube.com/embed/bR29G5pSpaQ"
+                    className="w-full h-full"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  />
+                )}
               </div>
             </div>
           </div>
