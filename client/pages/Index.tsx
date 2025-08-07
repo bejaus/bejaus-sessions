@@ -392,18 +392,17 @@ export default function Index() {
           {/* Featured Video */}
           <div className="mb-20">
             <div className="w-full">
-              <Card className="bg-forest-green/5 border-forest-green/20 p-4 lg:p-8">
-                <div className="text-center mb-6">
-                  <h3 className="text-2xl font-bold text-forest-green mb-2">
-                    🎵 Última Sesión Completa
-                  </h3>
-                  <p className="text-forest-green/70">
-                    {youtubeData?.latest
-                      ? `Publicado ${new Date(youtubeData.latest.publishedAt).toLocaleDateString()}`
-                      : "Disfruta la sesión completa de 1 hora desde nuestro canal de YouTube"}
-                  </p>
-                </div>
-                <div className="aspect-video bg-forest-green/10 rounded-xl overflow-hidden shadow-2xl">
+              <div className="text-center mb-6 max-w-4xl mx-auto px-6">
+                <h3 className="text-2xl font-bold text-forest-green mb-2">
+                  🎵 Última Sesión Completa
+                </h3>
+                <p className="text-forest-green/70">
+                  {youtubeData?.latest
+                    ? `Publicado ${new Date(youtubeData.latest.publishedAt).toLocaleDateString()}`
+                    : "Disfruta la sesión completa de 1 hora desde nuestro canal de YouTube"}
+                </p>
+              </div>
+              <div className="aspect-video bg-forest-green/10 overflow-hidden">
                   {isLoadingVideos ? (
                     <div className="w-full h-full flex items-center justify-center">
                       <Loader2 className="h-8 w-8 animate-spin text-forest-green" />
@@ -423,8 +422,7 @@ export default function Index() {
                       allowFullScreen
                     />
                   )}
-                </div>
-              </Card>
+              </div>
             </div>
           </div>
 
