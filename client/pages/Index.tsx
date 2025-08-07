@@ -400,7 +400,7 @@ export default function Index() {
                   <p className="text-forest-green/70">
                     {youtubeData?.latest
                       ? `Publicado ${new Date(youtubeData.latest.publishedAt).toLocaleDateString()}`
-                      : "Disfruta la sesi��n completa de 1 hora desde nuestro canal de YouTube"}
+                      : "Disfruta la sesión completa de 1 hora desde nuestro canal de YouTube"}
                   </p>
                 </div>
                 <div className="aspect-video bg-forest-green/10 rounded-xl overflow-hidden shadow-2xl">
