@@ -391,7 +391,7 @@ export default function Index() {
 
           {/* Featured Video */}
           <div className="mb-20">
-            <div className="max-w-5xl mx-auto">
+            <div className="w-full">
               <Card className="bg-forest-green/5 border-forest-green/20 p-4 lg:p-8">
                 <div className="text-center mb-6">
                   <h3 className="text-2xl font-bold text-forest-green mb-2">
