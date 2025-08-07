@@ -32,6 +32,11 @@ export default function Index() {
   const [productsError, setProductsError] = useState<string | null>(null);
   const [formSubmitted, setFormSubmitted] = useState(false);
 
+  // Newsletter subscription state
+  const [subscribeName, setSubscribeName] = useState("");
+  const [subscribeEmail, setSubscribeEmail] = useState("");
+  const [isSubscribing, setIsSubscribing] = useState(false);
+
   useEffect(() => {
     const handleScroll = () => {
       const scrollTop = window.scrollY;
@@ -116,6 +121,70 @@ export default function Index() {
     };
     fetchProducts();
   }, []);
+
+  // Handle newsletter subscription
+  const handleSubscribe = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (!subscribeEmail || !subscribeEmail.includes('@')) {
+      toast({
+        title: "Email inválido",
+        description: "Por favor, introduce un email válido.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    if (!subscribeName || subscribeName.trim().length === 0) {
+      toast({
+        title: "Nombre requerido",
+        description: "Por favor, introduce tu nombre.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setIsSubscribing(true);
+
+    try {
+      const response = await fetch('/api/subscribe', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: subscribeName.trim(),
+          email: subscribeEmail.trim(),
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || 'Error al suscribirse');
+      }
+
+      // Success
+      toast({
+        title: "¡Gracias por suscribirte!",
+        description: "Te mantendremos informado sobre próximos eventos y novedades.",
+      });
+
+      // Clear form
+      setSubscribeName("");
+      setSubscribeEmail("");
+
+    } catch (error) {
+      console.error('Subscription error:', error);
+      toast({
+        title: "Error al suscribirse",
+        description: error instanceof Error ? error.message : "No se pudo completar la suscripción. Inténtalo de nuevo.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubscribing(false);
+    }
+  };
   return (
     <div className="min-h-screen bg-beige">
       {/* Header */}
@@ -692,24 +761,40 @@ export default function Index() {
           </p>
 
           <Card className="bg-forest-green/5 backdrop-blur p-8 border-forest-green/20 max-w-2xl mx-auto">
-            <form className="space-y-4">
+            <form onSubmit={handleSubscribe} className="space-y-4">
               <Input
                 type="text"
                 placeholder="Tu nombre"
+                value={subscribeName}
+                onChange={(e) => setSubscribeName(e.target.value)}
                 className="bg-beige border-forest-green/30 text-forest-green placeholder:text-forest-green/60"
+                disabled={isSubscribing}
               />
               <Input
                 type="email"
                 placeholder="Tu email"
+                value={subscribeEmail}
+                onChange={(e) => setSubscribeEmail(e.target.value)}
                 className="bg-beige border-forest-green/30 text-forest-green placeholder:text-forest-green/60"
+                disabled={isSubscribing}
               />
               <Button
                 type="submit"
                 size="lg"
                 className="w-full bg-terracotta hover:bg-terracotta/90 text-beige"
+                disabled={isSubscribing}
               >
-                Suscribirme
-                <Mail className="ml-2 h-5 w-5" />
+                {isSubscribing ? (
+                  <>
+                    <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                    Suscribiendo...
+                  </>
+                ) : (
+                  <>
+                    Suscribirme
+                    <Mail className="ml-2 h-5 w-5" />
+                  </>
+                )}
               </Button>
             </form>
           </Card>
