@@ -377,7 +377,7 @@ export default function Index() {
           {/* Header */}
           <div className="text-center mb-20">
             <span className="inline-block bg-forest-green/10 text-forest-green px-6 py-3 rounded-full text-sm font-semibold mb-6 tracking-wide uppercase">
-              ���� Bejaus Sessions
+              Bejaus Sessions
             </span>
             <h2 className="text-4xl md:text-6xl font-bold text-forest-green mb-6">
               Vibra con nosotros
