@@ -402,7 +402,7 @@ export default function Index() {
                     : "Disfruta la sesión completa de 1 hora desde nuestro canal de YouTube"}
                 </p>
               </div>
-              <div className="aspect-video bg-forest-green/10 overflow-hidden">
+              <div className="aspect-video bg-forest-green/10 overflow-hidden w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw]">
                   {isLoadingVideos ? (
                     <div className="w-full h-full flex items-center justify-center">
                       <Loader2 className="h-8 w-8 animate-spin text-forest-green" />
