@@ -126,7 +126,7 @@ export default function Index() {
   const handleSubscribe = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!subscribeEmail || !subscribeEmail.includes('@')) {
+    if (!subscribeEmail || !subscribeEmail.includes("@")) {
       toast({
         title: "Email inválido",
         description: "Por favor, introduce un email válido.",
@@ -147,10 +147,10 @@ export default function Index() {
     setIsSubscribing(true);
 
     try {
-      const response = await fetch('/api/subscribe', {
-        method: 'POST',
+      const response = await fetch("/api/subscribe", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           name: subscribeName.trim(),
@@ -161,24 +161,27 @@ export default function Index() {
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.message || 'Error al suscribirse');
+        throw new Error(data.message || "Error al suscribirse");
       }
 
       // Success
       toast({
         title: "¡Gracias por suscribirte!",
-        description: "Te mantendremos informado sobre próximos eventos y novedades.",
+        description:
+          "Te mantendremos informado sobre próximos eventos y novedades.",
       });
 
       // Clear form
       setSubscribeName("");
       setSubscribeEmail("");
-
     } catch (error) {
-      console.error('Subscription error:', error);
+      console.error("Subscription error:", error);
       toast({
         title: "Error al suscribirse",
-        description: error instanceof Error ? error.message : "No se pudo completar la suscripción. Inténtalo de nuevo.",
+        description:
+          error instanceof Error
+            ? error.message
+            : "No se pudo completar la suscripción. Inténtalo de nuevo.",
         variant: "destructive",
       });
     } finally {
@@ -815,13 +818,15 @@ export default function Index() {
           <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
             {/* Google Map */}
             <div className="order-2 lg:order-1">
-              <h3 className="text-xl font-semibold text-beige mb-4">📍 Encuéntranos</h3>
+              <h3 className="text-xl font-semibold text-beige mb-4">
+                📍 Encuéntranos
+              </h3>
               <div className="rounded-lg overflow-hidden shadow-lg">
                 <iframe
                   src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2993.0276735936815!2d2.1240000!3d41.3874000!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12a498c6c7d2d6e9%3A0x7c3b1f2e4d5a6b8c!2sCarrer%20de%20l'Equador%2C%2089%2C%20Les%20Corts%2C%2008029%20Barcelona%2C%20Spain!5e0!3m2!1sen!2ses!4v1640000000000!5m2!1sen!2ses"
                   width="100%"
                   height="300"
-                  style={{border: 0}}
+                  style={{ border: 0 }}
                   allowFullScreen
                   loading="lazy"
                   referrerPolicy="no-referrer-when-downgrade"
@@ -859,99 +864,99 @@ export default function Index() {
                   </Button>
                 </div>
               ) : (
-            <form
-              action="https://formspree.io/f/xzzbavqy"
-              method="POST"
-              className="max-w-md mx-auto space-y-6"
-              onSubmit={async (e) => {
-                e.preventDefault();
-                const form = e.currentTarget;
-                const submitButton = form.querySelector(
-                  'button[type="submit"]',
-                ) as HTMLButtonElement;
+                <form
+                  action="https://formspree.io/f/xzzbavqy"
+                  method="POST"
+                  className="max-w-md mx-auto space-y-6"
+                  onSubmit={async (e) => {
+                    e.preventDefault();
+                    const form = e.currentTarget;
+                    const submitButton = form.querySelector(
+                      'button[type="submit"]',
+                    ) as HTMLButtonElement;
 
-                if (submitButton) {
-                  submitButton.disabled = true;
-                  submitButton.textContent = "Enviando...";
-                }
+                    if (submitButton) {
+                      submitButton.disabled = true;
+                      submitButton.textContent = "Enviando...";
+                    }
 
-                try {
-                  const formData = new FormData(form);
-                  const response = await fetch(
-                    "https://formspree.io/f/xzzbavqy",
-                    {
-                      method: "POST",
-                      body: formData,
-                      headers: {
-                        Accept: "application/json",
-                      },
-                    },
-                  );
+                    try {
+                      const formData = new FormData(form);
+                      const response = await fetch(
+                        "https://formspree.io/f/xzzbavqy",
+                        {
+                          method: "POST",
+                          body: formData,
+                          headers: {
+                            Accept: "application/json",
+                          },
+                        },
+                      );
 
-                  if (response.ok) {
-                    setFormSubmitted(true);
-                    form.reset();
-                  } else {
-                    throw new Error("Error sending message");
-                  }
-                } catch (error) {
-                  alert(
-                    "Hubo un error enviando el mensaje. Por favor intenta de nuevo.",
-                  );
-                } finally {
-                  if (submitButton) {
-                    submitButton.disabled = false;
-                    submitButton.textContent = "Enviar mensaje";
-                  }
-                }
-              }}
-            >
-              <input
-                type="hidden"
-                name="_subject"
-                value="Nuevo mensaje desde Bejaus Sessions"
-              />
-              <input
-                type="hidden"
-                name="_next"
-                value="https://bejaus.com/gracias"
-              />
+                      if (response.ok) {
+                        setFormSubmitted(true);
+                        form.reset();
+                      } else {
+                        throw new Error("Error sending message");
+                      }
+                    } catch (error) {
+                      alert(
+                        "Hubo un error enviando el mensaje. Por favor intenta de nuevo.",
+                      );
+                    } finally {
+                      if (submitButton) {
+                        submitButton.disabled = false;
+                        submitButton.textContent = "Enviar mensaje";
+                      }
+                    }
+                  }}
+                >
+                  <input
+                    type="hidden"
+                    name="_subject"
+                    value="Nuevo mensaje desde Bejaus Sessions"
+                  />
+                  <input
+                    type="hidden"
+                    name="_next"
+                    value="https://bejaus.com/gracias"
+                  />
 
-              <div>
-                <input
-                  type="text"
-                  name="name"
-                  placeholder="Tu nombre"
-                  required
-                  className="w-full px-4 py-3 rounded-md bg-beige/10 border border-beige/20 text-beige placeholder-beige/60 focus:outline-none focus:ring-2 focus:ring-beige focus:border-transparent"
-                />
-              </div>
-              <div>
-                <input
-                  type="email"
-                  name="email"
-                  placeholder="Tu email"
-                  required
-                  className="w-full px-4 py-3 rounded-md bg-beige/10 border border-beige/20 text-beige placeholder-beige/60 focus:outline-none focus:ring-2 focus:ring-beige focus:border-transparent"
-                />
-              </div>
-              <div>
-                <textarea
-                  name="message"
-                  placeholder="Cuéntanos sobre tu espacio y tu idea..."
-                  required
-                  rows={4}
-                  className="w-full px-4 py-3 rounded-md bg-beige/10 border border-beige/20 text-beige placeholder-beige/60 focus:outline-none focus:ring-2 focus:ring-beige focus:border-transparent resize-none"
-                />
-              </div>
-              <Button
-                type="submit"
-                size="lg"
-                className="w-full bg-beige hover:bg-beige/90 text-forest-green px-8 py-4 text-lg font-semibold"
-              >
-                Enviar mensaje
-              </Button>
-              </form>
+                  <div>
+                    <input
+                      type="text"
+                      name="name"
+                      placeholder="Tu nombre"
+                      required
+                      className="w-full px-4 py-3 rounded-md bg-beige/10 border border-beige/20 text-beige placeholder-beige/60 focus:outline-none focus:ring-2 focus:ring-beige focus:border-transparent"
+                    />
+                  </div>
+                  <div>
+                    <input
+                      type="email"
+                      name="email"
+                      placeholder="Tu email"
+                      required
+                      className="w-full px-4 py-3 rounded-md bg-beige/10 border border-beige/20 text-beige placeholder-beige/60 focus:outline-none focus:ring-2 focus:ring-beige focus:border-transparent"
+                    />
+                  </div>
+                  <div>
+                    <textarea
+                      name="message"
+                      placeholder="Cuéntanos sobre tu espacio y tu idea..."
+                      required
+                      rows={4}
+                      className="w-full px-4 py-3 rounded-md bg-beige/10 border border-beige/20 text-beige placeholder-beige/60 focus:outline-none focus:ring-2 focus:ring-beige focus:border-transparent resize-none"
+                    />
+                  </div>
+                  <Button
+                    type="submit"
+                    size="lg"
+                    className="w-full bg-beige hover:bg-beige/90 text-forest-green px-8 py-4 text-lg font-semibold"
+                  >
+                    Enviar mensaje
+                  </Button>
+                </form>
               )}
             </div>
           </div>
