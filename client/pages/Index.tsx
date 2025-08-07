@@ -812,23 +812,53 @@ export default function Index() {
             Escríbenos y hablemos.
           </p>
 
-          {formSubmitted ? (
-            <div className="max-w-md mx-auto text-center space-y-4">
-              <div className="text-6xl">✅</div>
-              <h3 className="text-2xl font-semibold text-beige">
-                ¡Mensaje enviado!
-              </h3>
-              <p className="text-beige/80">
-                Gracias por contactarnos. Te responderemos muy pronto.
-              </p>
-              <Button
-                onClick={() => setFormSubmitted(false)}
-                className="bg-beige hover:bg-beige/90 text-forest-green"
-              >
-                Enviar otro mensaje
-              </Button>
+          <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+            {/* Google Map */}
+            <div className="order-2 lg:order-1">
+              <h3 className="text-xl font-semibold text-beige mb-4">📍 Encuéntranos</h3>
+              <div className="rounded-lg overflow-hidden shadow-lg">
+                <iframe
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2993.0276735936815!2d2.1247!3d41.3874!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12a498b5e1b7c0e9%3A0x5e8e0a7b1f8b7c0e!2sLes%20Corts%2C%20Barcelona%2C%20Spain!5e0!3m2!1sen!2ses!4v1640000000000!5m2!1sen!2ses"
+                  width="100%"
+                  height="300"
+                  style={{border: 0}}
+                  allowFullScreen
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  className="w-full"
+                ></iframe>
+              </div>
+              <div className="mt-4 space-y-2 text-beige/80">
+                <p className="flex items-center">
+                  <span className="mr-2">📍</span>
+                  Les Corts, Barcelona
+                </p>
+                <p className="flex items-center">
+                  <span className="mr-2">☕</span>
+                  Espacio abierto para colaboraciones
+                </p>
+              </div>
             </div>
-          ) : (
+
+            {/* Contact Form */}
+            <div className="order-1 lg:order-2">
+              {formSubmitted ? (
+                <div className="text-center space-y-4">
+                  <div className="text-6xl">✅</div>
+                  <h3 className="text-2xl font-semibold text-beige">
+                    ¡Mensaje enviado!
+                  </h3>
+                  <p className="text-beige/80">
+                    Gracias por contactarnos. Te responderemos muy pronto.
+                  </p>
+                  <Button
+                    onClick={() => setFormSubmitted(false)}
+                    className="bg-beige hover:bg-beige/90 text-forest-green"
+                  >
+                    Enviar otro mensaje
+                  </Button>
+                </div>
+              ) : (
             <form
               action="https://formspree.io/f/xzzbavqy"
               method="POST"
@@ -921,8 +951,10 @@ export default function Index() {
               >
                 Enviar mensaje
               </Button>
-            </form>
-          )}
+              </form>
+              )}
+            </div>
+          </div>
         </div>
       </section>
 
