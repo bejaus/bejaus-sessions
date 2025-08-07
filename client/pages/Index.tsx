@@ -808,8 +808,8 @@ export default function Index() {
             ¿Tienes un espacio o proyecto y quieres colaborar?
           </h2>
           <p className="text-xl text-beige mb-12 leading-relaxed">
-            Llevamos Bejaus Sessions a colivings, hostels y espacios creativos.
-            Escríbenos y hablemos.
+            Creamos experiencias únicas de música y café en diferentes espacios.
+            Escríbenos y hablemos de tu idea.
           </p>
 
           <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
