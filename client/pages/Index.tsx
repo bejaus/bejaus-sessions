@@ -355,7 +355,7 @@ export default function Index() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center mb-16 lg:mb-24">
             <div className="aspect-[4/3] bg-forest-green/10 rounded-lg overflow-hidden">
               <img
-                src="https://cdn.builder.io/api/v1/image/assets%2Fb483dd511682401f9f00211e632d2fcf%2F245a0684d3f34da1bd550c2a8e1bd183?format=webp&width=800"
+                src="https://cdn.builder.io/api/v1/image/assets%2Fb483dd511682401f9f00211e632d2fcf%2F8c1cf9c55c5d425692695a59357a8046"
                 alt="Fachada de Bejaus Café en Les Corts, Barcelona"
                 className="w-full h-full object-cover"
               />
@@ -398,7 +398,7 @@ export default function Index() {
             </div>
             <div className="aspect-[4/3] bg-forest-green/10 rounded-lg overflow-hidden order-1 lg:order-2">
               <img
-                src="/placeholder.svg"
+                src="https://cdn.builder.io/api/v1/image/assets%2Fb483dd511682401f9f00211e632d2fcf%2F0a829c08313e43e995418fca37a187e1"
                 alt="Comunidad en Bejaus"
                 className="w-full h-full object-cover"
               />
@@ -409,7 +409,7 @@ export default function Index() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
             <div className="aspect-[4/3] bg-forest-green/10 rounded-lg overflow-hidden">
               <img
-                src="/placeholder.svg"
+                src="https://cdn.builder.io/api/v1/image/assets%2Fb483dd511682401f9f00211e632d2fcf%2F67e33b7f040f402b811a5def990259cb"
                 alt="Productos locales"
                 className="w-full h-full object-cover"
               />
