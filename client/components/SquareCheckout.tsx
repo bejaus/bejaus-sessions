@@ -35,7 +35,7 @@ export function SquareCheckout({
   const [squareConfig, setSquareConfig] = useState<SquareConfig>(
     DEFAULT_SQUARE_CONFIG,
   );
-  const [demoMode, setDemoMode] = useState(true); // Set to true for demo mode, false for real Square payments
+
   const [squareInitFailed, setSquareInitFailed] = useState(false);
   const cardRef = useRef<HTMLDivElement>(null);
   const googlePayRef = useRef<HTMLDivElement>(null);
@@ -47,6 +47,7 @@ export function SquareCheckout({
   const totalCents = Math.round(cart.total * 100);
   const shippingCents = cart.total >= 50 ? 0 : 599; // 5.99€ shipping
   const finalTotalCents = totalCents + shippingCents;
+  const demoMode = false;
 
   useEffect(() => {
     // Fetch Square configuration from server
@@ -86,7 +87,7 @@ export function SquareCheckout({
 
   useEffect(() => {
     // Only load Square SDK if not in demo mode and Square init hasn't failed
-    if (demoMode || squareInitFailed) {
+    if (squareInitFailed) {
       console.log(
         "Demo mode active or Square init failed - skipping Square SDK initialization",
       );
@@ -173,7 +174,6 @@ export function SquareCheckout({
 
         // Fall back to demo mode if Square initialization fails
         setSquareInitFailed(true);
-        setDemoMode(true);
 
         toast({
           title: "Usando modo demostración",
