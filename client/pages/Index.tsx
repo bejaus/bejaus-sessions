@@ -355,8 +355,8 @@ export default function Index() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center mb-16 lg:mb-24">
             <div className="aspect-[4/3] bg-forest-green/10 rounded-lg overflow-hidden">
               <img
-                src="/placeholder.svg"
-                alt="Interior de Bejaus Café"
+                src="https://cdn.builder.io/api/v1/image/assets%2Fb483dd511682401f9f00211e632d2fcf%2F245a0684d3f34da1bd550c2a8e1bd183?format=webp&width=800"
+                alt="Fachada de Bejaus Café en Les Corts, Barcelona"
                 className="w-full h-full object-cover"
               />
             </div>
