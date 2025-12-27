@@ -681,8 +681,8 @@ export default function Index() {
         </section>
       )}
 
-      {/* Newsletter Subscription */}
-      <section className="py-24 px-6 bg-beige">
+      {/* Newsletter Subscription - Temporarily hidden */}
+      {/* <section className="py-24 px-6 bg-beige">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-4xl md:text-5xl font-bold text-forest-green mb-8">
             Sé parte de la vibra Bejaus
@@ -731,7 +731,7 @@ export default function Index() {
             </form>
           </Card>
         </div>
-      </section>
+      </section> */}
 
       {/* Collaboration Section */}
       <section id="contacto" className="py-24 px-6 bg-forest-green/95">
