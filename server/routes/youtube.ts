@@ -91,52 +91,84 @@ export const handleYouTubeVideos: RequestHandler = async (req, res) => {
 
     // Check if we have all required configurations
     if (!API_KEY || !CHANNEL_ID) {
-      console.log(
-        "YouTube API not fully configured, using mock data from JSON file",
-      );
+      console.log("YouTube API not fully configured, returning empty data");
       res.setHeader("X-Cache", "DISABLED");
-      return res.json(getMockYouTubeData());
+      return res.json({
+        latest: null,
+        popular: [],
+      });
     }
 
     // Check if Redis is configured for caching
     if (!UPSTASH_REDIS_REST_URL || !UPSTASH_REDIS_REST_TOKEN) {
       console.log(
-        "Redis cache not configured - using mock data from JSON file to avoid YouTube API quota issues",
+        "Redis cache not configured - returning empty data to avoid YouTube API quota issues",
       );
       console.log(
         "To enable real YouTube data, configure UPSTASH_REDIS_REST_URL and UPSTASH_REDIS_REST_TOKEN",
       );
       res.setHeader("X-Cache", "DISABLED");
-      return res.json(getMockYouTubeData());
+      return res.json({
+        latest: null,
+        popular: [],
+      });
     }
 
     console.log("Fetching videos from channel:", CHANNEL_ID);
 
-    // Fetch latest videos from the channel
-    const channelUrl = `https://www.googleapis.com/youtube/v3/search?key=${API_KEY}&channelId=${CHANNEL_ID}&part=snippet&order=date&maxResults=10&type=video`;
+    // Fetch latest video (most recent)
+    const latestUrl = `https://www.googleapis.com/youtube/v3/search?key=${API_KEY}&channelId=${CHANNEL_ID}&part=snippet&order=date&maxResults=1&type=video`;
     console.log(
-      "Channel API URL:",
-      channelUrl.replace(API_KEY, "HIDDEN_API_KEY"),
+      "Latest video API URL:",
+      latestUrl.replace(API_KEY, "HIDDEN_API_KEY"),
     );
 
-    const channelResponse = await fetch(channelUrl);
+    const latestResponse = await fetch(latestUrl);
+    console.log("Latest video response status:", latestResponse.status);
 
-    console.log("Channel response status:", channelResponse.status);
-
-    if (!channelResponse.ok) {
-      const errorText = await channelResponse.text();
-      console.error("Channel API Error, using mock data:", errorText);
+    if (!latestResponse.ok) {
+      const errorText = await latestResponse.text();
+      console.error("Latest video API Error, returning empty data:", errorText);
       res.setHeader("X-Cache", "DISABLED");
-      return res.json(getMockYouTubeData());
+      return res.json({
+        latest: null,
+        popular: [],
+      });
     }
 
-    const channelData = await channelResponse.json();
+    const latestData = await latestResponse.json();
+    const latestVideoId = latestData.items?.[0]?.id?.videoId;
+
+    // Fetch most viewed videos directly using order=viewCount
+    const popularUrl = `https://www.googleapis.com/youtube/v3/search?key=${API_KEY}&channelId=${CHANNEL_ID}&part=snippet&order=viewCount&maxResults=4&type=video`;
     console.log(
-      "Channel data received, items count:",
-      channelData.items?.length || 0,
+      "Popular videos API URL:",
+      popularUrl.replace(API_KEY, "HIDDEN_API_KEY"),
     );
 
-    if (!channelData.items || channelData.items.length === 0) {
+    const popularResponse = await fetch(popularUrl);
+    console.log("Popular videos response status:", popularResponse.status);
+
+    if (!popularResponse.ok) {
+      const errorText = await popularResponse.text();
+      console.error(
+        "Popular videos API Error, returning empty data:",
+        errorText,
+      );
+      res.setHeader("X-Cache", "DISABLED");
+      return res.json({
+        latest: null,
+        popular: [],
+      });
+    }
+
+    const popularData = await popularResponse.json();
+    console.log(
+      "Popular videos data received, items count:",
+      popularData.items?.length || 0,
+    );
+
+    if (!popularData.items || popularData.items.length === 0) {
       console.log("No videos found in channel");
       return res.status(404).json({
         error: "No videos found in channel",
@@ -144,9 +176,17 @@ export const handleYouTubeVideos: RequestHandler = async (req, res) => {
       });
     }
 
-    const videoIds = channelData.items
-      .map((item: any) => item.id.videoId)
+    // Get video IDs for detailed statistics
+    const videoIds = [
+      latestVideoId,
+      ...popularData.items
+        .map((item: any) => item.id.videoId)
+        .filter((id: string) => id !== latestVideoId), // Exclude latest from popular
+    ]
+      .filter(Boolean)
+      .slice(0, 4) // Latest + up to 3 popular
       .join(",");
+
     console.log("Video IDs to fetch stats for:", videoIds);
 
     // Get detailed video statistics
@@ -157,9 +197,12 @@ export const handleYouTubeVideos: RequestHandler = async (req, res) => {
 
     if (!statsResponse.ok) {
       const errorText = await statsResponse.text();
-      console.error("Stats API Error, using mock data:", errorText);
+      console.error("Stats API Error, returning empty data:", errorText);
       res.setHeader("X-Cache", "DISABLED");
-      return res.json(getMockYouTubeData());
+      return res.json({
+        latest: null,
+        popular: [],
+      });
     }
 
     const statsData = await statsResponse.json();
@@ -181,14 +224,11 @@ export const handleYouTubeVideos: RequestHandler = async (req, res) => {
     }));
 
     // Latest video (most recent)
-    const latest = videos[0];
+    const latest = videos.find((v) => v.id === latestVideoId) || videos[0];
 
-    // Most popular videos (sorted by view count, excluding the latest)
+    // Most popular videos (already sorted by viewCount from API, excluding the latest)
     const popular = videos
-      .slice(1) // Exclude the latest video
-      .sort(
-        (a, b) => parseInt(b.viewCount || "0") - parseInt(a.viewCount || "0"),
-      )
+      .filter((video) => video.id !== latest.id)
       .slice(0, 3); // Top 3 most viewed
 
     const response: YouTubeApiResponse = {
@@ -217,8 +257,11 @@ export const handleYouTubeVideos: RequestHandler = async (req, res) => {
 
     res.json(response);
   } catch (error) {
-    console.error("YouTube API Error, using mock data:", error);
+    console.error("YouTube API Error, returning empty data:", error);
     res.setHeader("X-Cache", "DISABLED");
-    res.json(getMockYouTubeData());
+    res.json({
+      latest: null,
+      popular: [],
+    });
   }
 };

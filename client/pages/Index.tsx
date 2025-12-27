@@ -17,6 +17,7 @@ import { useCart } from "../contexts/CartContext";
 import { useToast } from "../hooks/use-toast";
 import { Badge } from "../components/ui/badge";
 import { CartPreview } from "../components/CartPreview";
+import fallbackYoutubeData from "../../youtube_videos_cache.json";
 
 export default function Index() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -192,16 +193,14 @@ export default function Index() {
     <div className="min-h-screen bg-beige">
       {/* Header */}
       <header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-in-out ${
-          isScrolled
-            ? "bg-forest-green/95 backdrop-blur-md shadow-lg"
-            : "bg-transparent"
-        }`}
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-in-out ${isScrolled
+          ? "bg-forest-green/95 backdrop-blur-md shadow-lg"
+          : "bg-transparent"
+          }`}
       >
         <div
-          className={`w-full px-6 xl:px-16 2xl:px-24 transition-all duration-300 ease-in-out ${
-            isScrolled ? "py-2" : "py-4"
-          }`}
+          className={`w-full px-6 xl:px-16 2xl:px-24 transition-all duration-300 ease-in-out ${isScrolled ? "py-2" : "py-4"
+            }`}
         >
           <div className="flex items-center justify-between">
             <div className="flex items-center">
@@ -249,23 +248,25 @@ export default function Index() {
               >
                 Bejaus Sessions
               </button>
-              <button
-                onClick={() => {
-                  const section = document.querySelector(
-                    "#merch",
-                  ) as HTMLElement | null;
-                  if (section) {
-                    const offsetTop = section.offsetTop - 80;
-                    window.scrollTo({
-                      top: offsetTop,
-                      behavior: "smooth",
-                    });
-                  }
-                }}
-                className="text-beige/80 hover:text-beige transition-colors text-sm font-medium"
-              >
-                Merch
-              </button>
+              {(!isLoadingProducts && !productsError && products.length > 0) && (
+                <button
+                  onClick={() => {
+                    const section = document.querySelector(
+                      "#merch",
+                    ) as HTMLElement | null;
+                    if (section) {
+                      const offsetTop = section.offsetTop - 80;
+                      window.scrollTo({
+                        top: offsetTop,
+                        behavior: "smooth",
+                      });
+                    }
+                  }}
+                  className="text-beige/80 hover:text-beige transition-colors text-sm font-medium"
+                >
+                  Merch
+                </button>
+              )}
               <button
                 onClick={() => {
                   const section = document.querySelector("#contacto");
@@ -461,145 +462,82 @@ export default function Index() {
             </p>
           </div>
 
-          {/* Featured Video */}
-          <div className="mb-20">
-            <div className="w-full">
-              <div className="text-center mb-6 max-w-4xl mx-auto px-6">
-                <h3 className="text-2xl font-bold text-forest-green mb-2">
-                  🎵 Última Sesión Completa
-                </h3>
-                <p className="text-forest-green/70">
-                  {youtubeData?.latest
-                    ? `Publicado ${new Date(youtubeData.latest.publishedAt).toLocaleDateString()}`
-                    : "Disfruta la sesión completa de 1 hora desde nuestro canal de YouTube"}
-                </p>
-              </div>
-              <div className="aspect-video bg-forest-green/10 overflow-hidden w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw]">
-                {isLoadingVideos ? (
-                  <div className="w-full h-full flex items-center justify-center">
-                    <Loader2 className="h-8 w-8 animate-spin text-forest-green" />
-                  </div>
-                ) : youtubeData?.latest ? (
+          {/* Featured Video - Only show if YouTube integration works */}
+          {(!isLoadingVideos && youtubeData?.latest) && (
+            <div className="mb-20">
+              <div className="w-full">
+                <div className="text-center mb-6 max-w-4xl mx-auto px-6">
+                  <h3 className="text-2xl font-bold text-forest-green mb-2">
+                    🎵 Última Sesión Completa
+                  </h3>
+                  <p className="text-forest-green/70">
+                    Publicado {new Date(youtubeData.latest.publishedAt).toLocaleDateString()}
+                  </p>
+                </div>
+                <div className="aspect-video bg-forest-green/10 overflow-hidden w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw]">
                   <iframe
                     src={`https://www.youtube.com/embed/${youtubeData.latest.id}`}
                     className="w-full h-full"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     allowFullScreen
                   />
-                ) : (
-                  <iframe
-                    src="https://www.youtube.com/embed/bR29G5pSpaQ"
-                    className="w-full h-full"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                  />
-                )}
+                </div>
               </div>
             </div>
-          </div>
+          )}
 
-          {/* Events Gallery */}
-          <div className="mb-20">
-            <div className="text-center mb-12">
-              <h3 className="text-3xl font-bold text-forest-green mb-4">
-                {youtubeData ? "Los Más Vistos" : "Momentos únicos"}
-              </h3>
-              <p className="text-lg text-forest-green/70 max-w-2xl mx-auto">
-                {youtubeData
-                  ? "Nuestras sesiones más populares, elegidas por la comunidad"
-                  : "Cada sesión es una experiencia irrepetible donde la música, el café y la comunidad se encuentran"}
-              </p>
-              {videoError && (
-                <p className="text-sm text-terracotta mt-2">{videoError}</p>
+          {/* Events Gallery - Show videos from API or fallback */}
+          {!isLoadingVideos && (
+            <div className="mb-20">
+              {youtubeData?.popular && youtubeData.popular.length > 0 ? (
+                <>
+                  <div className="text-center mb-12">
+                    <h3 className="text-3xl font-bold text-forest-green mb-4">
+                      Los Más Vistos
+                    </h3>
+                    <p className="text-lg text-forest-green/70 max-w-2xl mx-auto">
+                      Nuestras sesiones más populares, elegidas por la comunidad
+                    </p>
+                  </div>
+                  <div className="grid md:grid-cols-3 gap-8">
+                    {youtubeData.popular.map((video) => (
+                      <div
+                        key={video.id}
+                        className="aspect-video bg-forest-green/10 overflow-hidden rounded-lg group hover:scale-105 transition-transform duration-500"
+                      >
+                        <iframe
+                          src={`https://www.youtube.com/embed/${video.id}`}
+                          className="w-full h-full"
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                          allowFullScreen
+                        />
+                      </div>
+                    ))}
+                  </div>
+                </>
+              ) : (
+                <div className="grid md:grid-cols-3 gap-8">
+                  {fallbackYoutubeData.popular.map((video) => {
+                    // Support both full video objects and simple string IDs
+                    const videoId = typeof video === 'string' ? video : video.id;
+                    return (
+                      <div
+                        key={videoId}
+                        className="aspect-video bg-forest-green/10 overflow-hidden rounded-lg group hover:scale-105 transition-transform duration-500"
+                      >
+                        <iframe
+                          src={`https://www.youtube.com/embed/${videoId}`}
+                          className="w-full h-full"
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                          allowFullScreen
+                        />
+                      </div>
+                    );
+                  })}
+                </div>
               )}
             </div>
-
-            <div className="grid md:grid-cols-3 gap-8">
-              {isLoadingVideos
-                ? // Loading skeletons
-                  Array.from({ length: 3 }).map((_, index) => (
-                    <Card
-                      key={index}
-                      className="bg-white/50 border-forest-green/20 overflow-hidden"
-                    >
-                      <div className="aspect-video bg-forest-green/10 animate-pulse"></div>
-                      <div className="p-6">
-                        <div className="h-5 bg-forest-green/20 rounded animate-pulse mb-2"></div>
-                        <div className="h-4 bg-forest-green/10 rounded animate-pulse"></div>
-                      </div>
-                    </Card>
-                  ))
-                : youtubeData?.popular
-                  ? // Dynamic videos
-                    youtubeData.popular.map((video, index) => (
-                      <Card
-                        key={video.id}
-                        className="group hover:scale-105 transition-all duration-500 bg-white/50 border-forest-green/20 overflow-hidden"
-                      >
-                        <div className="aspect-video bg-forest-green/10 overflow-hidden">
-                          <iframe
-                            src={`https://www.youtube.com/embed/${video.id}`}
-                            className="w-full h-full group-hover:scale-110 transition-transform duration-700"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                            allowFullScreen
-                          />
-                        </div>
-                        <div className="p-6">
-                          <h4 className="font-semibold text-forest-green mb-2 line-clamp-2">
-                            {video.title.length > 50
-                              ? `${video.title.substring(0, 50)}...`
-                              : video.title}
-                          </h4>
-                          <p className="text-sm text-forest-green/70">
-                            {video.viewCount
-                              ? `${parseInt(video.viewCount).toLocaleString()} visualizaciones`
-                              : "Sesión especial"}
-                          </p>
-                        </div>
-                      </Card>
-                    ))
-                  : // Fallback static videos
-                    [
-                      {
-                        id: "fflf6I7UHXM",
-                        title: "Jou Nielsen",
-                        description: "Una noche mágica con sonidos únicos",
-                      },
-                      {
-                        id: "zaoEoFKjoR4",
-                        title: "Noé",
-                        description: "Ritmos que conectan almas",
-                      },
-                      {
-                        id: "X52oRpXKOxM",
-                        title: "Alexx Zander Johnson",
-                        description: "Experiencias que trascienden",
-                      },
-                    ].map((video, index) => (
-                      <Card
-                        key={video.id}
-                        className="group hover:scale-105 transition-all duration-500 bg-white/50 border-forest-green/20 overflow-hidden"
-                      >
-                        <div className="aspect-video bg-forest-green/10 overflow-hidden">
-                          <iframe
-                            src={`https://www.youtube.com/embed/${video.id}`}
-                            className="w-full h-full group-hover:scale-110 transition-transform duration-700"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                            allowFullScreen
-                          />
-                        </div>
-                        <div className="p-6">
-                          <h4 className="font-semibold text-forest-green mb-2">
-                            {video.title}
-                          </h4>
-                          <p className="text-sm text-forest-green/70">
-                            {video.description}
-                          </p>
-                        </div>
-                      </Card>
-                    ))}
-            </div>
-          </div>
+          )}
 
           {/* CTA Section */}
           <div className="text-center">
@@ -643,27 +581,18 @@ export default function Index() {
         </div>
       </section>
 
-      {/* Merch Section */}
-      <section id="merch" className="py-24 px-6 bg-forest-green">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-4xl md:text-5xl font-bold text-beige text-center mb-8">
-            Merch Bejaus
-          </h2>
-          <p className="text-xl text-beige/90 text-center mb-16 max-w-2xl mx-auto">
-            Lleva la vibra Bejaus contigo. Diseños únicos inspirados en la
-            comunidad musical de Barcelona.
-          </p>
+      {/* Merch Section - Only show if Square integration works */}
+      {(!isLoadingProducts && !productsError && products.length > 0) && (
+        <section id="merch" className="py-24 px-6 bg-forest-green">
+          <div className="max-w-6xl mx-auto">
+            <h2 className="text-4xl md:text-5xl font-bold text-beige text-center mb-8">
+              Merch Bejaus
+            </h2>
+            <p className="text-xl text-beige/90 text-center mb-16 max-w-2xl mx-auto">
+              Lleva la vibra Bejaus contigo. Diseños únicos inspirados en la
+              comunidad musical de Barcelona.
+            </p>
 
-          {isLoadingProducts ? (
-            <div className="text-center py-12">
-              <Loader2 className="mx-auto h-8 w-8 animate-spin text-beige" />
-              <p className="text-beige/80 mt-4">Cargando productos...</p>
-            </div>
-          ) : productsError ? (
-            <div className="text-center py-12">
-              <p className="text-beige/80">{productsError}</p>
-            </div>
-          ) : (
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
               {products.slice(0, 4).map((product) => {
                 // Map Square product to expected Product shape for cart
@@ -736,21 +665,21 @@ export default function Index() {
                 );
               })}
             </div>
-          )}
 
-          {/* Ver toda la tienda */}
-          <div className="text-center mt-16">
-            <Link to="/shop">
-              <Button
-                size="lg"
-                className="bg-beige hover:bg-beige/90 text-forest-green px-8 py-4 text-lg"
-              >
-                Ver toda la tienda
-              </Button>
-            </Link>
+            {/* Ver toda la tienda */}
+            <div className="text-center mt-16">
+              <Link to="/shop">
+                <Button
+                  size="lg"
+                  className="bg-beige hover:bg-beige/90 text-forest-green px-8 py-4 text-lg"
+                >
+                  Ver toda la tienda
+                </Button>
+              </Link>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* Newsletter Subscription */}
       <section className="py-24 px-6 bg-beige">

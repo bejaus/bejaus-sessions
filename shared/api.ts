@@ -25,6 +25,6 @@ export interface YouTubeVideo {
 }
 
 export interface YouTubeApiResponse {
-  latest: YouTubeVideo;
+  latest: YouTubeVideo | null;
   popular: YouTubeVideo[];
 }

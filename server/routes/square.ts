@@ -115,9 +115,9 @@ export const handleSquareProducts: RequestHandler = async (_req, res) => {
   }
   try {
     if (!process.env.SQUARE_ACCESS_TOKEN) {
-      console.log("Square access token not configured, using mock data");
+      console.log("Square access token not configured, returning empty products");
       res.setHeader("X-Cache", "DISABLED");
-      return res.json({ products: getMockSquareProducts() });
+      return res.json({ products: [] });
     }
 
     // Check cache first
@@ -151,9 +151,9 @@ export const handleSquareProducts: RequestHandler = async (_req, res) => {
 
     if (!response.ok) {
       const errorText = await response.text();
-      console.log("Square API failed, using mock data:", errorText);
+      console.log("Square API failed, returning empty products:", errorText);
       res.setHeader("X-Cache", "DISABLED");
-      return res.json({ products: getMockSquareProducts() });
+      return res.json({ products: [] });
     }
 
     const data = await response.json();
